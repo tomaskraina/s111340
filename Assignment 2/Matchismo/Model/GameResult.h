@@ -12,6 +12,7 @@
 @interface GameResult : NSObject
 
 + (NSArray *)allGameResults; // of GameResult
++ (void)eraseGameResults;
 
 @property (readonly, nonatomic) NSDate *start;
 @property (readonly, nonatomic) NSDate *end;

@@ -36,6 +36,12 @@
     return allGameResults;
 }
 
++ (void)eraseGameResults
+{
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:ALL_RESULTS_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 // convenience initializer
 - (id)initFromPropertyList:(id)plist
 {
