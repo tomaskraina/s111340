@@ -30,6 +30,6 @@ Assignment #2
 8. [DONE] Enhance displaying description with NSAttributedString
 
 ### Extra Credit
-1. Create appropriate icons for your two tabs
-2. Add third tab to track the user’s scores
-3. Add another tab for some “settings” in the game
+1. [DONE] Create appropriate icons for your two tabs
+2. [DONE] Add third tab to track the user’s scores
+3. [DONE] Add another tab for some “settings” in the game
