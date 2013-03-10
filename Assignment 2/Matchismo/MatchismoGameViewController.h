@@ -8,6 +8,6 @@
 
 #import "CardGameViewController.h"
 
-@interface MatchizmoGameViewController : CardGameViewController
+@interface MatchismoGameViewController : CardGameViewController
 
 @end

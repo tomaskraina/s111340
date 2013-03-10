@@ -16,6 +16,7 @@
 // implement in subclass
 - (CardMatchingGameMode)gameMode;
 - (Deck *)deck;
+- (NSString *)gameTypeName;
 - (void)configureCardButton:(UIButton *)cardButton forCard:(Card *)card;
 - (NSAttributedString *)attributedStringForCard:(Card *)card;
 //- (void)gameDidReset;

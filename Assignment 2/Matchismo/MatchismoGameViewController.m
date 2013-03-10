@@ -6,15 +6,15 @@
 //  Copyright (c) 2013 Tom Kraina (Advanced iOS Application Development DTU Course). All rights reserved.
 //
 
-#import "MatchizmoGameViewController.h"
+#import "MatchismoGameViewController.h"
 #import "Card.h"
 #import "PlayingCardDect.h"
 
-@interface MatchizmoGameViewController ()
+@interface MatchismoGameViewController ()
 @property (weak, nonatomic) IBOutlet UISegmentedControl *cardModeControl;
 @end
 
-@implementation MatchizmoGameViewController
+@implementation MatchismoGameViewController
 
 - (CardMatchingGameMode)gameMode
 {
@@ -24,6 +24,12 @@
 - (Deck *)deck
 {
     return [[PlayingCardDect alloc] init];
+}
+
+- (NSString *)gameTypeName
+{
+    static NSString *gameTypeName = @"Matchismo";
+    return gameTypeName;
 }
 
 - (NSAttributedString *)attributedStringForCard:(Card *)card

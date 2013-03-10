@@ -9,6 +9,7 @@
 #import "CardGameViewController.h"
 #import "PlayingCardDect.h"
 #import "CardMatchingGame.h"
+#import "GameResult.h"
 
 @interface CardGameViewController () <CardMatchingGameDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
@@ -19,9 +20,18 @@
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UISlider *historySlider;
 @property (strong, nonatomic) NSMutableArray *history;
+@property (strong, nonatomic) GameResult *gameResult;
 @end
 
 @implementation CardGameViewController
+
+- (GameResult *)gameResult
+{
+    if (!_gameResult) {
+        _gameResult = [[GameResult alloc] initWithGameType:[self gameTypeName]];
+    }
+    return _gameResult;
+}
 
 - (NSMutableArray *)history
 {
@@ -81,6 +91,8 @@
     
     [self updateUI];
     
+    self.gameResult = nil;
+    
 //    [self gameDidReset];
 }
 
@@ -90,6 +102,8 @@
     self.flipCount++;
     
     [self updateUI];
+    
+    self.gameResult.score = self.game.score;
     
 //    [self cardDidFlip];
 }
@@ -151,6 +165,11 @@
     return 0;
 }
 - (Deck *)deck
+{
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
+}
+- (NSString *)gameTypeName
 {
     [self doesNotRecognizeSelector:_cmd];
     return nil;

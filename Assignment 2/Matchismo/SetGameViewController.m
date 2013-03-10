@@ -26,6 +26,12 @@
     return [[SetCardDeck alloc] init];
 }
 
+- (NSString *)gameTypeName
+{
+    static NSString *gameTypeName = @"Set Game";
+    return gameTypeName;
+}
+
 - (UIColor *)colorFromSetCard:(SetCard *)card
 {
     if ([card.color isEqual:SetCardRedColor]) {
