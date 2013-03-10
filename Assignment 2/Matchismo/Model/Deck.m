@@ -46,6 +46,4 @@
     return randomCard;
 }
 
-// TODO: implement the rest
-
 @end

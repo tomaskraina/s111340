@@ -17,7 +17,6 @@
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *cardModeControl;
 @property (weak, nonatomic) IBOutlet UISlider *historySlider;
 @property (strong, nonatomic) NSMutableArray *history;
 @end
@@ -27,7 +26,7 @@
 - (NSMutableArray *)history
 {
     if (!_history) {
-        _history = [NSMutableArray arrayWithObject:@"New game"];
+        _history = [NSMutableArray arrayWithObject:[[NSAttributedString alloc] init]];
     }
     
     return _history;
@@ -36,7 +35,6 @@
 - (void)setFlipCount:(int)flipCount
 {
     _flipCount = flipCount;
-    self.cardModeControl.enabled = flipCount == 0;
     self.flipsLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
     NSLog(@"flips updated to %d", self.flipCount);
 }
@@ -45,8 +43,8 @@
 {
     if (!_game) {
         _game = [[CardMatchingGame alloc] initWithCardCount:self.cardButtons.count
-                                                  usingDeck:[[PlayingCardDect alloc] init]
-                                                       mode:CardMatchingGameModeMatch2Cards];
+                                                  usingDeck:[self deck]
+                                                       mode:[self gameMode]];
         _game.delegate = self;
     }
     
@@ -63,18 +61,10 @@
 {
     for (UIButton *cardButton in self.cardButtons) {
         Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
-        [cardButton setTitle:card.contents forState:UIControlStateSelected];
-        [cardButton setTitle:card.contents forState:UIControlStateSelected|UIControlStateDisabled];
-        cardButton.selected = card.isFaceUp;
-        cardButton.enabled = !card.isUnplayable;
-        cardButton.alpha = card.isUnplayable ? 0.3 : 1.0;
-        
-        UIImage *backImage = card.isFaceUp ? nil : [UIImage imageNamed:@"card-back"];
-        [cardButton setImage:backImage forState:UIControlStateNormal];
-        [cardButton setImageEdgeInsets:UIEdgeInsetsMake(6, 10, 6, 10)];
+        [self configureCardButton:cardButton forCard:card];
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"%d", self.game.score];
-    self.descriptionLabel.text = [self.history lastObject];
+    self.descriptionLabel.attributedText = [self.history lastObject];
     self.descriptionLabel.alpha = 1.;
     self.historySlider.maximumValue = [self.history count];
     self.historySlider.value = self.historySlider.maximumValue;
@@ -90,6 +80,8 @@
     self.history = nil;
     
     [self updateUI];
+    
+//    [self gameDidReset];
 }
 
 - (IBAction)flipCard:(UIButton *)sender
@@ -98,57 +90,88 @@
     self.flipCount++;
     
     [self updateUI];
+    
+//    [self cardDidFlip];
 }
 
-
-#define SEGMENTED_CONTROL_3_CARD_MATCH_MODE_SEGMENT 1
-
-- (IBAction)changeGameMode:(UISegmentedControl *)sender
-{
-    PlayingCardDect *deck = [[PlayingCardDect alloc] init];
-    
-    switch (sender.selectedSegmentIndex) {
-        case SEGMENTED_CONTROL_3_CARD_MATCH_MODE_SEGMENT :
-            self.game = [[CardMatchingGame alloc] initWithCardCount:self.cardButtons.count
-                                                          usingDeck:deck
-                                                               mode:CardMatchingGameModeMatch3Cards];
-            break;
-            
-        default:
-            self.game = [[CardMatchingGame alloc] initWithCardCount:self.cardButtons.count
-                                                          usingDeck:deck
-                                                               mode:CardMatchingGameModeMatch2Cards];
-            break;
-    }
-    
-    self.game.delegate = self;
-}
 
 - (IBAction)showHistory:(UISlider *)sender
 {
     self.descriptionLabel.alpha = sender.value == sender.maximumValue ? 1. : .5;
-    self.descriptionLabel.text = self.history[(int)sender.value - 1];
+    self.descriptionLabel.attributedText = self.history[(int)sender.value - 1];
 }
 
+
+- (NSAttributedString *)cards:(NSArray *)cards joinedByString:(NSString *)string
+{
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] init];
+    for (int i = 0; i < [cards count]; i++) {
+        [attributedString appendAttributedString:[self attributedStringForCard:cards[i]]];
+        
+        if (i < [cards count] - 1) {
+            [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:string]];
+        }
+    }
+    
+    return attributedString;
+}
 
 #pragma mark CardMatchingGameDelegate
 
 - (void)cardMatchingGame:(CardMatchingGame *)game cards:(NSArray *)cards didMatchWithScore:(NSInteger)score
 {
-    NSString *text;
+    NSMutableAttributedString *text;
     if (score > 0) {
-        text = [NSString stringWithFormat:@"Matched %@ for %d points", [cards componentsJoinedByString:@" and "], score];
+        text = [[NSMutableAttributedString alloc] initWithString:@"Matched "];
+        [text appendAttributedString:[self cards:cards joinedByString:@", "]];
+        [text appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" for %d point", score]]];
     }
     else {
-        text = [NSString stringWithFormat:@"%@ don't match! Penalty %d points", [cards componentsJoinedByString:@" and "], -score];
+        text = [[NSMutableAttributedString alloc] initWithAttributedString:[self cards:cards joinedByString:@", "]];
+        [text appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" don't match! Penalty %d points", -score]]];
     }
+    
+    [text addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.0] range:NSMakeRange(0, [text length])];
     
     [self.history addObject:text];
 }
 
 - (void)cardMatchingGame:(CardMatchingGame *)game didFlipCard:(Card *)card
 {
-    [self.history addObject:[NSString stringWithFormat:@"Flipped %@ %@", card.faceUp ? @"up" : @"down", card.contents]];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"Flipped %@ ", card.faceUp ? @"up" : @"down"]];
+    [attributedString appendAttributedString:[self attributedStringForCard:card]];
+    [self.history addObject:attributedString];
 }
+
+
+// Implement in subclass
+- (CardMatchingGameMode)gameMode
+{
+    [self doesNotRecognizeSelector:_cmd];
+    return 0;
+}
+- (Deck *)deck
+{
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
+}
+- (void)configureCardButton:(UIButton *)cardButton forCard:(Card *)card
+{
+    [self doesNotRecognizeSelector:_cmd];
+}
+- (NSAttributedString *)attributedStringForCard:(Card *)card
+{
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
+}
+//- (void)gameDidReset
+//{
+//    [self doesNotRecognizeSelector:_cmd];
+//}
+//- (void)cardDidFlip
+//{
+//    [self doesNotRecognizeSelector:_cmd];
+//}
+
 
 @end

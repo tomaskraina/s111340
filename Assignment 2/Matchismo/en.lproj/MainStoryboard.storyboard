@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12C3012" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="d0Q-eE-hBT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="d0Q-eE-hBT">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1929"/>
     </dependencies>
     <scenes>
-        <!--Card Game View Controller - Matchismo-->
+        <!--Matchizmo Game View Controller - Playing Card Game-->
         <scene sceneID="5">
             <objects>
-                <viewController id="2" customClass="CardGameViewController" sceneMemberID="viewController">
+                <viewController id="2" customClass="MatchizmoGameViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3">
                         <rect key="frame" x="0.0" y="20" width="320" height="411"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -314,7 +314,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Matchismo" id="4ea-Lj-Oyu"/>
+                    <tabBarItem key="tabBarItem" title="Playing Card Game" id="4ea-Lj-Oyu"/>
                     <connections>
                         <outlet property="descriptionLabel" destination="MGt-3s-4SQ" id="KK3-VH-GwB"/>
                         <outlet property="flipsLabel" destination="8mT-lt-NJT" id="sVB-xz-vg1"/>
@@ -342,56 +342,425 @@
             </objects>
             <point key="canvasLocation" x="153" y="-397"/>
         </scene>
-        <!--Set Game View Controller - Set-->
-        <scene sceneID="A68-SE-DZq">
-            <objects>
-                <viewController id="ujW-2c-Rpo" customClass="SetGameViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="n3L-yJ-c8E">
-                        <rect key="frame" x="0.0" y="20" width="320" height="411"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Set" id="74P-5V-akD"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XjB-ut-QJL" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="153" y="205"/>
-        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="hsN-fw-PtV">
             <objects>
                 <tabBarController definesPresentationContext="YES" id="d0Q-eE-hBT" sceneMemberID="viewController">
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="yTP-j6-Hwa">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="ujW-2c-Rpo" kind="relationship" relationship="viewControllers" id="4Vo-bf-e6v"/>
                         <segue destination="2" kind="relationship" relationship="viewControllers" id="ise-0P-64K"/>
+                        <segue destination="CfZ-m5-Obx" kind="relationship" relationship="viewControllers" id="Bbs-4y-dky"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z9X-5b-4bM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-381" y="-77"/>
         </scene>
+        <!--Set Game View Controller - Set Game-->
+        <scene sceneID="X3T-RI-mFK">
+            <objects>
+                <viewController id="CfZ-m5-Obx" customClass="SetGameViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="t3z-Hy-tFm">
+                        <rect key="frame" x="0.0" y="20" width="320" height="411"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="U6z-Cw-wbT">
+                                <rect key="frame" x="23" y="20" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="ukk-XS-lhy"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="yqh-F0-8rl">
+                                <rect key="frame" x="70" y="20" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="vrR-oj-xlz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="KGG-Zc-Sai">
+                                <rect key="frame" x="117" y="20" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="hbT-lO-QfN"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="Azz-vy-aRy">
+                                <rect key="frame" x="164" y="20" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="W9T-a1-aTq"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="XF3-kJ-4ig">
+                                <rect key="frame" x="23" y="87" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="TKO-iL-G1n"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="rvC-Fc-qsC">
+                                <rect key="frame" x="70" y="87" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="YQq-Sg-VGY"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="cZE-s7-xyB">
+                                <rect key="frame" x="117" y="87" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="QVv-5S-cgK"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="pn0-GA-moF">
+                                <rect key="frame" x="164" y="87" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="WDm-VP-pEu"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="8K3-AN-o5I">
+                                <rect key="frame" x="23" y="154" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="j9n-C0-Msq"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="Q0b-m0-93n">
+                                <rect key="frame" x="70" y="154" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="R6S-jg-3go"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="Pvg-84-mE2">
+                                <rect key="frame" x="117" y="154" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="P9p-tV-tIM"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="vmh-8y-SAa">
+                                <rect key="frame" x="164" y="154" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="Qrv-3w-LVD"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="vGO-BR-0Tf">
+                                <rect key="frame" x="23" y="221" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="DdI-Zg-VKl"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="I3Y-oe-kiI">
+                                <rect key="frame" x="70" y="221" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="Gla-wY-O9m"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="PoV-co-yMj">
+                                <rect key="frame" x="117" y="221" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="Ivm-73-Ww8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="bCU-tL-gIF">
+                                <rect key="frame" x="164" y="221" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="r7U-4F-sre"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="lc3-UP-Ztc">
+                                <rect key="frame" x="211" y="20" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="im7-5o-0Jh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="ylt-8a-QKy">
+                                <rect key="frame" x="211" y="87" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="yBB-Dw-Hce"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="BQb-8r-Ixw">
+                                <rect key="frame" x="211" y="154" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="4ja-Zk-Q7R"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="tK8-Hx-Qdd">
+                                <rect key="frame" x="211" y="221" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="5G9-BU-LMs"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="Rzl-Pn-ozq">
+                                <rect key="frame" x="258" y="20" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="tY6-Gk-8BG"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="7dw-BY-BCD">
+                                <rect key="frame" x="258" y="87" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="Z32-p4-GLL"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="zDF-NV-Mmw">
+                                <rect key="frame" x="258" y="154" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="80H-Q6-dia"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="Mhy-fx-cgW">
+                                <rect key="frame" x="258" y="221" width="39" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.90471031021897808" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCard:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="gPd-lz-AYl"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Flips: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NGC-dB-1vE">
+                                <rect key="frame" x="20" y="370" width="100" height="21"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Score: 0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hVZ-Ol-4yb">
+                                <rect key="frame" x="200" y="370" width="100" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" adjustsLetterSpacingToFitWidth="YES" id="MYk-3g-VDD">
+                                <rect key="frame" x="20" y="289" width="280" height="21"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <attributedString key="attributedText"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Zv2-WO-5CZ">
+                                <rect key="frame" x="128" y="348" width="64" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Deal">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="resetGame:" destination="CfZ-m5-Obx" eventType="touchUpInside" id="5bU-eH-h7Z"/>
+                                </connections>
+                            </button>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="1" id="LUz-VV-Lec">
+                                <rect key="frame" x="18" y="318" width="284" height="23"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <connections>
+                                    <action selector="showHistory:" destination="CfZ-m5-Obx" eventType="valueChanged" id="UUc-cb-NGP"/>
+                                </connections>
+                            </slider>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Set Game" id="7Eb-P1-qsz"/>
+                    <connections>
+                        <outlet property="descriptionLabel" destination="MYk-3g-VDD" id="cZj-r8-ghB"/>
+                        <outlet property="flipsLabel" destination="NGC-dB-1vE" id="aRd-pa-vzr"/>
+                        <outlet property="historySlider" destination="LUz-VV-Lec" id="5iJ-N0-ngF"/>
+                        <outlet property="scoreLabel" destination="hVZ-Ol-4yb" id="e3O-pN-74a"/>
+                        <outletCollection property="cardButtons" destination="U6z-Cw-wbT" id="qjl-BI-csE"/>
+                        <outletCollection property="cardButtons" destination="yqh-F0-8rl" id="HQZ-G2-CJJ"/>
+                        <outletCollection property="cardButtons" destination="KGG-Zc-Sai" id="DU0-LP-RYi"/>
+                        <outletCollection property="cardButtons" destination="Azz-vy-aRy" id="Zp1-dU-jry"/>
+                        <outletCollection property="cardButtons" destination="XF3-kJ-4ig" id="Dds-Nd-NuO"/>
+                        <outletCollection property="cardButtons" destination="rvC-Fc-qsC" id="fyV-fE-W97"/>
+                        <outletCollection property="cardButtons" destination="cZE-s7-xyB" id="55b-Os-Vda"/>
+                        <outletCollection property="cardButtons" destination="pn0-GA-moF" id="pkL-9R-EXB"/>
+                        <outletCollection property="cardButtons" destination="8K3-AN-o5I" id="M2J-cy-qI8"/>
+                        <outletCollection property="cardButtons" destination="Q0b-m0-93n" id="tRu-kj-3CE"/>
+                        <outletCollection property="cardButtons" destination="Pvg-84-mE2" id="5PI-gK-kym"/>
+                        <outletCollection property="cardButtons" destination="vmh-8y-SAa" id="bKy-lS-lAN"/>
+                        <outletCollection property="cardButtons" destination="vGO-BR-0Tf" id="KLe-r9-bq5"/>
+                        <outletCollection property="cardButtons" destination="I3Y-oe-kiI" id="ZNh-Jc-c90"/>
+                        <outletCollection property="cardButtons" destination="PoV-co-yMj" id="Gfg-wh-DCw"/>
+                        <outletCollection property="cardButtons" destination="bCU-tL-gIF" id="Vub-rm-i9Q"/>
+                        <outletCollection property="cardButtons" destination="Mhy-fx-cgW" id="AyA-ii-Evi"/>
+                        <outletCollection property="cardButtons" destination="tK8-Hx-Qdd" id="s0c-b1-g9B"/>
+                        <outletCollection property="cardButtons" destination="BQb-8r-Ixw" id="qlD-5V-MqM"/>
+                        <outletCollection property="cardButtons" destination="zDF-NV-Mmw" id="rtA-0D-cso"/>
+                        <outletCollection property="cardButtons" destination="7dw-BY-BCD" id="RrG-Ke-aSj"/>
+                        <outletCollection property="cardButtons" destination="ylt-8a-QKy" id="k8H-Hx-UGZ"/>
+                        <outletCollection property="cardButtons" destination="Rzl-Pn-ozq" id="x59-Dw-LWu"/>
+                        <outletCollection property="cardButtons" destination="lc3-UP-Ztc" id="biZ-Wk-lRg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OqA-pr-2mC" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="153" y="203"/>
+        </scene>
     </scenes>
     <classes>
         <class className="CardGameViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CardGameViewController.h"/>
             <relationships>
-                <relationship kind="action" name="changeGameMode:" candidateClass="UISegmentedControl"/>
                 <relationship kind="action" name="flipCard:" candidateClass="UIButton"/>
                 <relationship kind="action" name="resetGame:"/>
                 <relationship kind="action" name="showHistory:" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="cardModeControl" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="flipsLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="historySlider" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="scoreLabel" candidateClass="UILabel"/>
                 <relationship kind="outletCollection" name="cardButtons" candidateClass="UIButton"/>
             </relationships>
+        </class>
+        <class className="MatchizmoGameViewController" superclassName="CardGameViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MatchizmoGameViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="cardModeControl" candidateClass="UISegmentedControl"/>
+            </relationships>
+        </class>
+        <class className="SetGameViewController" superclassName="CardGameViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SetGameViewController.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

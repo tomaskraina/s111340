@@ -21,13 +21,13 @@ Assignment #2
 
 ### Required Tasks
 1. [DONE] Add a tab view controller
-2. [DONE] Remove a control for changing the card match modes
-3. Implement the Set game model
-4. Choose score for matching cards
-5. Make Set game with 24 cards
-6. Use NSAttributedString to draw ▲ ● ■ appropriately
-7. Add deal button, score label and flips label
-8. Enhance displaying description of what's going on in the game with NSAttributedString
+2. [DONE] Remove the control for changing the card match modes
+3. [DONE] Implement the Set game model
+4. [DONE] Choose score for matching cards
+5. [DONE] Make Set game with 24 cards
+6. [DONE] Use NSAttributedString to draw ▲ ● ■ appropriately
+7. [DONE] Add deal button, score label and flips label
+8. [DONE] Enhance displaying description with NSAttributedString
 
 ### Extra Credit
 1. Create appropriate icons for your two tabs

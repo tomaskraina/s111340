@@ -74,18 +74,20 @@
     Card *card = self.cards[index];
     
     if (!card.isUnplayable) {
+        
         card.faceUp = !card.isFaceUp;
         
         if (card.isFaceUp) {
             self.score -= FLIP_COST;
             
-            [self matchFlippedUpCard:card];
+            NSMutableArray *facedUpCards = [[self facedUpCards] mutableCopy];
+            [facedUpCards removeObject:card];
+            [self matchFacedUpCards:facedUpCards againstCard:card];
         }
         else {
             [self.delegate cardMatchingGame:self didFlipCard:card];
         }
     }
-
 }
 
 - (NSArray *)facedUpCards
@@ -101,42 +103,27 @@
     return [facedUpCards copy];
 }
 
-- (void)matchFlippedUpCard:(Card *)card
-{
-    NSArray *cardsToMatch = [self facedUpCards];
-    
-    if ([cardsToMatch count] == self.mode) {
-        NSInteger matchScore = [self matchScoreForCards:cardsToMatch];
+- (void)matchFacedUpCards:(NSArray *)cardsToMatch againstCard:(Card *)card
+{    
+    if ([cardsToMatch count] + 1 == self.mode) {
+        NSInteger matchScore = [card match:cardsToMatch];
         
         if (matchScore > 0) {
-            [self makeCardsUnplayable:cardsToMatch];
+            matchScore *= MATCH_BONUS;
+            [self makeCardsUnplayable:[cardsToMatch arrayByAddingObject:card]];
         }
         else {
+            matchScore -= MISMATCH_PENALTY;
             [self flipCards:cardsToMatch];
-            card.faceUp = YES; // Keep the last flipped card faced up
         }
         
         self.score += matchScore;
-        [self.delegate cardMatchingGame:self cards:cardsToMatch didMatchWithScore:matchScore];
+        [self.delegate cardMatchingGame:self cards:[cardsToMatch arrayByAddingObject:card] didMatchWithScore:matchScore];
     }
     else {
         [self.delegate cardMatchingGame:self didFlipCard:card];
     }
-}
 
-- (NSInteger)matchScoreForCards:(NSArray *)cards
-{
-    NSInteger matchScore = 0;
-    
-    // Matches every two cards against each other once and only once
-    for (NSUInteger i = 0; i < ([cards count] - 1); i++) {
-        NSRange rangeToMatch = NSMakeRange(i + 1, ([cards count] - i - 1));
-        NSUInteger score = [cards[i] match:[cards subarrayWithRange:rangeToMatch]];
-        matchScore += score ? (score * MATCH_BONUS) : (score - MISMATCH_PENALTY);
-    }
-        
-    return matchScore;
 }
-
 
 @end
