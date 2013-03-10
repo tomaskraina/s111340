@@ -29,6 +29,10 @@
 		E259D2E816E9441100F3E2FC /* MatchismoGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E259D2E716E9441100F3E2FC /* MatchismoGameViewController.m */; };
 		E283FED716ECE98E00666776 /* GameResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E283FED516ECE98E00666776 /* GameResultViewController.m */; };
 		E283FEDA16ECF17D00666776 /* GameResult.m in Sources */ = {isa = PBXBuildFile; fileRef = E283FED916ECF17D00666776 /* GameResult.m */; };
+		E283FEDF16ECFA0900666776 /* tab-matchismo.png in Resources */ = {isa = PBXBuildFile; fileRef = E283FEDB16ECFA0900666776 /* tab-matchismo.png */; };
+		E283FEE016ECFA0900666776 /* tab-matchismo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E283FEDC16ECFA0900666776 /* tab-matchismo@2x.png */; };
+		E283FEE116ECFA0900666776 /* tab-setgame.png in Resources */ = {isa = PBXBuildFile; fileRef = E283FEDD16ECFA0900666776 /* tab-setgame.png */; };
+		E283FEE216ECFA0900666776 /* tab-setgame@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E283FEDE16ECFA0900666776 /* tab-setgame@2x.png */; };
 		E29D189116E672C2007673CF /* SetGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E29D189016E672C2007673CF /* SetGameViewController.m */; };
 		E29D189416E67706007673CF /* SetCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E29D189316E67706007673CF /* SetCard.m */; };
 		E29D189716E6772E007673CF /* SetCardDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = E29D189616E6772E007673CF /* SetCardDeck.m */; };
@@ -70,6 +74,10 @@
 		E283FED516ECE98E00666776 /* GameResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameResultViewController.m; sourceTree = "<group>"; };
 		E283FED816ECF17D00666776 /* GameResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameResult.h; path = Model/GameResult.h; sourceTree = "<group>"; };
 		E283FED916ECF17D00666776 /* GameResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameResult.m; path = Model/GameResult.m; sourceTree = "<group>"; };
+		E283FEDB16ECFA0900666776 /* tab-matchismo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-matchismo.png"; sourceTree = "<group>"; };
+		E283FEDC16ECFA0900666776 /* tab-matchismo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-matchismo@2x.png"; sourceTree = "<group>"; };
+		E283FEDD16ECFA0900666776 /* tab-setgame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-setgame.png"; sourceTree = "<group>"; };
+		E283FEDE16ECFA0900666776 /* tab-setgame@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-setgame@2x.png"; sourceTree = "<group>"; };
 		E29D188F16E672C2007673CF /* SetGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetGameViewController.h; sourceTree = "<group>"; };
 		E29D189016E672C2007673CF /* SetGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetGameViewController.m; sourceTree = "<group>"; };
 		E29D189216E67706007673CF /* SetCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetCard.h; path = Model/SetCard.h; sourceTree = "<group>"; };
@@ -95,6 +103,10 @@
 		E210FCB516E6604B00FE958C /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E283FEDB16ECFA0900666776 /* tab-matchismo.png */,
+				E283FEDC16ECFA0900666776 /* tab-matchismo@2x.png */,
+				E283FEDD16ECFA0900666776 /* tab-setgame.png */,
+				E283FEDE16ECFA0900666776 /* tab-setgame@2x.png */,
 				E210FCB616E6604B00FE958C /* card-back.png */,
 				E210FCB716E6604B00FE958C /* Default-568h@2x.png */,
 				E210FCB816E6604B00FE958C /* Default.png */,
@@ -247,6 +259,10 @@
 				E210FCBF16E6604B00FE958C /* Default@2x.png in Resources */,
 				E210FCC016E6604B00FE958C /* Icon.png in Resources */,
 				E210FCC116E6604B00FE958C /* Icon@2x.png in Resources */,
+				E283FEDF16ECFA0900666776 /* tab-matchismo.png in Resources */,
+				E283FEE016ECFA0900666776 /* tab-matchismo@2x.png in Resources */,
+				E283FEE116ECFA0900666776 /* tab-setgame.png in Resources */,
+				E283FEE216ECFA0900666776 /* tab-setgame@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

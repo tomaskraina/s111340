@@ -314,7 +314,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Matchismo Game" id="4ea-Lj-Oyu"/>
+                    <tabBarItem key="tabBarItem" title="Matchismo Game" image="tab-matchismo.png" id="4ea-Lj-Oyu"/>
                     <connections>
                         <outlet property="descriptionLabel" destination="MGt-3s-4SQ" id="KK3-VH-GwB"/>
                         <outlet property="flipsLabel" destination="8mT-lt-NJT" id="sVB-xz-vg1"/>
@@ -703,7 +703,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Set Game" id="7Eb-P1-qsz"/>
+                    <tabBarItem key="tabBarItem" title="Set Game" image="tab-setgame.png" id="7Eb-P1-qsz"/>
                     <connections>
                         <outlet property="descriptionLabel" destination="MYk-3g-VDD" id="cZj-r8-ghB"/>
                         <outlet property="flipsLabel" destination="NGC-dB-1vE" id="aRd-pa-vzr"/>
@@ -739,7 +739,7 @@
             </objects>
             <point key="canvasLocation" x="153" y="203"/>
         </scene>
-        <!--Game Result View Controller - Score-->
+        <!--Game Result View Controller-->
         <scene sceneID="e2U-HL-fBq">
             <objects>
                 <viewController id="bTy-Z3-n9K" customClass="GameResultViewController" sceneMemberID="viewController">
@@ -803,7 +803,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Score" id="0em-LR-UVa"/>
+                    <tabBarItem key="tabBarItem" systemItem="history" id="0em-LR-UVa"/>
                     <connections>
                         <outlet property="display" destination="2tw-1d-E5q" id="NSB-BT-R7F"/>
                     </connections>
@@ -813,6 +813,10 @@
             <point key="canvasLocation" x="153" y="778"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="tab-matchismo.png" width="30" height="30"/>
+        <image name="tab-setgame.png" width="30" height="30"/>
+    </resources>
     <classes>
         <class className="CardGameViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CardGameViewController.h"/>
