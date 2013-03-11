@@ -39,6 +39,13 @@
         }
     }
     
+    Card *nextCardToMatch = [otherCards lastObject];
+    if (nextCardToMatch) {
+        NSMutableArray *cardsToMatch = [otherCards mutableCopy];
+        [cardsToMatch removeObject:nextCardToMatch];
+        score += [nextCardToMatch match:cardsToMatch];
+    }
+    
     return score;
 }
 
