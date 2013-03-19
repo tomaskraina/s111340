@@ -33,3 +33,24 @@ Assignment #2
 1. [DONE] Create appropriate icons for your two tabs
 2. [DONE] Add third tab to track the user’s scores
 3. [DONE] Add another tab for some “settings” in the game
+
+Assignment #3
+-------------
+
+### Required Tasks
+1. Create an app with one tab for Set and another for Playing card game
+2. Use polymorphism to design your Controllers for the two games
+3. Set game starts with 12 cards dealt and Playing card game with 22
+4. The user must then be able to choose matches
+5. When a Set match is successfully chosen, the cards should be removed from the game
+6. Set cards must have the “standard” Set look and feel using CG/UIBezierPath
+7. Button for request 3 more cards in the Set game
+8. Automatically scroll to show any new cards when you add some in the Set game
+9. Let the user know if there're no more cards are in the deck and the she requests more
+10. Allow the user to scroll down to see the rest of the cards
+11. Continue to have a “last flip status” UI
+12. The flip counter can be removed from the game
+13. Keep the re-deal button
+14. Make it look good in landscape/portrait and on the iP4 and iP5, use Autolayout
+
+### Extra Credit
