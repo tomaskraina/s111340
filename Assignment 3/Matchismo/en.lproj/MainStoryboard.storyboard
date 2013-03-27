@@ -13,6 +13,9 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Score" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zmd-02-UNO">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="23" id="VKi-DA-71T"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -114,7 +117,7 @@
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hVZ-Ol-4yb">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="lFb-LU-zAB"/>
+                                    <constraint firstAttribute="height" constant="20" id="5Jo-EV-0h4"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="0.49720574817518248" alpha="1" colorSpace="calibratedRGB"/>
@@ -131,14 +134,14 @@
                             <constraint firstItem="zmd-02-UNO" firstAttribute="leading" secondItem="T1C-NF-ith" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="Jec-o8-61o"/>
                             <constraint firstAttribute="trailing" secondItem="hVZ-Ol-4yb" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="PTO-Wl-lsr"/>
                             <constraint firstItem="OpW-XA-OgT" firstAttribute="leading" secondItem="3" secondAttribute="leading" type="default" id="UQf-aI-wdM"/>
-                            <constraint firstItem="zmd-02-UNO" firstAttribute="top" secondItem="T1C-NF-ith" secondAttribute="top" type="default" id="YH9-b4-252"/>
+                            <constraint firstItem="zmd-02-UNO" firstAttribute="top" secondItem="T1C-NF-ith" secondAttribute="top" type="user" id="YH9-b4-252"/>
                             <constraint firstAttribute="centerX" secondItem="T1C-NF-ith" secondAttribute="centerX" type="user" id="ZoS-cR-UCa"/>
                             <constraint firstAttribute="trailing" secondItem="zmd-02-UNO" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="hW7-lj-lHx"/>
                             <constraint firstItem="T1C-NF-ith" firstAttribute="leading" secondItem="FYT-mh-WKV" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="jeN-2G-UNi"/>
                             <constraint firstItem="OpW-XA-OgT" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" type="default" id="oT2-dG-SJv"/>
                             <constraint firstItem="FYT-mh-WKV" firstAttribute="centerY" secondItem="T1C-NF-ith" secondAttribute="centerY" type="user" id="plN-MK-JX0"/>
                             <constraint firstAttribute="trailing" secondItem="MGt-3s-4SQ" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="swK-nD-s6i"/>
-                            <constraint firstItem="MGt-3s-4SQ" firstAttribute="top" secondItem="hVZ-Ol-4yb" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="uXn-Mo-6Bv"/>
+                            <constraint firstItem="MGt-3s-4SQ" firstAttribute="top" secondItem="hVZ-Ol-4yb" secondAttribute="bottom" constant="8" symbolic="YES" type="user" id="uXn-Mo-6Bv"/>
                             <constraint firstItem="T1C-NF-ith" firstAttribute="top" secondItem="3" secondAttribute="top" constant="8" type="user" id="v9B-Ix-rKp"/>
                             <constraint firstItem="OpW-XA-OgT" firstAttribute="top" secondItem="MGt-3s-4SQ" secondAttribute="bottom" constant="8" symbolic="YES" type="user" id="vvK-8d-xGX"/>
                         </constraints>
@@ -229,7 +232,7 @@
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="500" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zv2-WO-5CZ">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="41" type="user" id="rWJ-WP-0zh"/>
+                                    <constraint firstAttribute="height" constant="44" type="user" id="9ZF-sa-yC0"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Deal">
@@ -245,7 +248,7 @@
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MYk-3g-VDD">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="XT6-C9-dYa"/>
+                                    <constraint firstAttribute="height" constant="21" type="user" id="XT6-C9-dYa"/>
                                 </constraints>
                                 <attributedString key="attributedText"/>
                                 <nil key="highlightedColor"/>
@@ -326,25 +329,24 @@
                         <constraints>
                             <constraint firstItem="8tQ-Ct-SsU" firstAttribute="trailing" secondItem="t3z-Hy-tFm" secondAttribute="trailing" type="default" id="13g-b5-P22"/>
                             <constraint firstItem="oZf-me-okm" firstAttribute="leading" secondItem="5jQ-36-tEA" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="1dV-JF-RlR"/>
+                            <constraint firstItem="Zv2-WO-5CZ" firstAttribute="baseline" secondItem="5jQ-36-tEA" secondAttribute="baseline" type="default" id="2Zg-Op-q1n"/>
                             <constraint firstItem="Zv2-WO-5CZ" firstAttribute="leading" secondItem="yc5-dj-Ga6" secondAttribute="trailing" constant="8" symbolic="YES" type="user" id="4m8-7t-Zdq"/>
-                            <constraint firstItem="Zv2-WO-5CZ" firstAttribute="baseline" secondItem="5jQ-36-tEA" secondAttribute="baseline" type="user" id="D9t-7J-KNH"/>
+                            <constraint firstItem="8tQ-Ct-SsU" firstAttribute="bottom" secondItem="t3z-Hy-tFm" secondAttribute="bottom" type="default" id="Fj2-Yc-1gS"/>
                             <constraint firstItem="Zv2-WO-5CZ" firstAttribute="top" secondItem="t3z-Hy-tFm" secondAttribute="top" constant="8" type="user" id="GpG-m7-PHr"/>
+                            <constraint firstItem="Zv2-WO-5CZ" firstAttribute="centerY" secondItem="yc5-dj-Ga6" secondAttribute="centerY" type="default" id="H7e-30-JyH"/>
                             <constraint firstItem="8tQ-Ct-SsU" firstAttribute="leading" secondItem="t3z-Hy-tFm" secondAttribute="leading" type="default" id="HbQ-b7-P9O"/>
-                            <constraint firstItem="8tQ-Ct-SsU" firstAttribute="bottom" secondItem="t3z-Hy-tFm" secondAttribute="bottom" type="default" id="NmV-CS-ngz"/>
                             <constraint firstItem="rih-Bz-Uuz" firstAttribute="leading" secondItem="5jQ-36-tEA" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="PxC-7J-ihl"/>
-                            <constraint firstItem="MYk-3g-VDD" firstAttribute="top" secondItem="Zv2-WO-5CZ" secondAttribute="bottom" constant="8" symbolic="YES" type="user" id="Qo4-et-EKg"/>
-                            <constraint firstItem="8tQ-Ct-SsU" firstAttribute="top" secondItem="MYk-3g-VDD" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="ReB-g3-eqZ"/>
+                            <constraint firstItem="8tQ-Ct-SsU" firstAttribute="top" secondItem="MYk-3g-VDD" secondAttribute="bottom" constant="8" symbolic="YES" type="user" id="ReB-g3-eqZ"/>
                             <constraint firstAttribute="trailing" secondItem="oZf-me-okm" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="Ul6-EB-1SF"/>
                             <constraint firstItem="MYk-3g-VDD" firstAttribute="top" secondItem="oZf-me-okm" secondAttribute="bottom" constant="8" symbolic="YES" type="user" id="Vho-TE-89w"/>
                             <constraint firstItem="MYk-3g-VDD" firstAttribute="leading" secondItem="t3z-Hy-tFm" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="WU9-uN-dg6"/>
                             <constraint firstItem="5jQ-36-tEA" firstAttribute="leading" secondItem="Zv2-WO-5CZ" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="aUF-a3-C4X"/>
-                            <constraint firstItem="Zv2-WO-5CZ" firstAttribute="centerX" secondItem="MYk-3g-VDD" secondAttribute="centerX" type="default" id="dCn-r3-zLg"/>
                             <constraint firstItem="rih-Bz-Uuz" firstAttribute="top" secondItem="Zv2-WO-5CZ" secondAttribute="top" type="default" id="hdm-Bq-WTz"/>
+                            <constraint firstAttribute="centerX" secondItem="Zv2-WO-5CZ" secondAttribute="centerX" type="user" id="kgV-l4-XLr"/>
                             <constraint firstItem="yc5-dj-Ga6" firstAttribute="leading" secondItem="t3z-Hy-tFm" secondAttribute="leading" type="default" id="nhe-NQ-kec"/>
                             <constraint firstAttribute="trailing" secondItem="MYk-3g-VDD" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="qV3-3f-vBs"/>
-                            <constraint firstItem="Zv2-WO-5CZ" firstAttribute="centerY" secondItem="5jQ-36-tEA" secondAttribute="centerY" type="user" id="szt-kj-TBv"/>
+                            <constraint firstItem="MYk-3g-VDD" firstAttribute="top" secondItem="Zv2-WO-5CZ" secondAttribute="bottom" constant="8" symbolic="YES" type="user" id="v81-Qr-9m7"/>
                             <constraint firstAttribute="trailing" secondItem="rih-Bz-Uuz" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="vwY-X9-ql7"/>
-                            <constraint firstItem="yc5-dj-Ga6" firstAttribute="centerY" secondItem="Zv2-WO-5CZ" secondAttribute="centerY" type="user" id="wfn-y3-7jy"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Set Game" image="tab-setgame.png" id="7Eb-P1-qsz"/>
@@ -375,10 +377,8 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CardGameViewController.h"/>
             <relationships>
                 <relationship kind="action" name="addCardsToGame:"/>
-                <relationship kind="action" name="changeNumberOfCards:" candidateClass="UIStepper"/>
                 <relationship kind="action" name="flipCard:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="action" name="resetGame:"/>
-                <relationship kind="action" name="showResetConfirmation:"/>
                 <relationship kind="outlet" name="addCardsButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
                 <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
@@ -397,6 +397,10 @@
         </class>
         <class className="PlayingCardGameViewController" superclassName="CardGameViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PlayingCardGameViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="changeNumberOfCards:" candidateClass="UIStepper"/>
+                <relationship kind="action" name="showResetConfirmation:"/>
+            </relationships>
         </class>
         <class className="PlayingCardView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PlayingCardView.h"/>
