@@ -55,7 +55,7 @@ Assignment #3
 
 ### Extra Credit
 1. [DONE] Animate the removal of matched cards
-2. Let the user choose the number of cards in the Playing Card game
+2. [DONE] Let the user choose the number of cards in the Playing Card game
 3. Show found matches in a row in the collection view
 4. Add better score keeping to the Set game by finding existing sets
 5. Help the user find existing set matches

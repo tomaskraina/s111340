@@ -27,7 +27,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="resetGame:" destination="2" eventType="touchUpInside" id="dEA-oe-UwT"/>
+                                    <action selector="showResetConfirmation:" destination="2" eventType="touchUpInside" id="5P9-tr-XuX"/>
                                 </connections>
                             </button>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="FYT-mh-WKV">
@@ -375,8 +375,10 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CardGameViewController.h"/>
             <relationships>
                 <relationship kind="action" name="addCardsToGame:"/>
+                <relationship kind="action" name="changeNumberOfCards:" candidateClass="UIStepper"/>
                 <relationship kind="action" name="flipCard:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="action" name="resetGame:"/>
+                <relationship kind="action" name="showResetConfirmation:"/>
                 <relationship kind="outlet" name="addCardsButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="collectionView" candidateClass="UICollectionView"/>
                 <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>

@@ -13,15 +13,20 @@
 
 @interface CardGameViewController : UIViewController
 
-// implement in subclass
-- (NSUInteger)startingCardCount;
+#pragma mark - Abstract - implement in subclass
+@property (nonatomic) NSUInteger startingCardCount;
 - (CardMatchingGameMode)gameMode;
 - (Deck *)createDeck;
 - (NSString *)gameTypeName;
 - (void)updateCell:(UICollectionViewCell *)cell usingCard:(Card *)card animated:(BOOL)animated;
 - (NSAttributedString *)attributedStringForCard:(Card *)card;
 
-// optional
+#pragma mark Optional methods to override
 @property (nonatomic, readonly) BOOL removesUnplayableCards; // default is NO
+
+#pragma mark - IBActions
+- (IBAction)resetGame:(id)sender;
+- (IBAction)addCardsToGame:(id)sender;
+- (IBAction)flipCard:(UITapGestureRecognizer *)gesture;
 
 @end

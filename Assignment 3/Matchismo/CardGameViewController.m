@@ -24,7 +24,6 @@
 @property (strong, nonatomic) GameResult *gameResult;
 @property (weak, nonatomic) IBOutlet UIButton *addCardsButton;
 @property (strong, nonatomic) NSMutableArray *deckIndicesOfVisibleCards;
-
 @end
 
 @implementation CardGameViewController
