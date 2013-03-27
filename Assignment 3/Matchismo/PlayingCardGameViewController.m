@@ -12,6 +12,12 @@
 #import "PlayingCard.h"
 #import "PlayingCardCollectionViewCell.h"
 
+const CGFloat CardAlphaUnplayable = .3;
+const CGFloat CardAlphaPlayable = 1.;
+const CGFloat CardTransformationDuration = .3;
+const NSUInteger CardStartingCount = 22;
+NSString * const CardGameTypeName = @"Playing Card Game";
+
 @implementation PlayingCardGameViewController
 
 #pragma mark - Properties
@@ -28,13 +34,12 @@
 
 - (NSString *)gameTypeName
 {
-    static NSString *gameTypeName = @"Matchismo";
-    return gameTypeName;
+    return CardGameTypeName;
 }
 
 - (NSUInteger)startingCardCount
 {
-    return 22;
+    return CardStartingCount;
 }
 
 - (void)updateCell:(PlayingCardCollectionViewCell *)cell usingCard:(PlayingCard *)card animated:(BOOL)animated
@@ -42,9 +47,9 @@
     if ([cell isKindOfClass:[PlayingCardCollectionViewCell class]] && [card isKindOfClass:[PlayingCard class]]) {
         cell.playingCardView.rank = card.rank;
         cell.playingCardView.suit = card.suit;
-        cell.playingCardView.alpha = card.isUnplayable ? 0.3 : 1.0;
+        cell.playingCardView.alpha = card.isUnplayable ? CardAlphaUnplayable : CardAlphaPlayable;
         if (animated && cell.playingCardView.faceUp != card.isFaceUp) {
-            [UIView transitionWithView:cell.playingCardView duration:0.5 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+            [UIView transitionWithView:cell.playingCardView duration:CardTransformationDuration options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
                     cell.playingCardView.faceUp = card.isFaceUp;
             } completion:NULL];
         }

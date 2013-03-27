@@ -11,6 +11,11 @@
 #import "SetCard.h"
 #import "SetCardCollectionViewCell.h"
 
+const CGFloat SetCardTransformationDuration = .1;
+const NSUInteger SetCardStartingCount = 12;
+NSString * const SetCardGameTypeName = @"Set Game";
+const CGFloat SetCardSizeChange = 10;
+
 @interface SetGameViewController ()
 
 @end
@@ -31,13 +36,12 @@
 
 - (NSString *)gameTypeName
 {
-    static NSString *gameTypeName = @"Set Game";
-    return gameTypeName;
+    return SetCardGameTypeName;
 }
 
 - (NSUInteger)startingCardCount
 {
-    return 12;
+    return SetCardStartingCount;
 }
 
 #pragma mark - Required overrides
@@ -61,20 +65,20 @@
 - (void)makeViewSmaller:(UIView *)view
 {
     CGRect frame = view.frame;
-    frame.size.width -= 10;
-    frame.size.height -= 10;
-    frame.origin.x += 5;
-    frame.origin.y += 5;
+    frame.size.width -= SetCardSizeChange;
+    frame.size.height -= SetCardSizeChange;
+    frame.origin.x += SetCardSizeChange/2;
+    frame.origin.y += SetCardSizeChange/2;
     view.frame = frame;
 }
 
 - (void)makeViewBigger:(UIView *)view
 {
     CGRect frame = view.frame;
-    frame.size.width += 10;
-    frame.size.height += 10;
-    frame.origin.x -= 5;
-    frame.origin.y -= 5;
+    frame.size.width += SetCardSizeChange;
+    frame.size.height += SetCardSizeChange;
+    frame.origin.x -= SetCardSizeChange/2;
+    frame.origin.y -= SetCardSizeChange/2;
     view.frame = frame;
 }
 
@@ -85,7 +89,7 @@
     }
 
     if (animated && cell.setCardView.isSelected != card.isFaceUp) {
-        [UIView animateWithDuration:.2 animations:^{
+        [UIView animateWithDuration:SetCardTransformationDuration animations:^{
             if (card.isFaceUp) {
                 [self makeViewBigger:cell.setCardView];
             }
@@ -100,7 +104,6 @@
     else if (!cell.setCardView.isSelected && card.isFaceUp) {
         [self makeViewBigger:cell.setCardView];
     }
-    
 
     cell.setCardView.selected = card.isFaceUp;
     cell.setCardView.number = card.number;

@@ -126,7 +126,7 @@
 
 - (void)updateUIwithoutCollectionView
 {
-    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+    self.scoreLabel.text = [NSString stringWithFormat:@"%d", self.game.score];
     self.descriptionLabel.attributedText = [self.history lastObject];
     self.descriptionLabel.alpha = 1.;
 }

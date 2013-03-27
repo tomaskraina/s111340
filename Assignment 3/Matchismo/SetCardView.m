@@ -35,7 +35,7 @@
     UIBezierPath *backgroundPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:radius];
     [backgroundPath addClip]; //prevents filling corners, i.e. sharp corners not included in roundedRect
     
-    UIColor *backgroundColor = self.isSelected ? [UIColor yellowColor] : [UIColor whiteColor];
+    UIColor *backgroundColor = self.isSelected ? [UIColor colorWithRed:1 green:1 blue:.9 alpha:1] : [UIColor whiteColor];
     [backgroundColor setFill];
     UIRectFill(self.bounds);
     
@@ -116,18 +116,25 @@
     return [[self class] colorFromColor:self.color];
 }
 
-#define NO_OF_STRIPES 10
+#define NO_OF_STRIPES 8
+#define STRIPES_LINE_WIDTH .7
 
-- (void)addStrippedShadingToPath:(UIBezierPath *)path
-{    
+- (void)addStrippedShadingToPath:(UIBezierPath *)shape
+{
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    
     for (NSUInteger i = 1; i <= NO_OF_STRIPES ; i++) {
         CGFloat xOffset = self.bounds.size.width * SYMBOL_WIDTH_RATIO / (NO_OF_STRIPES + 1.) * (CGFloat)i;
         [path moveToPoint:CGPointMake(xOffset, .0)];
         [path addLineToPoint:CGPointMake(xOffset, self.bounds.size.height * SYMBOL_HEIGHT_RATIO)];
     }
+    
+    [[self UIColor] setStroke];
+    [path setLineWidth:STRIPES_LINE_WIDTH];
+    [path stroke];
 }
 
-#define STROKE_LINE_WIDTH 1.5
+#define STROKE_LINE_WIDTH 2
 
 - (void)colorPath:(UIBezierPath *)path
 {
