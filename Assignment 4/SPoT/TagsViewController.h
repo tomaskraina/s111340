@@ -1,5 +1,5 @@
 //
-//  PhotosViewController.h
+//  TagsViewController.h
 //  SPoT
 //
 //  Created by Tom K on 4/10/13.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PhotosViewController : UIViewController
+@interface TagsViewController : UIViewController
 
 @end

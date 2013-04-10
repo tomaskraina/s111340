@@ -1,18 +1,18 @@
 //
-//  PhotosViewController.m
+//  TagsViewController.m
 //  SPoT
 //
 //  Created by Tom K on 4/10/13.
 //  Copyright (c) 2013 Tom Kraina (Advanced iOS Application Development DTU Course). All rights reserved.
 //
 
-#import "PhotosViewController.h"
+#import "TagsViewController.h"
 
-@interface PhotosViewController ()
+@interface TagsViewController ()
 
 @end
 
-@implementation PhotosViewController
+@implementation TagsViewController
 
 - (void)viewDidLoad
 {
