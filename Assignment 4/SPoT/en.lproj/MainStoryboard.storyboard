@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1929"/>
     </dependencies>
     <scenes>
-        <!--Tags View Controller-->
+        <!--Tags View Controller - Tags-->
         <scene sceneID="SEB-8Q-aFl">
             <objects>
                 <tableViewController id="8dX-QQ-eOG" customClass="TagsViewController" sceneMemberID="viewController">
@@ -43,7 +43,7 @@
                             <outlet property="delegate" destination="8dX-QQ-eOG" id="vRw-J7-dDa"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="BGQ-xW-9x9"/>
+                    <navigationItem key="navigationItem" title="Tags" id="BGQ-xW-9x9"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sul-n4-Ukx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -118,7 +118,7 @@
             </objects>
             <point key="canvasLocation" x="2239" y="180"/>
         </scene>
-        <!--Recent View Controller-->
+        <!--Recent View Controller - Recetly Viewed Photos-->
         <scene sceneID="Lj0-JF-WSh">
             <objects>
                 <tableViewController id="IWB-5t-AyE" customClass="RecentViewController" sceneMemberID="viewController">
@@ -157,7 +157,7 @@
                             <outlet property="delegate" destination="IWB-5t-AyE" id="XE5-CH-Q2b"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="S2z-UQ-Zbq"/>
+                    <navigationItem key="navigationItem" title="Recetly Viewed Photos" id="S2z-UQ-Zbq"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KtS-Fz-4lz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
