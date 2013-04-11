@@ -56,7 +56,7 @@
         }
         
         self.tagsPhotosDictionary = tagsPhotos;
-        _tags = [tags allObjects];
+        _tags = [[tags allObjects] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
     }
     
     return _tags;
@@ -69,7 +69,8 @@
     if ([segue.identifier isEqualToString:@"Show Photos"]) {
         PhotoListViewController *viewController = segue.destinationViewController;
         NSString *tag = self.tags[ [[self.tableView indexPathForSelectedRow] row] ];
-        [viewController setUpWithPhotos:[self.tagsPhotosDictionary[tag] allObjects]];
+        NSArray *photosSortedByName = [[self.tagsPhotosDictionary[tag] allObjects] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:FLICKR_PHOTO_TITLE ascending:YES]]];
+        [viewController setUpWithPhotos:photosSortedByName];
         viewController.title = [tag capitalizedString];
     }
 }
