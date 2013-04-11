@@ -30,7 +30,6 @@
     return allPhotos;
 }
 
-// TODO: avoid duplicates!
 + (void)addPhoto:(NSDictionary *)photoInfo
 {
     NSMutableArray *recentPhotos = [[[NSUserDefaults standardUserDefaults] objectForKey:ALL_PHOTOS_KEY] mutableCopy];
@@ -38,6 +37,11 @@
         recentPhotos = [NSMutableArray array];
     }
 
+    NSIndexSet *indexesToRemove = [recentPhotos indexesOfObjectsPassingTest:^BOOL(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
+        return [obj[PHOTO_INFO_KEY] isEqualToDictionary:photoInfo];
+    }];
+    [recentPhotos removeObjectsAtIndexes:indexesToRemove];
+    
     NSDictionary *recentPhoto = @{PHOTO_INFO_KEY : photoInfo, LAST_VIEWED_KEY : [NSDate date]};
     [recentPhotos addObject:recentPhoto];
 
