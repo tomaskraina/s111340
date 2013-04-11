@@ -70,6 +70,7 @@
         PhotoListViewController *viewController = segue.destinationViewController;
         NSString *tag = self.tags[ [[self.tableView indexPathForSelectedRow] row] ];
         [viewController setUpWithPhotos:[self.tagsPhotosDictionary[tag] allObjects]];
+        viewController.title = [tag capitalizedString];
     }
 }
 

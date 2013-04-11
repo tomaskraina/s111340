@@ -30,6 +30,7 @@
         PhotoDetailViewController *viewController = segue.destinationViewController;
         NSDictionary *photoInfo = self.photos[ [[self.tableView indexPathForSelectedRow] row] ];
         [viewController setUpWithPhotoInfo:photoInfo];
+        viewController.title = photoInfo[FLICKR_PHOTO_TITLE];
     }
 }
 
