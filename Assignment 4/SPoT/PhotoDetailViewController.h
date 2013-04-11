@@ -10,4 +10,6 @@
 
 @interface PhotoDetailViewController : UIViewController
 
+- (void)setUpWithPhotoInfo:(NSDictionary *)photoInfo;
+
 @end

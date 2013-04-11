@@ -7,20 +7,33 @@
 //
 
 #import "PhotoDetailViewController.h"
+#import "FlickrFetcher.h"
 
 @interface PhotoDetailViewController ()
-
+@property (weak, nonatomic) IBOutlet UIScrollView *photoScrollView;
+@property (strong, nonatomic) NSDictionary *photoInfo;
 @end
 
 @implementation PhotoDetailViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (void)setUpWithPhotoInfo:(NSDictionary *)photoInfo
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    self.photoInfo = photoInfo;
+}
+
+#pragma mark - UIViewController life cycle
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    NSURL *photoUrl = [FlickrFetcher urlForPhoto:self.photoInfo format:FlickrPhotoFormatLarge];
+    NSData *photoData = [NSData dataWithContentsOfURL:photoUrl];
+    UIImage *photoImage = [UIImage imageWithData:photoData];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:photoImage];
+
+    [self.photoScrollView addSubview:imageView];
+    self.photoScrollView.contentSize = imageView.bounds.size;
 }
 
 - (void)viewDidLoad

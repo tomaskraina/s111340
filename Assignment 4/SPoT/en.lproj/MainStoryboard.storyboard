@@ -104,7 +104,7 @@
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nmf-vj-jA6"/>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Nmf-vj-jA6" firstAttribute="top" secondItem="gbM-K8-kSj" secondAttribute="top" type="default" id="C1h-KZ-IMA"/>
                             <constraint firstItem="Nmf-vj-jA6" firstAttribute="bottom" secondItem="gbM-K8-kSj" secondAttribute="bottom" type="default" id="OvB-QY-XJJ"/>
@@ -113,6 +113,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="EEr-Ve-Aig"/>
+                    <connections>
+                        <outlet property="photoScrollView" destination="Nmf-vj-jA6" id="LIa-NR-mAL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2aU-Wf-eea" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -227,6 +230,9 @@
         </class>
         <class className="PhotoDetailViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PhotoDetailViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="photoScrollView" candidateClass="UIScrollView"/>
+            </relationships>
         </class>
         <class className="PhotoListViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PhotoListViewController.h"/>

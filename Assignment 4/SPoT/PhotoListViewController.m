@@ -8,6 +8,7 @@
 
 #import "PhotoListViewController.h"
 #import "FlickrFetcher.h"
+#import "PhotoDetailViewController.h"
 
 @interface PhotoListViewController ()
 @property (strong, nonatomic) NSArray *photos; // of NSDictionary
@@ -18,6 +19,17 @@
 - (void)setUpWithPhotos:(NSArray *)photos
 {
     self.photos = photos;
+}
+
+#pragma mark - UIStoryboardSegue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"Show Photo Detail"]) {
+        PhotoDetailViewController *viewController = segue.destinationViewController;
+        NSDictionary *photoInfo = self.photos[ [[self.tableView indexPathForSelectedRow] row] ];
+        [viewController setUpWithPhotoInfo:photoInfo];
+    }
 }
 
 #pragma mark - UIViewController life cycle
