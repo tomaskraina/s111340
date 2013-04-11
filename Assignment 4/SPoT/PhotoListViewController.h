@@ -10,4 +10,6 @@
 
 @interface PhotoListViewController : UITableViewController
 
+- (void)setUpWithPhotos:(NSArray *)photos;
+
 @end

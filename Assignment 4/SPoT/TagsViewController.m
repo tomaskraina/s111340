@@ -8,10 +8,11 @@
 
 #import "TagsViewController.h"
 #import "FlickrFetcher.h"
+#import "PhotoListViewController.h"
 
 @interface TagsViewController ()
-@property (strong, nonatomic) NSArray *tags;
-@property (strong, nonatomic) NSDictionary *tagsPhotosDictionary;
+@property (strong, nonatomic) NSArray *tags; // of NSString
+@property (strong, nonatomic) NSDictionary *tagsPhotosDictionary; // key NSString, object NSMutableSet
 @end
 
 @implementation TagsViewController
@@ -59,6 +60,17 @@
     }
     
     return _tags;
+}
+
+#pragma mark - UIStoryboardSegue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"Show Photos"]) {
+        PhotoListViewController *viewController = segue.destinationViewController;
+        NSString *tag = self.tags[ [[self.tableView indexPathForSelectedRow] row] ];
+        [viewController setUpWithPhotos:[self.tagsPhotosDictionary[tag] allObjects]];
+    }
 }
 
 #pragma mark - UIViewController life cycle
