@@ -7,6 +7,7 @@
 //
 
 #import "RecentPhotos.h"
+#import "FlickrFetcher.h"
 
 #define MAX_COUNT 25
 #define ALL_PHOTOS_KEY @"RecentPhotos"
@@ -38,7 +39,7 @@
     }
 
     NSIndexSet *indexesToRemove = [recentPhotos indexesOfObjectsPassingTest:^BOOL(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
-        return [obj[PHOTO_INFO_KEY] isEqualToDictionary:photoInfo];
+        return [obj[PHOTO_INFO_KEY][FLICKR_PHOTO_ID] isEqual:photoInfo[FLICKR_PHOTO_ID]];
     }];
     [recentPhotos removeObjectsAtIndexes:indexesToRemove];
     
