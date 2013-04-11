@@ -100,7 +100,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TagCell];
     
     NSString *tag = self.tags[indexPath.row];
-    cell.textLabel.text = tag;
+    cell.textLabel.text = [tag capitalizedString];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", [self.tagsPhotosDictionary[tag] count]];
     
     return cell;
