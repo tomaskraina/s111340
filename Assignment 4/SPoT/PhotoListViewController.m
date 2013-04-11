@@ -19,6 +19,7 @@
 - (void)setUpWithPhotos:(NSArray *)photos
 {
     self.photos = photos;
+    [self.tableView reloadData];
 }
 
 #pragma mark - UIStoryboardSegue

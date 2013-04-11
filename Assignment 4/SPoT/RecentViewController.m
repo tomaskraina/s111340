@@ -7,12 +7,18 @@
 //
 
 #import "RecentViewController.h"
+#import "RecentPhotos.h"
 
 @interface RecentViewController ()
 
 @end
 
 @implementation RecentViewController
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self setUpWithPhotos:[RecentPhotos allPhotos]];
+}
 
 - (void)viewDidLoad
 {

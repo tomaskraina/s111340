@@ -26,6 +26,7 @@
 		9CEA3B1A171611B500B25535 /* TagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CEA3B19171611B500B25535 /* TagsViewController.m */; };
 		9CEA3B1D171613B000B25535 /* PhotoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CEA3B1C171613B000B25535 /* PhotoListViewController.m */; };
 		9CEA3B20171613CC00B25535 /* PhotoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CEA3B1F171613CC00B25535 /* PhotoDetailViewController.m */; };
+		9CEA3B271716EA1B00B25535 /* RecentPhotos.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CEA3B261716EA1B00B25535 /* RecentPhotos.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,8 @@
 		9CEA3B1C171613B000B25535 /* PhotoListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoListViewController.m; sourceTree = "<group>"; };
 		9CEA3B1E171613CC00B25535 /* PhotoDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoDetailViewController.h; sourceTree = "<group>"; };
 		9CEA3B1F171613CC00B25535 /* PhotoDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoDetailViewController.m; sourceTree = "<group>"; };
+		9CEA3B251716EA1B00B25535 /* RecentPhotos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentPhotos.h; sourceTree = "<group>"; };
+		9CEA3B261716EA1B00B25535 /* RecentPhotos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentPhotos.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +120,8 @@
 				9CEA3B1E171613CC00B25535 /* PhotoDetailViewController.h */,
 				9CEA3B1F171613CC00B25535 /* PhotoDetailViewController.m */,
 				9CEA3AD417160E0D00B25535 /* Supporting Files */,
+				9CEA3B251716EA1B00B25535 /* RecentPhotos.h */,
+				9CEA3B261716EA1B00B25535 /* RecentPhotos.m */,
 			);
 			path = SPoT;
 			sourceTree = "<group>";
@@ -234,6 +239,7 @@
 				9CEA3B1A171611B500B25535 /* TagsViewController.m in Sources */,
 				9CEA3B1D171613B000B25535 /* PhotoListViewController.m in Sources */,
 				9CEA3B20171613CC00B25535 /* PhotoDetailViewController.m in Sources */,
+				9CEA3B271716EA1B00B25535 /* RecentPhotos.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

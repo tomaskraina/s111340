@@ -8,6 +8,7 @@
 
 #import "PhotoDetailViewController.h"
 #import "FlickrFetcher.h"
+#import "RecentPhotos.h"
 
 @interface PhotoDetailViewController () <UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *photoScrollView;
@@ -21,6 +22,7 @@
 - (void)setUpWithPhotoInfo:(NSDictionary *)photoInfo
 {
     self.photoInfo = photoInfo;
+    [RecentPhotos addPhoto:photoInfo];
 }
 
 #pragma mark - Properties
