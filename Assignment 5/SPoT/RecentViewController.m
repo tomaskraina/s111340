@@ -20,4 +20,16 @@
     [self setUpWithPhotos:[RecentPhotos allPhotos]];
 }
 
+//#pragma mark - UIStoryboardSegue
+//
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UITableViewCell *)sender
+//{
+//    [super prepareForSegue:segue sender:sender];
+//    
+//    if ([segue.identifier isEqualToString:@"Show Photo Detail"]) {
+//        [self setUpWithPhotos:[RecentPhotos allPhotos]];
+//        [self.tableView moveRowAtIndexPath:[self.tableView indexPathForCell:sender] toIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+//    }
+//}
+
 @end

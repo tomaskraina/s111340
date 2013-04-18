@@ -9,6 +9,7 @@
 #import "TagsViewController.h"
 #import "FlickrFetcher.h"
 #import "PhotoListViewController.h"
+#import "PhotoDetailViewController.h"
 
 @interface TagsViewController ()
 @property (strong, nonatomic) NSArray *tags; // of NSString

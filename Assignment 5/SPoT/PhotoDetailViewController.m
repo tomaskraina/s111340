@@ -11,6 +11,7 @@
 #import "RecentPhotos.h"
 
 @interface PhotoDetailViewController () <UIScrollViewDelegate>
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIScrollView *photoScrollView;
 @property (strong, nonatomic) NSDictionary *photoInfo;
 @property (weak, nonatomic, readonly) UIImageView *photoImageView;
@@ -20,6 +21,21 @@
 @end
 
 @implementation PhotoDetailViewController
+
+- (void)setSplitViewBarButtonItem:(UIBarButtonItem *)barButtonItem
+{
+    NSMutableArray *items = [self.toolbar.items mutableCopy];
+    if (_splitViewBarButtonItem) {
+        [items removeObject:_splitViewBarButtonItem];
+    }
+    
+    if (barButtonItem) {
+        [items insertObject:barButtonItem atIndex:0];
+    }
+    
+    self.toolbar.items = items;
+    _splitViewBarButtonItem = barButtonItem;
+}
 
 - (void)setUpWithPhotoInfo:(NSDictionary *)photoInfo
 {
@@ -75,7 +91,7 @@
 {
     [super viewDidAppear:animated];
     
-    if (!self.photoImageView) {
+    if (!self.photoImageView && self.photoInfo) {
         [self loadPhoto:self.photoInfo format:FlickrPhotoFormatLarge];
     }
 }
@@ -84,6 +100,12 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    if (self.splitViewBarButtonItem && ![self.toolbar.items containsObject:self.splitViewBarButtonItem]) {
+        NSMutableArray *items = [self.toolbar.items mutableCopy];
+        [items insertObject:self.splitViewBarButtonItem atIndex:0];
+        self.toolbar.items = items;
+    }
 }
 
 - (void)didReceiveMemoryWarning

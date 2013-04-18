@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TagsViewController : UITableViewController
+#import "MasterViewController.h"
+
+@interface TagsViewController : MasterViewController
 
 @end

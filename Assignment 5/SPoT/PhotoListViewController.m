@@ -31,6 +31,8 @@
         NSDictionary *photoInfo = self.photos[ [[self.tableView indexPathForSelectedRow] row] ];
         [viewController setUpWithPhotoInfo:photoInfo];
         viewController.title = photoInfo[FLICKR_PHOTO_TITLE];
+        
+        [self transferSplitViewBarButtonItemToViewController:segue.destinationViewController];
     }
 }
 
@@ -66,5 +68,21 @@
     return cell;
 }
 
+#pragma mark - Helpers
+
+- (id)splitViewDetailWithBarButtonItem
+{
+    id detail = [self.splitViewController.viewControllers lastObject];
+    if (![detail respondsToSelector:@selector(setSplitViewBarButtonItem:)] ||
+        ![detail respondsToSelector:@selector(splitViewBarButtonItem)]) detail = nil;
+    return detail;
+}
+
+- (void)transferSplitViewBarButtonItemToViewController:(id)destinationViewController
+{
+    UIBarButtonItem *splitViewBarButtonItem = [[self splitViewDetailWithBarButtonItem] splitViewBarButtonItem];
+    [[self splitViewDetailWithBarButtonItem] setSplitViewBarButtonItem:nil];
+    if (splitViewBarButtonItem) [destinationViewController setSplitViewBarButtonItem:splitViewBarButtonItem];
+}
 
 @end

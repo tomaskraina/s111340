@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface PhotoDetailViewController : UIViewController
-
+@property (strong, nonatomic) UIBarButtonItem *splitViewBarButtonItem;
+//- (void)setSplitViewBarButtonItem:(UIBarButtonItem *)splitViewBarButtonItem;
 - (void)setUpWithPhotoInfo:(NSDictionary *)photoInfo;
 
 @end

@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Tom Kraina (Advanced iOS Application Development DTU Course). All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "MasterViewController.h"
 
-@interface PhotoListViewController : UITableViewController
+@interface PhotoListViewController : MasterViewController
 
 - (void)setUpWithPhotos:(NSArray *)photos;
 
