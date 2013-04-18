@@ -13,6 +13,7 @@
 @interface TagsViewController ()
 @property (strong, nonatomic) NSArray *tags; // of NSString
 @property (strong, nonatomic) NSDictionary *tagsPhotosDictionary; // key NSString, object NSMutableSet
+@property (nonatomic, getter = isLoading) BOOL loading;
 @end
 
 @implementation TagsViewController
@@ -30,37 +31,28 @@
 
 #pragma mark - Properties
 
-- (NSArray *)tags
+- (void)setLoading:(BOOL)loading
 {
-    if (!_tags) {
-        NSArray *allPhotos = [FlickrFetcher stanfordPhotos];
-        
-        NSMutableSet *tags = [NSMutableSet set];
-        NSMutableDictionary *tagsPhotos = [NSMutableDictionary dictionary];
-        for (NSDictionary *photoInfo in allPhotos) {
-            NSArray *photoTags = [photoInfo[FLICKR_TAGS] componentsSeparatedByString:@" "];
-            NSArray *filteredPhotoTags = [photoTags filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-                return ![[TagsViewController excludedTags] containsObject:evaluatedObject];
-            }]];
-
-            [tags addObjectsFromArray:filteredPhotoTags];
-            for (id tag in filteredPhotoTags) {
-                NSMutableSet *photos = tagsPhotos[tag];
-                if (!photos) {
-                    photos = [NSMutableSet set];
-                }
-                
-                [photos addObject:photoInfo];
-                tagsPhotos[tag] = photos;
-            }
-        }
-        
-        self.tagsPhotosDictionary = tagsPhotos;
-        _tags = [[tags allObjects] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:loading];
+    if (loading) {
+        [self.refreshControl beginRefreshing];
     }
-    
-    return _tags;
+    else {
+        [self.refreshControl endRefreshing];
+    }
 }
+
+- (BOOL)isLoading
+{
+    return [[UIApplication sharedApplication] isNetworkActivityIndicatorVisible];
+}
+
+#pragma mark - IBActions
+
+- (IBAction)refresh:(id)sender {
+    [self reloadTags];
+}
+
 
 #pragma mark - UIStoryboardSegue
 
@@ -81,12 +73,66 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    [self.refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    
+    [self reloadTags];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Downloading
+
+- (void)reloadTags
+{
+    self.loading = YES;
+    
+    dispatch_queue_t queue = dispatch_queue_create("table view loading", NULL);
+    dispatch_async(queue, ^{
+        NSArray *allPhotos = [FlickrFetcher stanfordPhotos];
+        self.tagsPhotosDictionary = [self tagsPhotosDictionaryFromPhotos:allPhotos];
+        self.tags = [[self.tagsPhotosDictionary allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.loading = NO;
+            [self.tableView reloadData];
+        });
+    });
+
+}
+
+- (NSDictionary *)tagsPhotosDictionaryFromPhotos:(NSArray *)photos
+{
+    NSMutableDictionary *tagsPhotos = [NSMutableDictionary dictionary];
+    for (NSDictionary *photoInfo in photos) {
+        
+        NSArray *filteredPhotoTags = [self filteredTagsInPhoto:photoInfo];
+        
+        for (id tag in filteredPhotoTags) {
+            NSMutableSet *photoSet = tagsPhotos[tag];
+            if (!photoSet) {
+                photoSet = [NSMutableSet set];
+            }
+            
+            [photoSet addObject:photoInfo];
+            tagsPhotos[tag] = photoSet;
+        }
+    }
+    
+    return tagsPhotos;
+}
+
+- (NSArray *)filteredTagsInPhoto:(NSDictionary *)flickrPhoto
+{
+    NSArray *photoTags = [flickrPhoto[FLICKR_TAGS] componentsSeparatedByString:@" "];
+    NSArray *filteredPhotoTags = [photoTags filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return ![[TagsViewController excludedTags] containsObject:evaluatedObject];
+    }]];
+    
+    return filteredPhotoTags;
 }
 
 #pragma mark - UITableViewDataSource

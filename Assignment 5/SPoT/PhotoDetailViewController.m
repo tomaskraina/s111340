@@ -13,8 +13,10 @@
 @interface PhotoDetailViewController () <UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *photoScrollView;
 @property (strong, nonatomic) NSDictionary *photoInfo;
-@property (weak, nonatomic) UIImageView *photoImageView;
+@property (weak, nonatomic, readonly) UIImageView *photoImageView;
 @property (nonatomic, getter = isZoomed) BOOL zoomed;
+@property (nonatomic, getter = isLoading) BOOL loading;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end
 
 @implementation PhotoDetailViewController
@@ -27,18 +29,33 @@
 
 #pragma mark - Properties
 
-- (void)setPhotoImageView:(UIImageView *)imageView
+- (void)setLoading:(BOOL)loading
 {
-    if (_photoImageView != imageView) {
-        _photoImageView = imageView;
-        
-        [self.photoScrollView addSubview:imageView];
-        self.photoScrollView.contentSize = imageView.bounds.size;
-        self.photoScrollView.minimumZoomScale = [self calculateMinimumZoomScaleForImageView:imageView];
-        [self.photoScrollView zoomToRect:self.photoImageView.bounds animated:NO];
-        
-        self.zoomed = NO;
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:loading];
+    if (loading) {
+        [self.activityIndicator startAnimating];
     }
+    else {
+        [self.activityIndicator stopAnimating];
+    }
+}
+
+#define IMAGE_VIEW_TAG 1234
+
+- (UIImageView *)photoImageView
+{
+    return (UIImageView *)[self.photoScrollView viewWithTag:IMAGE_VIEW_TAG];
+}
+
+- (void)addPhotoImageViewToScrollView:(UIImageView *)imageView
+{
+    imageView.tag = IMAGE_VIEW_TAG;
+    [self.photoScrollView addSubview:imageView];
+    self.photoScrollView.contentSize = imageView.bounds.size;
+    self.photoScrollView.minimumZoomScale = [self calculateMinimumZoomScaleForImageView:imageView];
+    [self.photoScrollView zoomToRect:imageView.bounds animated:NO];
+    
+    self.zoomed = NO;
 }
 
 #pragma mark - UIViewController life cycle
@@ -51,7 +68,6 @@
         if (!self.isZoomed) {
             [self.photoScrollView zoomToRect:self.photoImageView.bounds animated:YES];
         }
-
     }
 }
 
@@ -59,10 +75,9 @@
 {
     [super viewDidAppear:animated];
     
-    NSURL *photoUrl = [FlickrFetcher urlForPhoto:self.photoInfo format:FlickrPhotoFormatLarge];
-    NSData *photoData = [NSData dataWithContentsOfURL:photoUrl];
-    UIImage *photoImage = [UIImage imageWithData:photoData];
-    self.photoImageView = [[UIImageView alloc] initWithImage:photoImage];
+    if (!self.photoImageView) {
+        [self loadPhoto:self.photoInfo format:FlickrPhotoFormatLarge];
+    }
 }
 
 - (void)viewDidLoad
@@ -75,6 +90,27 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Downloading
+
+- (void)loadPhoto:(NSDictionary *)flickrPhoto format:(FlickrPhotoFormat)format
+{
+    self.loading = YES;
+    
+    dispatch_queue_t q = dispatch_queue_create("photo downloading", NULL);
+    dispatch_async(q, ^{
+        NSURL *photoUrl = [FlickrFetcher urlForPhoto:self.photoInfo format:FlickrPhotoFormatLarge];
+        NSData *photoData = [NSData dataWithContentsOfURL:photoUrl];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.loading = NO;
+            if (!self.photoImageView) {
+                UIImage *photoImage = [UIImage imageWithData:photoData];
+                [self addPhotoImageViewToScrollView:[[UIImageView alloc] initWithImage:photoImage]];
+            }
+        });
+    });
 }
 
 #pragma mark - UIScrollViewDelegate
