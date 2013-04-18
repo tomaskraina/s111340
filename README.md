@@ -60,3 +60,13 @@ Assignment #3
 4. Add better score keeping to the Set game by finding existing sets
 5. Help the user find existing set matches
 6. Make it a two player game
+
+Assignment #4
+-------------
+
+### Required Tasks
+- All [DONE]
+
+### Extra Credit
+1. [DONE] Show your lists sorted alphabetically 
+2. Make your application work on the iPad
