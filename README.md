@@ -70,3 +70,12 @@ Assignment #4
 ### Extra Credit
 1. [DONE] Show your lists sorted alphabetically 
 2. Make your application work on the iPad
+
+Assignment #5
+-------------
+
+### Required Tasks
+- All [DONE]
+
+### Note
+Don't forget to set the FlickrAPIKey constant in FlickrAPIKey.h file to make the Assignment #4 and #5 working.
