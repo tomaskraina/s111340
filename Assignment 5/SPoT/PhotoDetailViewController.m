@@ -9,6 +9,7 @@
 #import "PhotoDetailViewController.h"
 #import "FlickrFetcher.h"
 #import "RecentPhotos.h"
+#import "FileCache.h"
 
 @interface PhotoDetailViewController () <UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
@@ -64,11 +65,12 @@
 }
 
 - (void)addPhotoImageViewToScrollView:(UIImageView *)imageView
-{
+{    
     imageView.tag = IMAGE_VIEW_TAG;
     [self.photoScrollView addSubview:imageView];
     self.photoScrollView.contentSize = imageView.bounds.size;
     self.photoScrollView.minimumZoomScale = [self calculateMinimumZoomScaleForImageView:imageView];
+    self.photoScrollView.maximumZoomScale = 2.0;
     [self.photoScrollView zoomToRect:imageView.bounds animated:NO];
     
     self.zoomed = NO;
@@ -92,7 +94,8 @@
     [super viewDidAppear:animated];
     
     if (!self.photoImageView && self.photoInfo) {
-        [self loadPhoto:self.photoInfo format:FlickrPhotoFormatLarge];
+        BOOL original = [UIScreen mainScreen].bounds.size.width * [[UIScreen mainScreen] scale] > 1024 || [UIScreen mainScreen].bounds.size.height * [[UIScreen mainScreen] scale] > 1024; // 1024x1024 size of large photo
+        [self loadPhoto:self.photoInfo format: original ? FlickrPhotoFormatOriginal : FlickrPhotoFormatLarge];
     }
 }
 
@@ -122,13 +125,18 @@
     
     dispatch_queue_t q = dispatch_queue_create("photo downloading", NULL);
     dispatch_async(q, ^{
-        NSURL *photoUrl = [FlickrFetcher urlForPhoto:self.photoInfo format:FlickrPhotoFormatLarge];
-        NSData *photoData = [NSData dataWithContentsOfURL:photoUrl];
+        
+        NSData *photoData = [[FileCache sharedCache] dataForKey:flickrPhoto[FLICKR_PHOTO_ID]];
+        if (!photoData) {
+            NSURL *photoUrl = [FlickrFetcher urlForPhoto:self.photoInfo format:FlickrPhotoFormatLarge];
+            photoData = [NSData dataWithContentsOfURL:photoUrl];
+            [[FileCache sharedCache] setData:photoData forKey:flickrPhoto[FLICKR_PHOTO_ID]];
+        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             self.loading = NO;
             if (!self.photoImageView) {
-                UIImage *photoImage = [UIImage imageWithData:photoData];
+                UIImage *photoImage = [UIImage imageWithData:photoData scale:[[UIScreen mainScreen] scale]];
                 [self addPhotoImageViewToScrollView:[[UIImageView alloc] initWithImage:photoImage]];
             }
         });
@@ -154,7 +162,7 @@
     CGFloat xZoomScale = self.photoScrollView.bounds.size.width / imageView.bounds.size.width;
     CGFloat yZoomScale = self.photoScrollView.bounds.size.height / imageView.bounds.size.height;
     
-    return MIN(xZoomScale, yZoomScale);
+    return MIN( MIN(1,xZoomScale), MIN(1,yZoomScale));
 }
 
 @end

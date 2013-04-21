@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9C571C991720A36D004C94B7 /* iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C571C981720A36D004C94B7 /* iPad.storyboard */; };
 		9C571C9C1720B3E9004C94B7 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C571C9B1720B3E9004C94B7 /* MasterViewController.m */; };
+		9C9EC0E91724722800EA61EA /* FileCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C9EC0E81724722800EA61EA /* FileCache.m */; };
 		9CEA3ACE17160E0D00B25535 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CEA3ACD17160E0D00B25535 /* UIKit.framework */; };
 		9CEA3AD017160E0D00B25535 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CEA3ACF17160E0D00B25535 /* Foundation.framework */; };
 		9CEA3AD217160E0D00B25535 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CEA3AD117160E0D00B25535 /* CoreGraphics.framework */; };
@@ -35,6 +36,8 @@
 		9C571C981720A36D004C94B7 /* iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPad.storyboard; sourceTree = "<group>"; };
 		9C571C9A1720B3E9004C94B7 /* MasterViewController.h */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
 		9C571C9B1720B3E9004C94B7 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
+		9C9EC0E71724722800EA61EA /* FileCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileCache.h; sourceTree = "<group>"; };
+		9C9EC0E81724722800EA61EA /* FileCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileCache.m; sourceTree = "<group>"; };
 		9CEA3AC917160E0D00B25535 /* SPoT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SPoT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CEA3ACD17160E0D00B25535 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9CEA3ACF17160E0D00B25535 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -127,6 +130,8 @@
 				9CEA3B1C171613B000B25535 /* PhotoListViewController.m */,
 				9CEA3B1E171613CC00B25535 /* PhotoDetailViewController.h */,
 				9CEA3B1F171613CC00B25535 /* PhotoDetailViewController.m */,
+				9C9EC0E71724722800EA61EA /* FileCache.h */,
+				9C9EC0E81724722800EA61EA /* FileCache.m */,
 				9CEA3AD417160E0D00B25535 /* Supporting Files */,
 				9CEA3B251716EA1B00B25535 /* RecentPhotos.h */,
 				9CEA3B261716EA1B00B25535 /* RecentPhotos.m */,
@@ -250,6 +255,7 @@
 				9CEA3B20171613CC00B25535 /* PhotoDetailViewController.m in Sources */,
 				9CEA3B271716EA1B00B25535 /* RecentPhotos.m in Sources */,
 				9C571C9C1720B3E9004C94B7 /* MasterViewController.m in Sources */,
+				9C9EC0E91724722800EA61EA /* FileCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
