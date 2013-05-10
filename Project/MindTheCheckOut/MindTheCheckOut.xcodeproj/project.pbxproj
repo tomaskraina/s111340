@@ -30,7 +30,8 @@
 		9CF2AD95173D730E00DFA5CE /* StationFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF2AD93173D730E00DFA5CE /* StationFetcher.m */; };
 		9CF2AD99173D74FA00DFA5CE /* Recents.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF2AD98173D74FA00DFA5CE /* Recents.m */; };
 		9CF2AD9A173D74FA00DFA5CE /* Recents.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF2AD98173D74FA00DFA5CE /* Recents.m */; };
-		9CF2ADA3173D8C2700DFA5CE /* StationsViewController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9CF2ADA1173D8C2700DFA5CE /* StationsViewController.strings */; };
+		9CF2ADAB173D8EA800DFA5CE /* StationsViewController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9CF2ADA9173D8EA800DFA5CE /* StationsViewController.strings */; };
+		9CF2ADAE173D903E00DFA5CE /* ReminderViewController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9CF2ADAC173D903E00DFA5CE /* ReminderViewController.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,7 +75,8 @@
 		9CF2AD93173D730E00DFA5CE /* StationFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StationFetcher.m; sourceTree = "<group>"; };
 		9CF2AD97173D74FA00DFA5CE /* Recents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recents.h; sourceTree = "<group>"; };
 		9CF2AD98173D74FA00DFA5CE /* Recents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recents.m; sourceTree = "<group>"; };
-		9CF2ADA2173D8C2700DFA5CE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/StationsViewController.strings; sourceTree = "<group>"; };
+		9CF2ADAA173D8EA800DFA5CE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/StationsViewController.strings; sourceTree = "<group>"; };
+		9CF2ADAD173D903E00DFA5CE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ReminderViewController.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,7 +201,8 @@
 		9CF2AD9B173D8B8B00DFA5CE /* Language Files */ = {
 			isa = PBXGroup;
 			children = (
-				9CF2ADA1173D8C2700DFA5CE /* StationsViewController.strings */,
+				9CF2ADAC173D903E00DFA5CE /* ReminderViewController.strings */,
+				9CF2ADA9173D8EA800DFA5CE /* StationsViewController.strings */,
 			);
 			name = "Language Files";
 			sourceTree = "<group>";
@@ -280,7 +283,8 @@
 				9CC946C21739798400454FF3 /* Default@2x.png in Resources */,
 				9CC946C41739798400454FF3 /* Default-568h@2x.png in Resources */,
 				9CC946C71739798400454FF3 /* MainStoryboard.storyboard in Resources */,
-				9CF2ADA3173D8C2700DFA5CE /* StationsViewController.strings in Resources */,
+				9CF2ADAB173D8EA800DFA5CE /* StationsViewController.strings in Resources */,
+				9CF2ADAE173D903E00DFA5CE /* ReminderViewController.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,12 +373,20 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		9CF2ADA1173D8C2700DFA5CE /* StationsViewController.strings */ = {
+		9CF2ADA9173D8EA800DFA5CE /* StationsViewController.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				9CF2ADA2173D8C2700DFA5CE /* en */,
+				9CF2ADAA173D8EA800DFA5CE /* en */,
 			);
 			name = StationsViewController.strings;
+			sourceTree = "<group>";
+		};
+		9CF2ADAC173D903E00DFA5CE /* ReminderViewController.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9CF2ADAD173D903E00DFA5CE /* en */,
+			);
+			name = ReminderViewController.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -392,6 +404,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tomas Kraina (AX68SWDLTW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -407,6 +420,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "E6869242-1CA0-45DF-BB47-411CA77FFA67";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -423,6 +437,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tomas Kraina (AX68SWDLTW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -431,6 +446,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "E6869242-1CA0-45DF-BB47-411CA77FFA67";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

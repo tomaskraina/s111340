@@ -7,6 +7,7 @@
 //
 
 #import "ReminderViewController.h"
+#import "StationFetcher.h"
 #import <EventKit/EventKit.h>
 
 @interface ReminderViewController ()
@@ -44,7 +45,8 @@
     // Update the user interface for the detail item.
 
     if (self.detailItem) {
-        self.detailDescriptionLabel.text = [self.detailItem description];
+        NSString *baseText = NSLocalizedStringFromTable(@"Description - Text", @"ReminderViewController", @"Must containt %@ for station's name");
+        self.detailDescriptionLabel.text = [NSString stringWithFormat:baseText, self.detailItem[kStationName]];
     }
 }
 
@@ -70,8 +72,8 @@
 
 - (void)_setUpReminder
 {
-    EKStructuredLocation *structuredLocation = [EKStructuredLocation locationWithTitle:self.detailItem[@"name"]];
-    CLLocation *location = [[CLLocation alloc] initWithLatitude:[self.detailItem[@"latitude"] doubleValue] longitude:[self.detailItem[@"longitude"] doubleValue]];
+    EKStructuredLocation *structuredLocation = [EKStructuredLocation locationWithTitle:self.detailItem[kStationName]];
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:[self.detailItem[kStationLatitude] doubleValue] longitude:[self.detailItem[kStationLongitude] doubleValue]];
     structuredLocation.geoLocation = location;
     structuredLocation.radius = 150; // metres
     
@@ -81,7 +83,8 @@
     
     EKReminder *reminder = [EKReminder reminderWithEventStore:self.eventStore];
     reminder.calendar = [self.eventStore defaultCalendarForNewReminders];
-    reminder.title = [NSString stringWithFormat:@"Don't forget to check out @ %@", self.detailItem[@"name"]];
+    NSString *baseText = NSLocalizedStringFromTable(@"Reminder - Title", @"ReminderViewController", @"Must contain %@ for reminder's name");
+    reminder.title = [NSString stringWithFormat:baseText, self.detailItem[kStationName]];
     [reminder addAlarm:alarm];
     
     NSError *error;
