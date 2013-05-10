@@ -26,6 +26,10 @@
 		9CC946E21739798400454FF3 /* MindTheCheckOutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CC946E11739798400454FF3 /* MindTheCheckOutTests.m */; };
 		9CC946EC173982ED00454FF3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC946EB173982ED00454FF3 /* CoreLocation.framework */; };
 		9CC946EE173982FB00454FF3 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC946ED173982FB00454FF3 /* EventKit.framework */; };
+		9CF2AD94173D730E00DFA5CE /* StationFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF2AD93173D730E00DFA5CE /* StationFetcher.m */; };
+		9CF2AD95173D730E00DFA5CE /* StationFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF2AD93173D730E00DFA5CE /* StationFetcher.m */; };
+		9CF2AD99173D74FA00DFA5CE /* Recents.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF2AD98173D74FA00DFA5CE /* Recents.m */; };
+		9CF2AD9A173D74FA00DFA5CE /* Recents.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF2AD98173D74FA00DFA5CE /* Recents.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +69,10 @@
 		9CC946E11739798400454FF3 /* MindTheCheckOutTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MindTheCheckOutTests.m; sourceTree = "<group>"; };
 		9CC946EB173982ED00454FF3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		9CC946ED173982FB00454FF3 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		9CF2AD92173D730E00DFA5CE /* StationFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StationFetcher.h; sourceTree = "<group>"; };
+		9CF2AD93173D730E00DFA5CE /* StationFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StationFetcher.m; sourceTree = "<group>"; };
+		9CF2AD97173D74FA00DFA5CE /* Recents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recents.h; sourceTree = "<group>"; };
+		9CF2AD98173D74FA00DFA5CE /* Recents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recents.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +136,7 @@
 		9CC946B31739798400454FF3 /* MindTheCheckOut */ = {
 			isa = PBXGroup;
 			children = (
+				9CF2AD96173D731400DFA5CE /* Model */,
 				9CC946BC1739798400454FF3 /* AppDelegate.h */,
 				9CC946BD1739798400454FF3 /* AppDelegate.m */,
 				9CC946C51739798400454FF3 /* MainStoryboard.storyboard */,
@@ -171,6 +180,17 @@
 				9CC946DD1739798400454FF3 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9CF2AD96173D731400DFA5CE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9CF2AD92173D730E00DFA5CE /* StationFetcher.h */,
+				9CF2AD93173D730E00DFA5CE /* StationFetcher.m */,
+				9CF2AD97173D74FA00DFA5CE /* Recents.h */,
+				9CF2AD98173D74FA00DFA5CE /* Recents.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,6 +307,8 @@
 				9CC946BE1739798400454FF3 /* AppDelegate.m in Sources */,
 				9CC946CA1739798400454FF3 /* StationsViewController.m in Sources */,
 				9CC946CD1739798400454FF3 /* ReminderViewController.m in Sources */,
+				9CF2AD94173D730E00DFA5CE /* StationFetcher.m in Sources */,
+				9CF2AD99173D74FA00DFA5CE /* Recents.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,6 +317,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CC946E21739798400454FF3 /* MindTheCheckOutTests.m in Sources */,
+				9CF2AD95173D730E00DFA5CE /* StationFetcher.m in Sources */,
+				9CF2AD9A173D74FA00DFA5CE /* Recents.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
