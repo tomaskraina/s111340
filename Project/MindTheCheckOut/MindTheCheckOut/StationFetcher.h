@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const kStationName;
+extern NSString * const kStationLatitude;
+extern NSString * const kStationLongitude;
+
 @interface StationFetcher : NSObject
 + (instancetype)defaultFetcher;
 - (void)findByName:(NSString *)name completed:(void (^)(NSArray *stations))block;

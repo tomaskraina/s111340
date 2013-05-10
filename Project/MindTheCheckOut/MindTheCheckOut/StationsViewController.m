@@ -7,45 +7,19 @@
 //
 
 #import "StationsViewController.h"
-
 #import "ReminderViewController.h"
+#import "StationFetcher.h"
 
-@interface StationsViewController ()
-@property (strong, nonatomic) NSMutableArray *stations;
+@interface StationsViewController () <UISearchBarDelegate, UISearchDisplayDelegate>
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (strong, nonatomic) NSArray *stations;
 @end
 
 @implementation StationsViewController
 
 #pragma mark - Properties
 
-- (NSMutableArray *)stations
-{
-    if (!_stations) {
-        _stations = [NSMutableArray array];
-        [_stations addObject:@{
-         @"name": @"Frederiskberg st. (Metro)",
-         @"latitude": @"55.6812030",
-         @"longitude": @"12.5339930"
-         }];
-        [_stations addObject:@{
-         @"name": @"Lyngby st.",
-         @"latitude": @"55.7680839",
-         @"longitude": @"12.5031010"
-         }];
-        [_stations addObject:@{
-         @"name": @"Nørreport st.",
-         @"latitude": @"55.6830530",
-         @"longitude": @"12.5713060"
-         }];
-        [_stations addObject:@{
-         @"name": @"Ørestad st. (Metro)",
-         @"latitude": @"55.6290550",
-         @"longitude": @"12.5793890"
-         }];
-    }
-    
-    return _stations;
-}
+
 
 #pragma mark - UIViewController lifecycle
 
@@ -58,10 +32,12 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
-
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-    self.navigationItem.rightBarButtonItem = addButton;
+//    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+//
+//    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
+//    self.navigationItem.rightBarButtonItem = addButton;
+    
+    self.searchBar.placeholder = NSLocalizedStringFromTable(@"SearchBar - Placeholder", @"StationsViewController", @"");
 }
 
 - (void)didReceiveMemoryWarning
@@ -87,7 +63,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *Identifier = @"StationCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier forIndexPath:indexPath];
+    // must be called on self.tableView
+    // more info: http://stackoverflow.com/questions/8066668/ios-5-uisearchdisplaycontroller-crash
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:Identifier];
 
     NSDictionary *object = self.stations[indexPath.row];
     cell.textLabel.text = object[@"name"];
@@ -100,15 +78,15 @@
     return YES;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.stations removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-    }
-}
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        [self.stations removeObjectAtIndex:indexPath.row];
+//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+//        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+//    }
+//}
 
 /*
 // Override to support rearranging the table view.
@@ -125,6 +103,26 @@
     return YES;
 }
 */
+
+#pragma mark - UISearchBarDelegate & UISearchDisplayDelegate
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    // TODO: activity indicator
+    StationFetcher *fetcher = [StationFetcher defaultFetcher];
+    [fetcher findByName:searchString completed:^(NSArray *stations) {
+        self.stations = stations;
+        
+        // Refresh result's table view
+        [controller.searchResultsTableView reloadData];
+        
+        // TODO: insert data animated
+    }];
+    
+    return NO;
+}
+
+#pragma mark - UIStoryboarSegue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

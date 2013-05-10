@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Tom Kraina. All rights reserved.
 //
 
-#import "RecentStations.h"
+#import "Recents.h"
 
-@implementation RecentStations
+@implementation Recents
 
 @end
