@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C247F7B173EA1A900BE6F07 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C247F7A173EA1A900BE6F07 /* MapKit.framework */; };
+		9C247F7F173EB10B00BE6F07 /* NSDictionary+MKAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C247F7E173EB10B00BE6F07 /* NSDictionary+MKAnnotation.m */; };
 		9CC946AE1739798400454FF3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC946AD1739798400454FF3 /* UIKit.framework */; };
 		9CC946B01739798400454FF3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC946AF1739798400454FF3 /* Foundation.framework */; };
 		9CC946B21739798400454FF3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC946B11739798400454FF3 /* CoreGraphics.framework */; };
@@ -45,6 +47,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9C247F7A173EA1A900BE6F07 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		9C247F7D173EB10B00BE6F07 /* NSDictionary+MKAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+MKAnnotation.h"; sourceTree = "<group>"; };
+		9C247F7E173EB10B00BE6F07 /* NSDictionary+MKAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+MKAnnotation.m"; sourceTree = "<group>"; };
 		9CC946AA1739798400454FF3 /* MindTheCheckOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MindTheCheckOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CC946AD1739798400454FF3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9CC946AF1739798400454FF3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -84,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C247F7B173EA1A900BE6F07 /* MapKit.framework in Frameworks */,
 				9CC946EE173982FB00454FF3 /* EventKit.framework in Frameworks */,
 				9CC946EC173982ED00454FF3 /* CoreLocation.framework in Frameworks */,
 				9CC946AE1739798400454FF3 /* UIKit.framework in Frameworks */,
@@ -127,6 +133,7 @@
 		9CC946AC1739798400454FF3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9C247F7A173EA1A900BE6F07 /* MapKit.framework */,
 				9CC946ED173982FB00454FF3 /* EventKit.framework */,
 				9CC946EB173982ED00454FF3 /* CoreLocation.framework */,
 				9CC946AD1739798400454FF3 /* UIKit.framework */,
@@ -194,6 +201,8 @@
 				9CF2AD93173D730E00DFA5CE /* StationFetcher.m */,
 				9CF2AD97173D74FA00DFA5CE /* Recents.h */,
 				9CF2AD98173D74FA00DFA5CE /* Recents.m */,
+				9C247F7D173EB10B00BE6F07 /* NSDictionary+MKAnnotation.h */,
+				9C247F7E173EB10B00BE6F07 /* NSDictionary+MKAnnotation.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -325,6 +334,7 @@
 				9CC946CD1739798400454FF3 /* ReminderViewController.m in Sources */,
 				9CF2AD94173D730E00DFA5CE /* StationFetcher.m in Sources */,
 				9CF2AD99173D74FA00DFA5CE /* Recents.m in Sources */,
+				9C247F7F173EB10B00BE6F07 /* NSDictionary+MKAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

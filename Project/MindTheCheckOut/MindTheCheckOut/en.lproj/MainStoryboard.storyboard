@@ -24,7 +24,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="" title="Master" id="12" customClass="StationsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="13">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" id="8LI-3T-dxH">
@@ -65,7 +65,7 @@
                             <outlet property="delegate" destination="12" id="15"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Master" id="36"/>
+                    <navigationItem key="navigationItem" title="Stations" id="36"/>
                     <connections>
                         <outlet property="searchBar" destination="8LI-3T-dxH" id="eY8-1y-yPC"/>
                         <outlet property="searchDisplayController" destination="pyF-eY-fDy" id="V1Q-Tk-Ylu"/>
@@ -89,31 +89,166 @@
             <objects>
                 <viewController storyboardIdentifier="" title="Detail" id="21" customClass="ReminderViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="22">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Detail view content goes here" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="27">
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" size="system"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="You Have Selected" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ki6-Ib-iEU">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="27" id="x4E-Sc-LdO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="STATION NAME" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lqj-1J-ScE">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="26" id="Ozn-7I-vGl"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="As The Location To Remind You To Check Out At" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="2ph-7v-ZwO">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="rhS-JH-bFX"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="9y9-Wl-RoU">
+                                <connections>
+                                    <outlet property="delegate" destination="21" id="IVx-2r-TsO"/>
+                                </connections>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ec3-oN-0fE">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="2xZ-Pl-MZL" kind="push" identifier="showMap" id="bjH-Hz-3Uk"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="Pkx-Bx-5Q4">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="KfZ-1p-ckR"/>
+                                </constraints>
+                                <string key="text">You will be reminded when you arrive there.
+Feel free to close this app or just lock your screen.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="45O-hO-YEV">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="149" id="hQg-K6-lRX"/>
+                                    <constraint firstAttribute="height" constant="43" id="x0v-qe-nUT"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Cancel Reminder">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelReminder:" destination="21" eventType="touchUpInside" id="ICi-Lr-wsc"/>
+                                </connections>
+                            </button>
+                            <stepper opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="39L-qX-SM1">
+                                <connections>
+                                    <action selector="setRadius:" destination="21" eventType="valueChanged" id="8Sd-jv-aRU"/>
+                                </connections>
+                            </stepper>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="1000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JkT-2F-Xes">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="27" firstAttribute="centerY" secondItem="22" secondAttribute="centerY" type="default" id="7cE-gL-0wv"/>
-                            <constraint firstItem="27" firstAttribute="leading" secondItem="22" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="R0m-z7-TWk"/>
-                            <constraint firstAttribute="trailing" secondItem="27" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="pRe-qY-58T"/>
+                            <constraint firstItem="Lqj-1J-ScE" firstAttribute="leading" secondItem="22" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="5lX-57-hyM"/>
+                            <constraint firstItem="Pkx-Bx-5Q4" firstAttribute="leading" secondItem="22" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="7fl-FA-87X"/>
+                            <constraint firstItem="2ph-7v-ZwO" firstAttribute="leading" secondItem="22" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="7ls-jH-uKt"/>
+                            <constraint firstItem="2ph-7v-ZwO" firstAttribute="top" secondItem="Lqj-1J-ScE" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="9k8-2J-HtF"/>
+                            <constraint firstItem="Ec3-oN-0fE" firstAttribute="top" secondItem="2ph-7v-ZwO" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="EUh-G2-h5j"/>
+                            <constraint firstItem="45O-hO-YEV" firstAttribute="top" secondItem="Pkx-Bx-5Q4" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="Eac-Bk-5h6"/>
+                            <constraint firstItem="9y9-Wl-RoU" firstAttribute="top" secondItem="2ph-7v-ZwO" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="Hh1-dw-e6h"/>
+                            <constraint firstItem="9y9-Wl-RoU" firstAttribute="trailing" secondItem="22" secondAttribute="trailing" type="default" id="Hop-h0-xam"/>
+                            <constraint firstAttribute="bottom" secondItem="45O-hO-YEV" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="I8T-Du-OTz"/>
+                            <constraint firstAttribute="bottom" secondItem="39L-qX-SM1" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="IO3-X3-s4C"/>
+                            <constraint firstItem="Pkx-Bx-5Q4" firstAttribute="top" secondItem="9y9-Wl-RoU" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="Lal-xh-gWO"/>
+                            <constraint firstItem="JkT-2F-Xes" firstAttribute="leading" secondItem="39L-qX-SM1" secondAttribute="leading" type="default" id="MI8-sL-A0V"/>
+                            <constraint firstItem="9y9-Wl-RoU" firstAttribute="leading" secondItem="22" secondAttribute="leading" type="default" id="Rkk-da-TNV"/>
+                            <constraint firstItem="Ec3-oN-0fE" firstAttribute="trailing" secondItem="22" secondAttribute="trailing" type="default" id="SAi-N2-ANG"/>
+                            <constraint firstItem="Lqj-1J-ScE" firstAttribute="top" secondItem="ki6-Ib-iEU" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="ZRk-bD-GGD"/>
+                            <constraint firstItem="ki6-Ib-iEU" firstAttribute="top" secondItem="22" secondAttribute="top" constant="20" symbolic="YES" type="default" id="bSp-0Q-ARt"/>
+                            <constraint firstAttribute="trailing" secondItem="ki6-Ib-iEU" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="ecd-5O-3Xl"/>
+                            <constraint firstItem="ki6-Ib-iEU" firstAttribute="leading" secondItem="22" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="fYL-Do-pxx"/>
+                            <constraint firstItem="45O-hO-YEV" firstAttribute="leading" secondItem="22" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="fqy-rJ-V0x"/>
+                            <constraint firstAttribute="trailing" secondItem="Pkx-Bx-5Q4" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="hov-uS-Dti"/>
+                            <constraint firstAttribute="trailing" secondItem="39L-qX-SM1" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="lfg-bW-hF2"/>
+                            <constraint firstItem="Pkx-Bx-5Q4" firstAttribute="top" secondItem="Ec3-oN-0fE" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="r0A-1G-yCB"/>
+                            <constraint firstItem="Ec3-oN-0fE" firstAttribute="leading" secondItem="22" secondAttribute="leading" type="default" id="tEn-q2-klM"/>
+                            <constraint firstItem="39L-qX-SM1" firstAttribute="top" secondItem="JkT-2F-Xes" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="v8f-bO-DHv"/>
+                            <constraint firstAttribute="trailing" secondItem="2ph-7v-ZwO" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="vGs-6f-qwK"/>
+                            <constraint firstAttribute="trailing" secondItem="Lqj-1J-ScE" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="vVQ-4A-7eB"/>
+                            <constraint firstAttribute="trailing" secondItem="JkT-2F-Xes" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="vtp-dG-ygQ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Detail" id="26"/>
+                    <navigationItem key="navigationItem" title="Reminder" id="26">
+                        <barButtonItem key="rightBarButtonItem" title="Zoom" id="WNf-dq-8Yy">
+                            <connections>
+                                <action selector="toggleZoom:" destination="21" id="OX9-MX-ATC"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
-                        <outlet property="detailDescriptionLabel" destination="27" id="28"/>
+                        <outlet property="cancelButton" destination="45O-hO-YEV" id="POB-1j-aKy"/>
+                        <outlet property="descriptionLabel" destination="2ph-7v-ZwO" id="tZl-Yo-AXo"/>
+                        <outlet property="mapButton" destination="Ec3-oN-0fE" id="hAD-4t-PlH"/>
+                        <outlet property="mapView" destination="9y9-Wl-RoU" id="ZnH-Sc-fa0"/>
+                        <outlet property="notesLabel" destination="Pkx-Bx-5Q4" id="8c9-bs-9So"/>
+                        <outlet property="radiusLabel" destination="JkT-2F-Xes" id="1y8-Pj-Nx1"/>
+                        <outlet property="radiusStepper" destination="39L-qX-SM1" id="mNy-5A-uoP"/>
+                        <outlet property="stationLabel" destination="Lqj-1J-ScE" id="9Nl-kf-N8T"/>
+                        <outlet property="titleLabel" destination="ki6-Ib-iEU" id="yi1-3p-EbC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="23" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="902" y="64"/>
+        </scene>
+        <!--View Controller - Map-->
+        <scene sceneID="vNr-Lm-NDv">
+            <objects>
+                <viewController id="2xZ-Pl-MZL" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bpP-hc-EiI">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="aNX-Ya-O3G"/>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aNX-Ya-O3G" firstAttribute="top" secondItem="bpP-hc-EiI" secondAttribute="top" type="default" id="3Qw-7Q-1EX"/>
+                            <constraint firstItem="aNX-Ya-O3G" firstAttribute="trailing" secondItem="bpP-hc-EiI" secondAttribute="trailing" type="default" id="8LU-Gf-XNj"/>
+                            <constraint firstItem="aNX-Ya-O3G" firstAttribute="bottom" secondItem="bpP-hc-EiI" secondAttribute="bottom" type="default" id="ONA-a5-tDf"/>
+                            <constraint firstItem="aNX-Ya-O3G" firstAttribute="leading" secondItem="bpP-hc-EiI" secondAttribute="leading" type="default" id="gmC-UP-KRa"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Map" id="pQw-wU-kjV"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W3F-iW-pk7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1330" y="64"/>
         </scene>
     </scenes>
     <classes>
@@ -123,7 +258,15 @@
         <class className="ReminderViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ReminderViewController.h"/>
             <relationships>
-                <relationship kind="outlet" name="detailDescriptionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="cancelButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="mapButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="notesLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="radiusLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="radiusStepper" candidateClass="UIStepper"/>
+                <relationship kind="outlet" name="stationLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="StationsViewController" superclassName="UITableViewController">
@@ -136,6 +279,6 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
+        <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
 </document>

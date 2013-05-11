@@ -9,10 +9,33 @@
 #import "ReminderViewController.h"
 #import "StationFetcher.h"
 #import <EventKit/EventKit.h>
+#import <MapKit/MapKit.h>
+#import "NSDictionary+MKAnnotation.h"
 
-@interface ReminderViewController ()
+#define REMINDER_RADIUS 150
+#define ORIGIN_LATITUDE 55.67609680
+#define ORIGIN_LONGITUDE 12.56833710
+
+@interface ReminderViewController () <MKMapViewDelegate>
 @property (strong, nonatomic) EKEventStore *eventStore;
-- (void)configureView;
+@property (nonatomic, getter = isZoomed) BOOL zoomed;
+
+// Labels
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *stationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *notesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *radiusLabel;
+
+// Buttons
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIButton *mapButton;
+@property (weak, nonatomic) IBOutlet UIStepper *radiusStepper;
+
+// Other views
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) MKAnnotationView *annotationView;
+
 @end
 
 @implementation ReminderViewController
@@ -27,6 +50,33 @@
         // Update the view.
         [self configureView];
     }
+}
+
+- (void)setRadiusStepper:(UIStepper *)radiusStepper
+{
+    _radiusStepper = radiusStepper;
+    _radiusStepper.minimumValue = 150;
+    _radiusStepper.maximumValue = 50*1000;
+    _radiusStepper.stepValue = 150;
+}
+
+- (void)setMapView:(MKMapView *)mapView
+{
+    if (_mapView != mapView) {
+        _mapView = mapView;
+        
+        _mapView.mapType = MKMapTypeHybrid;
+        _mapView.zoomEnabled = YES;
+        _mapView.scrollEnabled = YES;
+        
+        _mapView.showsUserLocation = YES;
+        _mapView.region = [self defaultCoordinateRegion];
+    }
+}
+
+- (void)setRadiusLabelValue:(double)radius
+{
+    self.radiusLabel.text = [NSString stringWithFormat:@"%.0f m", radius];
 }
 
 - (EKEventStore *)eventStore
@@ -45,8 +95,7 @@
     // Update the user interface for the detail item.
 
     if (self.detailItem) {
-        NSString *baseText = NSLocalizedStringFromTable(@"Description - Text", @"ReminderViewController", @"Must containt %@ for station's name");
-        self.detailDescriptionLabel.text = [NSString stringWithFormat:baseText, self.detailItem[kStationName]];
+        self.stationLabel.text = [self.detailItem[kStationName] uppercaseString];
     }
 }
 
@@ -54,6 +103,17 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    // Load localized texts
+    self.titleLabel.text = NSLocalizedStringFromTable(@"Title - Label", @"ReminderViewController", @"You have selected");
+    self.descriptionLabel.text = NSLocalizedStringFromTable(@"Description - Label", @"ReminderViewController", @"As The Location To Remind You To Check Out At");
+    self.notesLabel.text = NSLocalizedStringFromTable(@"Notes - Label", @"ReminderViewController", @"You will be reminded when you arrive there. Feel free to close this app or just lock your screen.");
+    [self.cancelButton setTitle:NSLocalizedStringFromTable(@"Cancel Button - Title", @"ReminderViewController", @"Cancel Reminder") forState:UIControlStateNormal];
+    
+    self.mapButton.hidden = YES;
+    
+    [self setRadiusLabelValue:self.radiusStepper.value];
+    
     [self configureView];
 }
 
@@ -62,6 +122,18 @@
     [super viewDidAppear:animated];
     
     [self setUpReminder];
+    
+    [self.mapView setCenterCoordinate:[[self locationFromStation:self.detailItem] coordinate] animated:YES];
+    [self toggleZoom:self];
+    
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    [self.mapView addAnnotation:self.detailItem];
+    
+    double delayInSeconds = .5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self.mapView selectAnnotation:self.detailItem animated:YES];
+    });
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,12 +142,32 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - IBAction
+- (IBAction)toggleZoom:(id)sender
+{
+    [self.mapView setRegion:self.isZoomed ? [self defaultCoordinateRegion] : [self zoomedCoordinateRegion] animated:YES];
+    
+    self.zoomed = !self.isZoomed;
+}
+
+- (IBAction)setRadius:(UIStepper *)sender
+{
+    [self setRadiusLabelValue:self.radiusStepper.value];
+}
+
+- (IBAction)cancelReminder:(id)sender
+{
+    
+}
+
+#pragma mark - Reminder methods
+
 - (void)_setUpReminder
 {
     EKStructuredLocation *structuredLocation = [EKStructuredLocation locationWithTitle:self.detailItem[kStationName]];
-    CLLocation *location = [[CLLocation alloc] initWithLatitude:[self.detailItem[kStationLatitude] doubleValue] longitude:[self.detailItem[kStationLongitude] doubleValue]];
+    CLLocation *location = [self locationFromStation:self.detailItem];
     structuredLocation.geoLocation = location;
-    structuredLocation.radius = 150; // metres
+    structuredLocation.radius = REMINDER_RADIUS; // metres
     
     EKAlarm *alarm = [[EKAlarm alloc] init];
     alarm.proximity = EKAlarmProximityEnter;
@@ -91,6 +183,9 @@
     if (![self.eventStore saveReminder:reminder commit:YES error:&error]) {
         NSLog(@"%@", error);
     }
+    else {
+        NSLog(@"Reminder has been set up: %@", reminder);
+    }
 
     
 }
@@ -102,6 +197,40 @@
         [self _setUpReminder];
     }];
     
+}
+
+#pragma mark - Convinience methods
+
+- (MKCoordinateRegion)zoomedCoordinateRegion
+{
+    return MKCoordinateRegionMakeWithDistance([[self locationFromStation:self.detailItem] coordinate], self.radiusStepper.value, self.radiusStepper.value);
+}
+
+- (MKCoordinateRegion)defaultCoordinateRegion
+{
+    return MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2DMake(ORIGIN_LATITUDE, ORIGIN_LONGITUDE), 30*1000, 100*1000);
+}
+
+- (CLLocation *)locationFromStation:(NSDictionary *)station
+{
+    return [[CLLocation alloc] initWithLatitude:[station[kStationLatitude] doubleValue] longitude:[station[kStationLongitude] doubleValue]];
+}
+
+#pragma mark - UIMapViewDelegate
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    if (annotation == mapView.userLocation) return nil;
+    
+    static NSString *AnnotationIdentifier = @"Pin";
+    MKPinAnnotationView *annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:AnnotationIdentifier];
+    if (annotationView == nil) {
+        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationIdentifier];
+        annotationView.canShowCallout = YES;
+        annotationView.animatesDrop = YES;
+    }
+    
+    return annotationView;
 }
 
 @end
