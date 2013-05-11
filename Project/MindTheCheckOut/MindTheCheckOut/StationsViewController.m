@@ -9,6 +9,7 @@
 #import "StationsViewController.h"
 #import "ReminderViewController.h"
 #import "StationFetcher.h"
+#import "Recents.h"
 
 @interface StationsViewController () <UISearchBarDelegate, UISearchDisplayDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -38,6 +39,8 @@
 //    self.navigationItem.rightBarButtonItem = addButton;
     
     self.searchBar.placeholder = NSLocalizedStringFromTable(@"SearchBar - Placeholder", @"StationsViewController", @"");
+    
+    self.stations = [[Recents defaultRecents] allRecents];
 }
 
 - (void)didReceiveMemoryWarning
@@ -122,6 +125,12 @@
     return NO;
 }
 
+- (void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView
+{
+    self.stations = [[Recents defaultRecents] allRecents];
+    [self.tableView reloadData];
+}
+
 #pragma mark - UIStoryboarSegue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -130,6 +139,9 @@
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSDictionary *object = self.stations[indexPath.row];
         [[segue destinationViewController] setDetailItem:object];
+        
+        // add to recents
+        [[Recents defaultRecents] addObject:object];
     }
 }
 

@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSUInteger const RECENTS_DEFAULT_LIMIT;
+
 @interface Recents : NSObject
 @property (nonatomic) NSUInteger limit;
 + (instancetype)defaultRecents;
