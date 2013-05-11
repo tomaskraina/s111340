@@ -16,6 +16,8 @@
 #define ORIGIN_LATITUDE 55.67609680
 #define ORIGIN_LONGITUDE 12.56833710
 
+NSString * const kZoomRadius = @"zoom-radius";
+
 @interface ReminderViewController () <MKMapViewDelegate>
 @property (strong, nonatomic) EKEventStore *eventStore;
 @property (nonatomic, getter = isZoomed) BOOL zoomed;
@@ -55,9 +57,11 @@
 - (void)setRadiusStepper:(UIStepper *)radiusStepper
 {
     _radiusStepper = radiusStepper;
-    _radiusStepper.minimumValue = 150;
+    _radiusStepper.minimumValue = 250;
     _radiusStepper.maximumValue = 50*1000;
-    _radiusStepper.stepValue = 150;
+    _radiusStepper.stepValue = 250;
+    
+    _radiusStepper.value = [[NSUserDefaults standardUserDefaults] doubleForKey:kZoomRadius];
 }
 
 - (void)setMapView:(MKMapView *)mapView
@@ -153,6 +157,8 @@
 - (IBAction)setRadius:(UIStepper *)sender
 {
     [self setRadiusLabelValue:self.radiusStepper.value];
+    [[NSUserDefaults standardUserDefaults] setDouble:sender.value forKey:kZoomRadius];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (IBAction)cancelReminder:(id)sender
