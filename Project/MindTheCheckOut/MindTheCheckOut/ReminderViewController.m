@@ -21,6 +21,7 @@ NSString * const kZoomRadius = @"zoom-radius";
 @interface ReminderViewController () <MKMapViewDelegate>
 @property (strong, nonatomic) EKEventStore *eventStore;
 @property (nonatomic, getter = isZoomed) BOOL zoomed;
+@property (strong, nonatomic) EKReminder *reminder;
 
 // Labels
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -163,7 +164,15 @@ NSString * const kZoomRadius = @"zoom-radius";
 
 - (IBAction)cancelReminder:(id)sender
 {
+    NSError *error;
+    if (![self.eventStore removeReminder:self.reminder commit:YES error:&error]) {
+        NSLog(@"%@", error);
+    }
+    else {
+        NSLog(@"Reminder has been removed: %@", self.reminder);
+    }
     
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Reminder methods
@@ -190,6 +199,7 @@ NSString * const kZoomRadius = @"zoom-radius";
         NSLog(@"%@", error);
     }
     else {
+        self.reminder = reminder;
         NSLog(@"Reminder has been set up: %@", reminder);
     }
 
