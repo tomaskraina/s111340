@@ -7,6 +7,8 @@
 //
 
 #import "StationFetcher.h"
+#import "AFNetworking.h"
+#import "APIkeys.h"
 
 NSString * const kStationName = @"name";
 NSString * const kStationLatitude = @"latitude";
@@ -75,19 +77,60 @@ NSString * const kStationLongitude = @"longitude";
 
 #pragma mark - searching methods
 
+- (void)logResponse:(id)JSON query:(NSString *)query
+{
+    NSLog(@"Searching for: '%@', results: %d, status: %@ ", query, [[JSON valueForKey:@"results"] count], [JSON valueForKey:@"status"]);
+}
+
+- (NSArray *)produceArrayStationInfoFromGoogleJSON:(id)JSON
+{
+    NSMutableArray *places = [NSMutableArray array];
+    for (id place in [JSON valueForKeyPath:@"results"]) {
+        NSDictionary *placeInfo = @{
+                                    kStationName: place[@"name"],
+                                    kStationLatitude: place[@"geometry.location.lat"],
+                                    kStationLongitude: place[@"geometry.location.lng"]
+                                    };
+        [places addObject:placeInfo];
+    }
+
+    return [places copy];
+}
+
 - (void)findByName:(NSString *)searchName completed:(void (^)(NSArray *stations))block
 {
+    if ([searchName length] < 3) {
+        block(nil);
+        return;
+    }
+    
     dispatch_queue_t q = dispatch_queue_create("search queue", NULL);
     dispatch_async(q, ^{
         
-        NSArray *filteredStations = [self.downloadedStations filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSDictionary *evaluatedObject, NSDictionary *bindings) {
-            return [evaluatedObject[@"name"] rangeOfString:searchName options:SEARCH_OPTIONS].location != NSNotFound;
-        }]];
+        NSURL *baseUrl = [NSURL URLWithString:@"https://maps.googleapis.com/maps/api/place/textsearch/"];
+        AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseUrl];
+        NSDictionary *params = @{
+                                 @"query": [NSString stringWithFormat:@"%@ st, Denmark", searchName],
+                                 @"key": GOOGLE_PLACES_API_KEY,
+                                 @"sensor": @"false",
+                                 @"types": @"bus_station|subway_station|train_station"
+                                 };
+        NSMutableURLRequest *request = [client requestWithMethod:@"GET" path:@"json" parameters:params];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // execute completition block
-            block(filteredStations);
-        });
+        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+            
+            [self logResponse:JSON query:params[@"query"]];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // execute completition block
+                block([self produceArrayStationInfoFromGoogleJSON:JSON]);
+            });
+            
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+            NSLog(@"%@", error);
+        }];
+        
+        [operation start];
         
     });
 }

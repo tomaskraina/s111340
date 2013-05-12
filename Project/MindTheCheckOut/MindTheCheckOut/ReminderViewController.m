@@ -52,6 +52,8 @@ NSString * const kZoomRadius = @"zoom-radius";
         
         // Update the view.
         [self configureView];
+        
+        NSLog(@"Selected station: %@", _detailItem);
     }
 }
 

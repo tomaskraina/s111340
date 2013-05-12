@@ -137,6 +137,10 @@
 {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        if (indexPath == nil) {
+            indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
+        }
+        
         NSDictionary *object = self.stations[indexPath.row];
         [[segue destinationViewController] setDetailItem:object];
         
