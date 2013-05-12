@@ -16,5 +16,5 @@ extern NSString * const kStationID;
 
 @interface StationFetcher : NSObject
 + (instancetype)defaultFetcher;
-- (void)findByName:(NSString *)name completed:(void (^)(NSArray *stations))block;
+- (void)findByName:(NSString *)searchName completed:(void (^)(NSArray *stations))block error:(void (^)(NSError *error))error;
 @end

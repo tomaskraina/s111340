@@ -83,7 +83,7 @@ NSString * const kZoomRadius = @"zoom-radius";
 
 - (void)setRadiusLabelValue:(double)radius
 {
-    self.radiusLabel.text = [NSString stringWithFormat:@"%.0f m", radius];
+    self.radiusLabel.text = [NSString stringWithFormat:@"zoom: %.2fkm", (double)radius/1000.0];
 }
 
 - (EKEventStore *)eventStore
@@ -128,19 +128,21 @@ NSString * const kZoomRadius = @"zoom-radius";
 {
     [super viewDidAppear:animated];
     
-    [self setUpReminder];
-    
-    [self.mapView setCenterCoordinate:[[self locationFromStation:self.detailItem] coordinate] animated:YES];
-    [self toggleZoom:self];
-    
-    [self.mapView removeAnnotations:self.mapView.annotations];
-    [self.mapView addAnnotation:self.detailItem];
-    
-    double delayInSeconds = .5;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self.mapView selectAnnotation:self.detailItem animated:YES];
-    });
+    if ([self isMovingToParentViewController] || [self isBeingPresented]) {
+        [self setUpReminder];
+        
+        [self.mapView setCenterCoordinate:[[self locationFromStation:self.detailItem] coordinate] animated:YES];
+        [self toggleZoom:self];
+        
+        [self.mapView removeAnnotations:self.mapView.annotations];
+        [self.mapView addAnnotation:self.detailItem];
+        
+        double delayInSeconds = .5;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self.mapView selectAnnotation:self.detailItem animated:YES];
+        });
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -161,6 +163,8 @@ NSString * const kZoomRadius = @"zoom-radius";
 #pragma mark - IBAction
 - (IBAction)toggleZoom:(id)sender
 {
+    NSLog(@"Toggle zoom: %@", self.isZoomed ? @"out" : [NSString stringWithFormat:@"in %.0fm", self.radiusStepper.value]);
+    
     [self.mapView setRegion:self.isZoomed ? [self defaultCoordinateRegion] : [self zoomedCoordinateRegion] animated:YES];
     
     self.zoomed = !self.isZoomed;

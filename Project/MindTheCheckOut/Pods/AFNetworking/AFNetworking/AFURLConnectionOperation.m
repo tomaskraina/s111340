@@ -138,7 +138,6 @@ static inline BOOL AFStateTransitionIsValid(AFOperationState fromState, AFOperat
 @synthesize request = _request;
 @synthesize response = _response;
 @synthesize error = _error;
-@synthesize allowsInvalidSSLCertificate = _allowsInvalidSSLCertificate;
 @synthesize responseData = _responseData;
 @synthesize responseString = _responseString;
 @synthesize responseStringEncoding = _responseStringEncoding;
@@ -630,8 +629,6 @@ willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challe
                 break;
             }
         }
-    } else if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodDefault]) {
-        [[challenge sender] performDefaultHandlingForAuthenticationChallenge:challenge];
     }
 }
 #endif
@@ -668,8 +665,25 @@ didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
         self.authenticationChallenge(connection, challenge);
     } else {
         if ([challenge previousFailureCount] == 0) {
-            if (self.credential) {
-                [[challenge sender] useCredential:self.credential forAuthenticationChallenge:challenge];
+            NSURLCredential *credential = nil;
+            
+            NSString *user = [[self.request URL] user];
+            NSString *password = [[self.request URL] password];
+            
+            if (user && password) {
+                credential = [NSURLCredential credentialWithUser:user password:password persistence:NSURLCredentialPersistenceNone];
+            } else if (user) {
+                credential = [[[NSURLCredentialStorage sharedCredentialStorage] credentialsForProtectionSpace:[challenge protectionSpace]] objectForKey:user];
+            } else {
+                credential = [[NSURLCredentialStorage sharedCredentialStorage] defaultCredentialForProtectionSpace:[challenge protectionSpace]];
+            }
+            
+            if (!credential) {
+                credential = self.credential;
+            }
+            
+            if (credential) {
+                [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
             } else {
                 [[challenge sender] continueWithoutCredentialForAuthenticationChallenge:challenge];
             }
@@ -688,11 +702,9 @@ didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {
     if ([request.HTTPBodyStream conformsToProtocol:@protocol(NSCopying)]) {
         return [request.HTTPBodyStream copy];
-    } else {
-        [self cancelConnection];
-        
-        return nil;
     }
+    
+    return nil;
 }
 
 - (NSURLRequest *)connection:(NSURLConnection *)connection

@@ -105,7 +105,10 @@
         // Refresh result's table view
         [controller.searchResultsTableView reloadData];
         
-        // TODO: insert data animated
+        // TODO: insert data animated ?
+    } error:^(NSError *error) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Alert - Title", @"StationsViewController", @"") message:[error localizedFailureReason] delegate:nil cancelButtonTitle:NSLocalizedStringFromTable(@"Alert - Cancel Button", @"StationsViewController", @"") otherButtonTitles:nil];
+        [alert show];
     }];
     
     return NO;

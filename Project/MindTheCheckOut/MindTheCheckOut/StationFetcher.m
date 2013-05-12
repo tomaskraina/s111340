@@ -7,14 +7,29 @@
 //
 
 #import "StationFetcher.h"
-#import "AFNetworking.h"
 #import "APIkeys.h"
+#import <AFNetworking/AFNetworking.h>
 
 NSString * const kStationName = @"name";
 NSString * const kStationLatitude = @"latitude";
 NSString * const kStationLongitude = @"longitude";
 NSString * const kStationTypes = @"types";
 NSString * const kStationID = @"id";
+
+NSString * const GoogleStatusOK = @"OK";
+NSString * const GoogleStatusNoResult = @"ZERO_RESULTS";
+NSString * const GoogleStatusOverLimit = @"OVER_QUERY_LIMIT";
+NSString * const GoogleStatusRequestDenied = @"REQUEST_DENIED";
+
+NSString * const StationFetcherErrorDomain = @"StationFetcher";
+
+NSString * const GoogleQueryFormat = @"%@ st Denmark";
+
+typedef NS_ENUM(NSUInteger, StationFetcherErrorCode) {
+    StationFetcherErrorCodeOverLimit,
+    StationFetcherErrorCodeRequestDenied
+};
+
 
 #define SEARCH_OPTIONS (NSDiacriticInsensitiveSearch | NSCaseInsensitiveSearch | NSAnchoredSearch)
 
@@ -101,42 +116,60 @@ NSString * const kStationID = @"id";
     return [places copy];
 }
 
-- (void)findByName:(NSString *)searchName completed:(void (^)(NSArray *stations))block
+- (NSError *)produceErrorFromGoogleJSON:(id)JSON
+{
+    NSError *error;
+    NSString *status = [JSON valueForKey:@"status"];
+    if ([status isEqualToString:GoogleStatusOverLimit]) {
+        error = [NSError errorWithDomain:StationFetcherErrorDomain code:StationFetcherErrorCodeOverLimit userInfo:@{NSLocalizedFailureReasonErrorKey: status}];
+    }
+    else if ([status isEqualToString:GoogleStatusRequestDenied]) {
+        error = [NSError errorWithDomain:StationFetcherErrorDomain code:StationFetcherErrorCodeRequestDenied userInfo:@{NSLocalizedFailureReasonErrorKey: status}];
+    }
+
+    return error;
+}
+
+- (void)findByName:(NSString *)searchName completed:(void (^)(NSArray *stations))completedBlock error:(void (^)(NSError *error))errorBlock
 {
     if ([searchName length] < 3) {
-        block(nil);
+        completedBlock(nil);
         return;
     }
+        
+    NSURL *baseUrl = [NSURL URLWithString:@"https://maps.googleapis.com/maps/api/place/textsearch/"];
+    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseUrl];
+    NSDictionary *params = @{
+                             @"query": [NSString stringWithFormat:GoogleQueryFormat, searchName],
+                             @"key": GOOGLE_PLACES_API_KEY,
+                             @"sensor": @"false",
+                             @"types": @"bus_station|subway_station|train_station"
+                             };
+    NSMutableURLRequest *request = [client requestWithMethod:@"GET" path:@"json" parameters:params];
     
-    dispatch_queue_t q = dispatch_queue_create("search queue", NULL);
-    dispatch_async(q, ^{
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         
-        NSURL *baseUrl = [NSURL URLWithString:@"https://maps.googleapis.com/maps/api/place/textsearch/"];
-        AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseUrl];
-        NSDictionary *params = @{
-                                 @"query": [NSString stringWithFormat:@"%@ st, Denmark", searchName],
-                                 @"key": GOOGLE_PLACES_API_KEY,
-                                 @"sensor": @"false",
-                                 @"types": @"bus_station|subway_station|train_station"
-                                 };
-        NSMutableURLRequest *request = [client requestWithMethod:@"GET" path:@"json" parameters:params];
+        [self logResponse:JSON query:params[@"query"]];
         
-        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-            
-            [self logResponse:JSON query:params[@"query"]];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                // execute completition block
-                block([self produceArrayStationInfoFromGoogleJSON:JSON]);
-            });
-            
-        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-            NSLog(@"%@", error);
-        }];
+        NSString *status = [JSON valueForKeyPath:@"status"];
+        if ([status isEqualToString:GoogleStatusOK] || [status isEqualToString:GoogleStatusNoResult]) {
+            // execute completition block
+            completedBlock([self produceArrayStationInfoFromGoogleJSON:JSON]);
+        }
+        else {
+            errorBlock([self produceErrorFromGoogleJSON:JSON]);
+        }
         
-        [operation start];
         
-    });
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"Error: %@", error);
+        NSLog(@"Returned JSON: %@", JSON);
+        
+        errorBlock(error);
+    }];
+    
+    [operation start];
+    
 }
 
 @end

@@ -7,3 +7,4 @@
 //
 
 #define GOOGLE_PLACES_API_KEY @""
+#define TEST_FLIGHT_APP_TOKEN @""

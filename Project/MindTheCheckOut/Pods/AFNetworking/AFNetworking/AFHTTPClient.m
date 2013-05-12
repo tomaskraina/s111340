@@ -81,7 +81,7 @@ static NSString * AFBase64EncodedStringFromString(NSString *string) {
 }
 
 static NSString * AFPercentEscapedQueryStringPairMemberFromStringWithEncoding(NSString *string, NSStringEncoding encoding) {
-    static NSString * const kAFCharactersToBeEscaped = @":/?&=;+!@#$()',*";
+    static NSString * const kAFCharactersToBeEscaped = @":/?&=;+!@#$()~',*";
     static NSString * const kAFCharactersToLeaveUnescaped = @"[].";
 
 	return (__bridge_transfer  NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (__bridge CFStringRef)string, (__bridge CFStringRef)kAFCharactersToLeaveUnescaped, (__bridge CFStringRef)kAFCharactersToBeEscaped, CFStringConvertNSStringEncodingToEncoding(encoding));
@@ -212,10 +212,6 @@ NSArray * AFQueryStringPairsFromKeyAndValue(NSString *key, id value) {
 @synthesize networkReachabilityStatus = _networkReachabilityStatus;
 @synthesize networkReachabilityStatusBlock = _networkReachabilityStatusBlock;
 #endif
-#ifdef _AFNETWORKING_PIN_SSL_CERTIFICATES_
-@synthesize defaultSSLPinningMode = _defaultSSLPinningMode;
-#endif
-@synthesize allowsInvalidSSLCertificate = _allowsInvalidSSLCertificate;
 
 + (instancetype)clientWithBaseURL:(NSURL *)url {
     return [[self alloc] initWithBaseURL:url];
@@ -330,12 +326,12 @@ static void AFNetworkReachabilityCallback(SCNetworkReachabilityRef __unused targ
 }
 
 static const void * AFNetworkReachabilityRetainCallback(const void *info) {
-    return Block_copy(info);
+    return (__bridge_retained const void *)([(__bridge AFNetworkReachabilityStatusBlock)info copy]);
 }
 
 static void AFNetworkReachabilityReleaseCallback(const void *info) {
     if (info) {
-        Block_release(info);
+        CFRelease(info);
     }
 }
 
@@ -367,6 +363,7 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
 
     SCNetworkReachabilityContext context = {0, (__bridge void *)callback, AFNetworkReachabilityRetainCallback, AFNetworkReachabilityReleaseCallback, NULL};
     SCNetworkReachabilitySetCallback(self.networkReachability, AFNetworkReachabilityCallback, &context);
+    SCNetworkReachabilityScheduleWithRunLoop(self.networkReachability, CFRunLoopGetMain(), (CFStringRef)NSRunLoopCommonModes);
 
     /* Network reachability monitoring does not establish a baseline for IP addresses as it does for hostnames, so if the base URL host is an IP address, the initial reachability callback is manually triggered.
      */
@@ -378,14 +375,11 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
             callback(status);
         });
     }
-
-    SCNetworkReachabilityScheduleWithRunLoop(self.networkReachability, CFRunLoopGetMain(), kCFRunLoopCommonModes);
 }
 
 - (void)stopMonitoringNetworkReachability {
-    if (self.networkReachability) {
-        SCNetworkReachabilityUnscheduleFromRunLoop(self.networkReachability, CFRunLoopGetMain(), kCFRunLoopCommonModes);
-
+    if (_networkReachability) {
+        SCNetworkReachabilityUnscheduleFromRunLoop(_networkReachability, CFRunLoopGetMain(), (CFStringRef)NSRunLoopCommonModes);
         CFRelease(_networkReachability);
         _networkReachability = NULL;
     }
@@ -699,7 +693,7 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
     }
 
     self.stringEncoding = [aDecoder decodeIntegerForKey:@"stringEncoding"];
-    self.parameterEncoding = (AFHTTPClientParameterEncoding) [aDecoder decodeIntegerForKey:@"parameterEncoding"];
+    self.parameterEncoding = [aDecoder decodeIntegerForKey:@"parameterEncoding"];
     self.registeredHTTPOperationClassNames = [aDecoder decodeObjectForKey:@"registeredHTTPOperationClassNames"];
     self.defaultHeaders = [aDecoder decodeObjectForKey:@"defaultHeaders"];
 
@@ -1067,7 +1061,7 @@ static const NSUInteger AFMultipartBodyStreamProviderDefaultBufferLength = 4096;
 
 #pragma mark - NSStreamDelegate
 
-- (void)stream:(NSStream __unused *)stream
+- (void)stream:(NSStream *)stream
    handleEvent:(NSStreamEvent)eventCode
 {
     if (eventCode & NSStreamEventHasSpaceAvailable) {
@@ -1078,7 +1072,7 @@ static const NSUInteger AFMultipartBodyStreamProviderDefaultBufferLength = 4096;
 - (void)handleOutputStreamSpaceAvailable {
     while ([_outputStream hasSpaceAvailable]) {
         if ([_buffer length] > 0) {
-            NSInteger numberOfBytesWritten = [_outputStream write:(uint8_t const *)[_buffer bytes] maxLength:[_buffer length]];
+            NSInteger numberOfBytesWritten = [_outputStream write:[_buffer bytes] maxLength:[_buffer length]];
             if (numberOfBytesWritten < 0) {
                 [self close];
                 return;
@@ -1100,7 +1094,7 @@ static const NSUInteger AFMultipartBodyStreamProviderDefaultBufferLength = 4096;
             
             [_buffer setLength:self.bufferLength];
             
-            NSInteger numberOfBytesRead = [self.currentHTTPBodyPart read:(uint8_t *)[_buffer mutableBytes] maxLength:[_buffer length]];
+            NSInteger numberOfBytesRead = [self.currentHTTPBodyPart read:[_buffer mutableBytes] maxLength:[_buffer length]];
             if (numberOfBytesRead < 0) {
                 [self close];
                 return;
@@ -1120,21 +1114,8 @@ static const NSUInteger AFMultipartBodyStreamProviderDefaultBufferLength = 4096;
 }
 
 - (void)close {
-    NSOutputStream *outputStream = self.outputStream;
-    
-    [outputStream close];
-    outputStream.delegate = nil;
-    
-    /*
-     Workaround for a race condition in CFStream _CFStreamCopyRunLoopsAndModes. This outputstream needs to be retained just a little longer.
-     
-     See: https://github.com/AFNetworking/AFNetworking/issues/907
-     */
-    double delayInSeconds = 2.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^{
-        outputStream.delegate = nil;
-    });
+    [_outputStream close];
+    _outputStream.delegate = nil;
     
     _self = nil;
 }
@@ -1192,7 +1173,6 @@ typedef enum {
 @synthesize headers = _headers;
 @synthesize body = _body;
 @synthesize bodyContentLength = _bodyContentLength;
-@synthesize inputStream = _inputStream;
 @synthesize hasInitialBoundary = _hasInitialBoundary;
 @synthesize hasFinalBoundary = _hasFinalBoundary;
 

@@ -7,11 +7,16 @@
 //
 
 #import "AppDelegate.h"
+#import "APIkeys.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // !!!: Use the next line only during beta
+     [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
+    [TestFlight takeOff:TEST_FLIGHT_APP_TOKEN];
+    
     // Override point for customization after application launch.
     return YES;
 }
