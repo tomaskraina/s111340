@@ -10,7 +10,6 @@
 		15A58F94112B4C41B65722B1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A4C6E1629C744A49FC09D4D /* libPods.a */; };
 		9C247F7B173EA1A900BE6F07 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C247F7A173EA1A900BE6F07 /* MapKit.framework */; };
 		9C247F7F173EB10B00BE6F07 /* NSDictionary+MKAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C247F7E173EB10B00BE6F07 /* NSDictionary+MKAnnotation.m */; };
-		9CA61F21173FFDA1006A9E99 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CA61F1D173FFDA1006A9E99 /* libTestFlight.a */; };
 		9CA61F25173FFDD1006A9E99 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CA61F24173FFDD1006A9E99 /* libz.dylib */; };
 		9CB6F3291740266F00B7FF5F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CB6F3281740266F00B7FF5F /* SystemConfiguration.framework */; };
 		9CB6F32B1740267700B7FF5F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CB6F32A1740267700B7FF5F /* MobileCoreServices.framework */; };
@@ -58,10 +57,6 @@
 		9C247F7E173EB10B00BE6F07 /* NSDictionary+MKAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+MKAnnotation.m"; sourceTree = "<group>"; };
 		9C247F80173F19CD00BE6F07 /* APIkeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIkeys.h; sourceTree = "<group>"; };
 		9C94E9C8148F494AA531FEE0 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
-		9CA61F1D173FFDA1006A9E99 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		9CA61F1E173FFDA1006A9E99 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		9CA61F1F173FFDA1006A9E99 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
-		9CA61F20173FFDA1006A9E99 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		9CA61F24173FFDD1006A9E99 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		9CB6F3281740266F00B7FF5F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9CB6F32A1740267700B7FF5F /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -113,7 +108,6 @@
 				9CC946AE1739798400454FF3 /* UIKit.framework in Frameworks */,
 				9CC946B01739798400454FF3 /* Foundation.framework in Frameworks */,
 				9CC946B21739798400454FF3 /* CoreGraphics.framework in Frameworks */,
-				9CA61F21173FFDA1006A9E99 /* libTestFlight.a in Frameworks */,
 				15A58F94112B4C41B65722B1 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -131,18 +125,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9CA61F1C173FFDA1006A9E99 /* TestFlightSDK */ = {
-			isa = PBXGroup;
-			children = (
-				9CA61F1D173FFDA1006A9E99 /* libTestFlight.a */,
-				9CA61F1E173FFDA1006A9E99 /* README.md */,
-				9CA61F1F173FFDA1006A9E99 /* release_notes.md */,
-				9CA61F20173FFDA1006A9E99 /* TestFlight.h */,
-			);
-			name = TestFlightSDK;
-			path = lib/TestFlightSDK;
-			sourceTree = "<group>";
-		};
 		9CC946A11739798400454FF3 = {
 			isa = PBXGroup;
 			children = (
@@ -166,7 +148,6 @@
 		9CC946AC1739798400454FF3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9CA61F1C173FFDA1006A9E99 /* TestFlightSDK */,
 				9CA61F24173FFDD1006A9E99 /* libz.dylib */,
 				9CB6F32A1740267700B7FF5F /* MobileCoreServices.framework */,
 				9CB6F3281740266F00B7FF5F /* SystemConfiguration.framework */,
@@ -538,10 +519,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MindTheCheckOut/MindTheCheckOut-Prefix.pch";
 				INFOPLIST_FILE = "MindTheCheckOut/MindTheCheckOut-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/lib/TestFlightSDK\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -554,10 +532,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MindTheCheckOut/MindTheCheckOut-Prefix.pch";
 				INFOPLIST_FILE = "MindTheCheckOut/MindTheCheckOut-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/lib/TestFlightSDK\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
