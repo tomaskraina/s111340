@@ -12,6 +12,7 @@ NSUInteger const RECENTS_DEFAULT_LIMIT = 5;
 
 NSString * const kRecentsAll = @"recents-all";
 NSString * const kRecentDatetime = @"datetime-added";
+NSString * const kRecentID = @"id";
 
 @implementation Recents
 
@@ -28,6 +29,8 @@ NSString * const kRecentDatetime = @"datetime-added";
     if (!allRecents) {
         allRecents = [NSMutableArray array];
     }
+    
+    [allRecents filterUsingPredicate:[NSPredicate predicateWithFormat:@"%K != %@", kRecentID, object[kRecentID]]];
     
     NSMutableDictionary *mutableObject = [object mutableCopy];
     [mutableObject setObject:[NSDate date] forKey:kRecentDatetime];

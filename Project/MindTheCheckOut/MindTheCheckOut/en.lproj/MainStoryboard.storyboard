@@ -65,7 +65,13 @@
                             <outlet property="delegate" destination="12" id="15"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Stations" id="36"/>
+                    <navigationItem key="navigationItem" title="Stations" id="36">
+                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="bQ4-uu-VD5">
+                            <connections>
+                                <action selector="eraseHistory:" destination="12" id="dwg-dF-pB6"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="searchBar" destination="8LI-3T-dxH" id="eY8-1y-yPC"/>
                         <outlet property="searchDisplayController" destination="pyF-eY-fDy" id="V1Q-Tk-Ylu"/>

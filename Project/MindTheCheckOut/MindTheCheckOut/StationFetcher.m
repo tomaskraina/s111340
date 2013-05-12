@@ -13,6 +13,8 @@
 NSString * const kStationName = @"name";
 NSString * const kStationLatitude = @"latitude";
 NSString * const kStationLongitude = @"longitude";
+NSString * const kStationTypes = @"types";
+NSString * const kStationID = @"id";
 
 #define SEARCH_OPTIONS (NSDiacriticInsensitiveSearch | NSCaseInsensitiveSearch | NSAnchoredSearch)
 
@@ -87,9 +89,11 @@ NSString * const kStationLongitude = @"longitude";
     NSMutableArray *places = [NSMutableArray array];
     for (id place in [JSON valueForKeyPath:@"results"]) {
         NSDictionary *placeInfo = @{
-                                    kStationName: place[@"name"],
-                                    kStationLatitude: place[@"geometry.location.lat"],
-                                    kStationLongitude: place[@"geometry.location.lng"]
+                                    kStationName: [place valueForKeyPath:@"name"],
+                                    kStationLatitude: [place valueForKeyPath:@"geometry.location.lat"],
+                                    kStationLongitude: [place valueForKeyPath:@"geometry.location.lng"],
+                                    kStationTypes: [place valueForKeyPath:@"types"],
+                                    kStationID: [place valueForKeyPath:@"id"]
                                     };
         [places addObject:placeInfo];
     }

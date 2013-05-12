@@ -11,6 +11,8 @@
 extern NSString * const kStationName;
 extern NSString * const kStationLatitude;
 extern NSString * const kStationLongitude;
+extern NSString * const kStationTypes;
+extern NSString * const kStationID;
 
 @interface StationFetcher : NSObject
 + (instancetype)defaultFetcher;
