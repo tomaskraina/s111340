@@ -143,6 +143,15 @@ NSString * const kZoomRadius = @"zoom-radius";
     });
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    if ([self isMovingFromParentViewController] || [self isBeingDismissed]) {
+        [self _cancelReminder];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -166,13 +175,7 @@ NSString * const kZoomRadius = @"zoom-radius";
 
 - (IBAction)cancelReminder:(id)sender
 {
-    NSError *error;
-    if (![self.eventStore removeReminder:self.reminder commit:YES error:&error]) {
-        NSLog(@"%@", error);
-    }
-    else {
-        NSLog(@"Reminder has been removed: %@", self.reminder);
-    }
+    [self _cancelReminder];
     
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -206,6 +209,17 @@ NSString * const kZoomRadius = @"zoom-radius";
     }
 
     
+}
+
+- (void)_cancelReminder
+{
+    NSError *error;
+    if (![self.eventStore removeReminder:self.reminder commit:YES error:&error]) {
+        NSLog(@"%@", error);
+    }
+    else {
+        NSLog(@"Reminder has been removed: %@", self.reminder);
+    }
 }
 
 - (void)setUpReminder
