@@ -122,6 +122,9 @@ NSString * const kZoomRadius = @"zoom-radius";
     [self setRadiusLabelValue:self.radiusStepper.value];
     
     [self configureView];
+    
+    // TODO: inform user about cancelled reminder after pressing a back button rather than disabling the back button. Since it's easy to create the alarm againg. Design pattern 'undo' rather then 'confirmation'
+    self.navigationItem.hidesBackButton = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated
