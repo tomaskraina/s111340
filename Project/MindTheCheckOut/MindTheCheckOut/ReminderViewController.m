@@ -11,12 +11,10 @@
 #import <EventKit/EventKit.h>
 #import <MapKit/MapKit.h>
 #import "NSDictionary+MKAnnotation.h"
+#import "Constancts.h"
 
-#define REMINDER_RADIUS 150
 #define ORIGIN_LATITUDE 55.67609680
 #define ORIGIN_LONGITUDE 12.56833710
-
-NSString * const kZoomRadius = @"zoom-radius";
 
 @interface ReminderViewController () <MKMapViewDelegate>
 @property (strong, nonatomic) EKEventStore *eventStore;
@@ -28,12 +26,10 @@ NSString * const kZoomRadius = @"zoom-radius";
 @property (weak, nonatomic) IBOutlet UILabel *stationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *notesLabel;
-@property (weak, nonatomic) IBOutlet UILabel *radiusLabel;
 
 // Buttons
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *mapButton;
-@property (weak, nonatomic) IBOutlet UIStepper *radiusStepper;
 
 // Other views
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -57,15 +53,7 @@ NSString * const kZoomRadius = @"zoom-radius";
     }
 }
 
-- (void)setRadiusStepper:(UIStepper *)radiusStepper
-{
-    _radiusStepper = radiusStepper;
-    _radiusStepper.minimumValue = 250;
-    _radiusStepper.maximumValue = 50*1000;
-    _radiusStepper.stepValue = 250;
-    
-    _radiusStepper.value = [[NSUserDefaults standardUserDefaults] doubleForKey:kZoomRadius];
-}
+
 
 - (void)setMapView:(MKMapView *)mapView
 {
@@ -81,10 +69,6 @@ NSString * const kZoomRadius = @"zoom-radius";
     }
 }
 
-- (void)setRadiusLabelValue:(double)radius
-{
-    self.radiusLabel.text = [NSString stringWithFormat:@"zoom: %.2fkm", (double)radius/1000.0];
-}
 
 - (EKEventStore *)eventStore
 {
@@ -119,8 +103,6 @@ NSString * const kZoomRadius = @"zoom-radius";
     
     self.mapButton.hidden = YES;
     
-    [self setRadiusLabelValue:self.radiusStepper.value];
-    
     [self configureView];
     
     // TODO: inform user about cancelled reminder after pressing a back button rather than disabling the back button. Since it's easy to create the alarm againg. Design pattern 'undo' rather then 'confirmation'
@@ -146,6 +128,10 @@ NSString * const kZoomRadius = @"zoom-radius";
             [self.mapView selectAnnotation:self.detailItem animated:YES];
         });
     }
+    else {
+        self.zoomed = NO; // hack...
+        [self toggleZoom:self];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -166,19 +152,14 @@ NSString * const kZoomRadius = @"zoom-radius";
 #pragma mark - IBAction
 - (IBAction)toggleZoom:(id)sender
 {
-    NSLog(@"Toggle zoom: %@", self.isZoomed ? @"out" : [NSString stringWithFormat:@"in %.0fm", self.radiusStepper.value]);
+    double zoomRadius = [[NSUserDefaults standardUserDefaults] doubleForKey:kZoomRadius];
+    NSLog(@"Toggle zoom: %@", self.isZoomed ? @"out" : [NSString stringWithFormat:@"in %.0fm", zoomRadius]);
     
     [self.mapView setRegion:self.isZoomed ? [self defaultCoordinateRegion] : [self zoomedCoordinateRegion] animated:YES];
     
     self.zoomed = !self.isZoomed;
 }
 
-- (IBAction)setRadius:(UIStepper *)sender
-{
-    [self setRadiusLabelValue:self.radiusStepper.value];
-    [[NSUserDefaults standardUserDefaults] setDouble:sender.value forKey:kZoomRadius];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
 
 - (IBAction)cancelReminder:(id)sender
 {
@@ -194,7 +175,7 @@ NSString * const kZoomRadius = @"zoom-radius";
     EKStructuredLocation *structuredLocation = [EKStructuredLocation locationWithTitle:self.detailItem[kStationName]];
     CLLocation *location = [self locationFromStation:self.detailItem];
     structuredLocation.geoLocation = location;
-    structuredLocation.radius = REMINDER_RADIUS; // metres
+    structuredLocation.radius = [[NSUserDefaults standardUserDefaults] integerForKey:kActivationRadius]; // metres
     
     EKAlarm *alarm = [[EKAlarm alloc] init];
     alarm.proximity = EKAlarmProximityEnter;
@@ -242,7 +223,8 @@ NSString * const kZoomRadius = @"zoom-radius";
 
 - (MKCoordinateRegion)zoomedCoordinateRegion
 {
-    return MKCoordinateRegionMakeWithDistance([[self locationFromStation:self.detailItem] coordinate], self.radiusStepper.value, self.radiusStepper.value);
+    double zoomRadius = [[NSUserDefaults standardUserDefaults] doubleForKey:kZoomRadius];
+    return MKCoordinateRegionMakeWithDistance([[self locationFromStation:self.detailItem] coordinate], zoomRadius, zoomRadius);
 }
 
 - (MKCoordinateRegion)defaultCoordinateRegion

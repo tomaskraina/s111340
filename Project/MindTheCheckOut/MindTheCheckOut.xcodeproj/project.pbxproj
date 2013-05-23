@@ -14,6 +14,10 @@
 		9C2B8202174E9FCD00E22C0F /* GoogleStationFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C2B8200174E9FCD00E22C0F /* GoogleStationFetcher.m */; };
 		9C2B8205174E9FE900E22C0F /* RejseplanenStationFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C2B8204174E9FE900E22C0F /* RejseplanenStationFetcher.m */; };
 		9C2B8206174E9FE900E22C0F /* RejseplanenStationFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C2B8204174E9FE900E22C0F /* RejseplanenStationFetcher.m */; };
+		9C2B8209174EC22D00E22C0F /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C2B8208174EC22D00E22C0F /* SettingsViewController.m */; };
+		9C2B820A174EC22D00E22C0F /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C2B8208174EC22D00E22C0F /* SettingsViewController.m */; };
+		9C2B820E174EC34D00E22C0F /* Constancts.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C2B820D174EC34D00E22C0F /* Constancts.m */; };
+		9C2B820F174EC34D00E22C0F /* Constancts.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C2B820D174EC34D00E22C0F /* Constancts.m */; };
 		9CA61F25173FFDD1006A9E99 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CA61F24173FFDD1006A9E99 /* libz.dylib */; };
 		9CB6F3291740266F00B7FF5F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CB6F3281740266F00B7FF5F /* SystemConfiguration.framework */; };
 		9CB6F32B1740267700B7FF5F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CB6F32A1740267700B7FF5F /* MobileCoreServices.framework */; };
@@ -64,6 +68,10 @@
 		9C2B8200174E9FCD00E22C0F /* GoogleStationFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleStationFetcher.m; sourceTree = "<group>"; };
 		9C2B8203174E9FE900E22C0F /* RejseplanenStationFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RejseplanenStationFetcher.h; sourceTree = "<group>"; };
 		9C2B8204174E9FE900E22C0F /* RejseplanenStationFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RejseplanenStationFetcher.m; sourceTree = "<group>"; };
+		9C2B8207174EC22C00E22C0F /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		9C2B8208174EC22D00E22C0F /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		9C2B820C174EC34D00E22C0F /* Constancts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constancts.h; sourceTree = "<group>"; };
+		9C2B820D174EC34D00E22C0F /* Constancts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constancts.m; sourceTree = "<group>"; };
 		9C94E9C8148F494AA531FEE0 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		9CA61F24173FFDD1006A9E99 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		9CB6F3281740266F00B7FF5F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -175,6 +183,8 @@
 			isa = PBXGroup;
 			children = (
 				9CF2AD96173D731400DFA5CE /* Model */,
+				9C2B820C174EC34D00E22C0F /* Constancts.h */,
+				9C2B820D174EC34D00E22C0F /* Constancts.m */,
 				9CC946BC1739798400454FF3 /* AppDelegate.h */,
 				9CC946BD1739798400454FF3 /* AppDelegate.m */,
 				9CC946C51739798400454FF3 /* MainStoryboard.storyboard */,
@@ -182,6 +192,8 @@
 				9CC946C91739798400454FF3 /* StationsViewController.m */,
 				9CC946CB1739798400454FF3 /* ReminderViewController.h */,
 				9CC946CC1739798400454FF3 /* ReminderViewController.m */,
+				9C2B8207174EC22C00E22C0F /* SettingsViewController.h */,
+				9C2B8208174EC22D00E22C0F /* SettingsViewController.m */,
 				9CC946B41739798400454FF3 /* Supporting Files */,
 			);
 			path = MindTheCheckOut;
@@ -399,6 +411,8 @@
 				9C247F7F173EB10B00BE6F07 /* NSDictionary+MKAnnotation.m in Sources */,
 				9C2B8201174E9FCD00E22C0F /* GoogleStationFetcher.m in Sources */,
 				9C2B8205174E9FE900E22C0F /* RejseplanenStationFetcher.m in Sources */,
+				9C2B8209174EC22D00E22C0F /* SettingsViewController.m in Sources */,
+				9C2B820E174EC34D00E22C0F /* Constancts.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,6 +425,8 @@
 				9CF2AD9A173D74FA00DFA5CE /* Recents.m in Sources */,
 				9C2B8202174E9FCD00E22C0F /* GoogleStationFetcher.m in Sources */,
 				9C2B8206174E9FE900E22C0F /* RejseplanenStationFetcher.m in Sources */,
+				9C2B820A174EC22D00E22C0F /* SettingsViewController.m in Sources */,
+				9C2B820F174EC34D00E22C0F /* Constancts.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
