@@ -14,6 +14,13 @@ extern NSString * const kStationLongitude;
 extern NSString * const kStationTypes;
 extern NSString * const kStationID;
 
+extern NSString * const StationFetcherErrorDomain;
+
+typedef NS_ENUM(NSUInteger, StationFetcherErrorCode) {
+    StationFetcherErrorCodeOverLimit,
+    StationFetcherErrorCodeRequestDenied
+};
+
 @interface StationFetcher : NSObject
 + (instancetype)defaultFetcher;
 - (void)findByName:(NSString *)searchName completed:(void (^)(NSArray *stations))block error:(void (^)(NSError *error))error;

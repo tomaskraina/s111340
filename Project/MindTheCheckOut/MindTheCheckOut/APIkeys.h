@@ -8,3 +8,4 @@
 
 #define GOOGLE_PLACES_API_KEY @""
 #define TEST_FLIGHT_APP_TOKEN @""
+#define REJSEPLANEN_BASE_URL @"xmlopen.rejseplanen.dk/bin/rest.exe"

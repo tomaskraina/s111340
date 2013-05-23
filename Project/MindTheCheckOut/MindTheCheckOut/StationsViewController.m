@@ -8,7 +8,7 @@
 
 #import "StationsViewController.h"
 #import "ReminderViewController.h"
-#import "StationFetcher.h"
+#import "RejseplanenStationFetcher.h"
 #import "Recents.h"
 
 @interface StationsViewController () <UISearchBarDelegate, UISearchDisplayDelegate>
@@ -98,7 +98,7 @@
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
     // TODO: activity indicator
-    StationFetcher *fetcher = [StationFetcher defaultFetcher];
+    StationFetcher *fetcher = [RejseplanenStationFetcher defaultFetcher];
     [fetcher findByName:searchString completed:^(NSArray *stations) {
         self.stations = stations;
         
