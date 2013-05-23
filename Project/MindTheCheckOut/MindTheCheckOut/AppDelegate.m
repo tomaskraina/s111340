@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "APIkeys.h"
+#import <AFNetworkActivityIndicatorManager.h>
 
 @implementation AppDelegate
 
@@ -16,6 +17,9 @@
     // !!!: Use the next line only during beta
      [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
     [TestFlight takeOff:TEST_FLIGHT_APP_TOKEN];
+    
+    // Allow handling network indicator by AFNetworking framework
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
     // Override point for customization after application launch.
     return YES;
