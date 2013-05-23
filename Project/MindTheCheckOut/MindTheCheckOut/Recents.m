@@ -8,7 +8,7 @@
 
 #import "Recents.h"
 
-NSUInteger const RECENTS_DEFAULT_LIMIT = 5;
+NSUInteger const RECENTS_DEFAULT_LIMIT = 15;
 
 NSString * const kRecentsAll = @"recents-all";
 NSString * const kRecentDatetime = @"datetime-added";
