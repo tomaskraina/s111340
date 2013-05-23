@@ -129,6 +129,7 @@
         });
     }
     else {
+        // TODO: recreate alarm if activation radius changed
         self.zoomed = NO; // hack...
         [self toggleZoom:self];
     }
