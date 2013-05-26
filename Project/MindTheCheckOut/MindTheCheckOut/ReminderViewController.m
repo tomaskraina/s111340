@@ -20,7 +20,6 @@
 @interface ReminderViewController () <MKMapViewDelegate, UIAlertViewDelegate>
 @property (strong, nonatomic) EKEventStore *eventStore;
 @property (nonatomic, getter = isZoomed) BOOL zoomed;
-@property (strong, nonatomic) Reminder *reminder;
 
 // Labels
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -54,7 +53,19 @@
     }
 }
 
-
+- (void)setReminder:(Reminder *)reminder
+{
+    _reminder = reminder;
+    
+    if (!self.detailItem) {
+        EKAlarm *alarm = [reminder.reminder.alarms lastObject];
+        self.detailItem = @{
+                            kStationName: alarm.structuredLocation.title,
+                            kStationLatitude: [NSString stringWithFormat:@"%f", alarm.structuredLocation.geoLocation.coordinate.latitude],
+                            kStationLongitude: [NSString stringWithFormat:@"%f",alarm.structuredLocation.geoLocation.coordinate.longitude]
+                            };
+    }
+}
 
 - (void)setMapView:(MKMapView *)mapView
 {
@@ -114,7 +125,11 @@
     [super viewDidAppear:animated];
     
     if ([self isMovingToParentViewController] || [self isBeingPresented]) {
-        [self setUpReminder];
+        
+        // Set up new reminder
+        if (!self.reminder) {
+            [self setUpReminder];
+        }
         
         [self.mapView setCenterCoordinate:[[self locationFromStation:self.detailItem] coordinate] animated:YES];
         [self toggleZoom:self];

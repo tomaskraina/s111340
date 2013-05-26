@@ -94,8 +94,8 @@ NSString * const kReminders = @"Reminders";
                 errorBlock(savingError);
             }
             else {
-                // TODO: store ID in persistent storage
                 NSLog(@"Reminder has been set up: %@", reminder);
+                [[self class] saveReminderIndentifier:self.reminder.calendarItemIdentifier];
                 completitionBlock();
             }
         }
@@ -137,7 +137,7 @@ NSString * const kReminders = @"Reminders";
             for (NSString *identifier in [[self class] allRemindersIdentifiers]) {
                 EKCalendarItem *reminder = [eventStore calendarItemWithIdentifier:identifier];
                 if (reminder && [reminder isKindOfClass:[EKReminder class]]) {
-                    [reminders addObject:reminder];
+                    [reminders addObject:[[Reminder alloc] initWithReminder:(EKReminder *)reminder]];
                 }
             }
             completitionBlock(reminders);

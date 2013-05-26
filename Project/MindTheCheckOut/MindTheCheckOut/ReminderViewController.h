@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class Reminder;
+
 @interface ReminderViewController : UIViewController
 
 @property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) Reminder *reminder;
 
 @end

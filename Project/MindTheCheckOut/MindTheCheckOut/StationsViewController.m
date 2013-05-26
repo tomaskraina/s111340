@@ -10,17 +10,23 @@
 #import "ReminderViewController.h"
 #import "RejseplanenStationFetcher.h"
 #import "Recents.h"
+#import "Reminder.h"
+
+typedef NS_ENUM(NSInteger, StationsViewControllerSections) {
+    StationsViewControllerSectionReminders,
+    StationsViewControllerSectionRecents,
+    StationsViewControllerNumberOfSection
+};
 
 @interface StationsViewController () <UISearchBarDelegate, UISearchDisplayDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) NSArray *stations;
+@property (strong, nonatomic) NSArray *reminders;
 @end
 
 @implementation StationsViewController
 
 #pragma mark - Properties
-
-
 
 #pragma mark - UIViewController lifecycle
 
@@ -32,15 +38,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-//    self.navigationItem.leftBarButtonItem = self.editButtonItem;
-//
-//    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-//    self.navigationItem.rightBarButtonItem = addButton;
     
     self.searchBar.placeholder = NSLocalizedStringFromTable(@"SearchBar - Placeholder", @"StationsViewController", @"");
     
     self.stations = [[Recents defaultRecents] allRecents];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self reloadReminders];
 }
 
 - (void)didReceiveMemoryWarning
@@ -68,9 +76,27 @@
 
 #pragma mark - UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return tableView != self.tableView ? 1 : StationsViewControllerNumberOfSection;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.stations.count;
+    if (tableView != self.tableView) {
+        return [self.stations count];
+    }
+    
+    switch (section) {
+        case StationsViewControllerSectionRecents:
+            return [self.stations count];
+        
+        case StationsViewControllerSectionReminders:
+            return [self.reminders count];
+            
+        default:
+            return 0;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -79,19 +105,56 @@
     // must be called on self.tableView
     // more info: http://stackoverflow.com/questions/8066668/ios-5-uisearchdisplaycontroller-crash
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:Identifier];
+    
+    if (tableView != self.tableView || (tableView == self.tableView && indexPath.section == StationsViewControllerSectionRecents)) {
+        NSDictionary *object = self.stations[indexPath.row];
+        cell.textLabel.text = object[kStationName];
+    }
+    else {
+        Reminder *reminder = self.reminders[indexPath.row];
+        cell.textLabel.text = [[[reminder.reminder.alarms lastObject] structuredLocation] title];
+    }
 
-    NSDictionary *object = self.stations[indexPath.row];
-    cell.textLabel.text = object[kStationName];
     return cell;
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    if (tableView == self.tableView) {
+        switch (section) {
+            case StationsViewControllerSectionRecents:
+                return NSLocalizedStringFromTable(@"Table - Recents section - Header", @"StationsViewController", @"");
+            
+            case StationsViewControllerSectionReminders:
+                return NSLocalizedStringFromTable(@"Table - Reminders section - Header", @"StationsViewController", @"");
+                
+            default:
+                return nil;
+        }
+    }
+    else {
+        return nil;
+    }
 }
 
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    // Return NO if you do not want the specified item to be editable.
+//    return YES;
+//}
 
+#pragma mark - Reminders methods
+
+- (void)reloadReminders
+{
+    [Reminder allReminders:^(NSArray *reminders) {
+        self.reminders = reminders;
+        [self.tableView reloadData];
+    } error:^(NSError *error) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Alert - Title - Can't load reminders", @"StationsViewController", @"") message:[error localizedFailureReason] delegate:self cancelButtonTitle:NSLocalizedStringFromTable(@"Alert - Cancel", @"StationsViewController", @"") otherButtonTitles:nil];
+        [alert show];
+    }];
+}
 
 #pragma mark - UISearchBarDelegate & UISearchDisplayDelegate
 
@@ -128,13 +191,20 @@
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         if (indexPath == nil) {
             indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
+            
+            NSDictionary *object = self.stations[indexPath.row];
+            [[segue destinationViewController] setDetailItem:object];
+            [[Recents defaultRecents] addObject:object];
         }
-        
-        NSDictionary *object = self.stations[indexPath.row];
-        [[segue destinationViewController] setDetailItem:object];
-        
-        // add to recents
-        [[Recents defaultRecents] addObject:object];
+        else if (indexPath.section == StationsViewControllerSectionRecents) {
+            NSDictionary *object = self.stations[indexPath.row];
+            [[segue destinationViewController] setDetailItem:object];
+            [[Recents defaultRecents] addObject:object];
+        }
+        else {
+            Reminder *reminder = self.reminders[indexPath.row];
+            [[segue destinationViewController] setReminder:reminder];
+        }
     }
 }
 
