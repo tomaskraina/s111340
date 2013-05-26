@@ -7,7 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <EventKit/EventKit.h>
+
+extern NSString * const ReminderErrorDomain;
 
 @interface Reminder : NSObject
 
+@property (strong, nonatomic, readonly) EKReminder *reminder;
+
+- (instancetype)initWithStructuredLocation:(EKStructuredLocation *)location
+                                 proximity:(EKAlarmProximity)proximity
+                                     title:(NSString *)title;
+
+- (void)save:(void(^)())completitionHandler error:(void (^)(NSError *))errorBlock;;
+- (void)cancel:(void (^)())completitionBlock error:(void (^)(NSError *))errorBlock;
+
++ (void)allReminders:(void (^)(NSArray *reminders))completitionBlock error:(void (^)(NSError *))errorBlock;
 @end

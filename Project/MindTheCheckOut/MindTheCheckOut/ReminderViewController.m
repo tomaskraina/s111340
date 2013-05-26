@@ -12,14 +12,15 @@
 #import <MapKit/MapKit.h>
 #import "NSDictionary+MKAnnotation.h"
 #import "Constancts.h"
+#import "Reminder.h"
 
 #define ORIGIN_LATITUDE 55.67609680
 #define ORIGIN_LONGITUDE 12.56833710
 
-@interface ReminderViewController () <MKMapViewDelegate>
+@interface ReminderViewController () <MKMapViewDelegate, UIAlertViewDelegate>
 @property (strong, nonatomic) EKEventStore *eventStore;
 @property (nonatomic, getter = isZoomed) BOOL zoomed;
-@property (strong, nonatomic) EKReminder *reminder;
+@property (strong, nonatomic) Reminder *reminder;
 
 // Labels
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -105,8 +106,7 @@
     
     [self configureView];
     
-    // TODO: inform user about cancelled reminder after pressing a back button rather than disabling the back button. Since it's easy to create the alarm againg. Design pattern 'undo' rather then 'confirmation'
-    self.navigationItem.hidesBackButton = YES;
+//    self.navigationItem.hidesBackButton = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -139,9 +139,11 @@
 {
     [super viewWillDisappear:animated];
     
-    if ([self isMovingFromParentViewController] || [self isBeingDismissed]) {
-        [self _cancelReminder];
-    }
+//    if ([self isMovingFromParentViewController] || [self isBeingDismissed]) {
+//        [self.reminder cancel:NULL error:^(NSError *error) {
+//            NSLog(@"Can't cancel reminder: %@", error);
+//        }];
+//    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -164,60 +166,68 @@
 
 - (IBAction)cancelReminder:(id)sender
 {
-    [self _cancelReminder];
+    [self.reminder cancel:NULL error:^(NSError *error) {
+        NSLog(@"Can't cancel reminder: %@", error);
+    }];
     
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Reminder methods
 
-- (void)_setUpReminder
+//- (void)_setUpReminder
+//{
+//    EKStructuredLocation *structuredLocation = [EKStructuredLocation locationWithTitle:self.detailItem[kStationName]];
+//    CLLocation *location = [self locationFromStation:self.detailItem];
+//    structuredLocation.geoLocation = location;
+//    structuredLocation.radius = [[NSUserDefaults standardUserDefaults] integerForKey:kActivationRadius]; // metres
+//    
+//    EKAlarm *alarm = [[EKAlarm alloc] init];
+//    alarm.proximity = EKAlarmProximityEnter;
+//    alarm.structuredLocation = structuredLocation;
+//    
+//    EKReminder *reminder = [EKReminder reminderWithEventStore:self.eventStore];
+//    reminder.calendar = [self.eventStore defaultCalendarForNewReminders];
+//    NSString *baseText = NSLocalizedStringFromTable(@"Reminder - Title", @"ReminderViewController", @"Must contain %@ for reminder's name");
+//    reminder.title = [NSString stringWithFormat:baseText, self.detailItem[kStationName]];
+//    [reminder addAlarm:alarm];
+//    
+//    NSError *error;
+//    if (![self.eventStore saveReminder:reminder commit:YES error:&error]) {
+//        NSLog(@"%@", error);
+//    }
+//    else {
+//        self.reminder = reminder;
+//        NSLog(@"Reminder has been set up: %@", reminder);
+//    }
+//}
+
+- (void)setUpReminder
 {
     EKStructuredLocation *structuredLocation = [EKStructuredLocation locationWithTitle:self.detailItem[kStationName]];
     CLLocation *location = [self locationFromStation:self.detailItem];
     structuredLocation.geoLocation = location;
     structuredLocation.radius = [[NSUserDefaults standardUserDefaults] integerForKey:kActivationRadius]; // metres
     
-    EKAlarm *alarm = [[EKAlarm alloc] init];
-    alarm.proximity = EKAlarmProximityEnter;
-    alarm.structuredLocation = structuredLocation;
-    
-    EKReminder *reminder = [EKReminder reminderWithEventStore:self.eventStore];
-    reminder.calendar = [self.eventStore defaultCalendarForNewReminders];
     NSString *baseText = NSLocalizedStringFromTable(@"Reminder - Title", @"ReminderViewController", @"Must contain %@ for reminder's name");
-    reminder.title = [NSString stringWithFormat:baseText, self.detailItem[kStationName]];
-    [reminder addAlarm:alarm];
+    NSString *title = [NSString stringWithFormat:baseText, self.detailItem[kStationName]];
+    Reminder *reminder = [[Reminder alloc] initWithStructuredLocation:structuredLocation proximity:EKAlarmProximityEnter title:title];
     
-    NSError *error;
-    if (![self.eventStore saveReminder:reminder commit:YES error:&error]) {
-        NSLog(@"%@", error);
-    }
-    else {
+    [reminder save:^{
+        NSLog(@"Reminder saved!");
         self.reminder = reminder;
-        NSLog(@"Reminder has been set up: %@", reminder);
-    }
-
-    
-}
-
-- (void)_cancelReminder
-{
-    NSError *error;
-    if (![self.eventStore removeReminder:self.reminder commit:YES error:&error]) {
-        NSLog(@"%@", error);
-    }
-    else {
-        NSLog(@"Reminder has been removed: %@", self.reminder);
-    }
-}
-
-- (void)setUpReminder
-{
-    [self.eventStore requestAccessToEntityType:EKEntityTypeReminder completion:^(BOOL granted, NSError *error) {
-        // data accessible
-        [self _setUpReminder];
+    } error:^(NSError *error) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedFailureReason] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
+        [alert show];
     }];
-    
+}
+
+#pragma mark - UIAlertViewDelegate
+
+// Can't save reminder alert view
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Convinience methods

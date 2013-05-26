@@ -21,6 +21,7 @@
 		9CA61F25173FFDD1006A9E99 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CA61F24173FFDD1006A9E99 /* libz.dylib */; };
 		9CB6F3291740266F00B7FF5F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CB6F3281740266F00B7FF5F /* SystemConfiguration.framework */; };
 		9CB6F32B1740267700B7FF5F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CB6F32A1740267700B7FF5F /* MobileCoreServices.framework */; };
+		9CB9BC221750F69F00084199 /* Reminder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CB9BC211750F69F00084199 /* Reminder.m */; };
 		9CC946AE1739798400454FF3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC946AD1739798400454FF3 /* UIKit.framework */; };
 		9CC946B01739798400454FF3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC946AF1739798400454FF3 /* Foundation.framework */; };
 		9CC946B21739798400454FF3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC946B11739798400454FF3 /* CoreGraphics.framework */; };
@@ -76,6 +77,8 @@
 		9CA61F24173FFDD1006A9E99 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		9CB6F3281740266F00B7FF5F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9CB6F32A1740267700B7FF5F /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		9CB9BC201750F69F00084199 /* Reminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reminder.h; sourceTree = "<group>"; };
+		9CB9BC211750F69F00084199 /* Reminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reminder.m; sourceTree = "<group>"; };
 		9CC946AA1739798400454FF3 /* MindTheCheckOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MindTheCheckOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CC946AD1739798400454FF3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9CC946AF1739798400454FF3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -247,6 +250,8 @@
 				9CF2AD98173D74FA00DFA5CE /* Recents.m */,
 				9C247F7D173EB10B00BE6F07 /* NSDictionary+MKAnnotation.h */,
 				9C247F7E173EB10B00BE6F07 /* NSDictionary+MKAnnotation.m */,
+				9CB9BC201750F69F00084199 /* Reminder.h */,
+				9CB9BC211750F69F00084199 /* Reminder.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -413,6 +418,7 @@
 				9C2B8205174E9FE900E22C0F /* RejseplanenStationFetcher.m in Sources */,
 				9C2B8209174EC22D00E22C0F /* SettingsViewController.m in Sources */,
 				9C2B820E174EC34D00E22C0F /* Constancts.m in Sources */,
+				9CB9BC221750F69F00084199 /* Reminder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
