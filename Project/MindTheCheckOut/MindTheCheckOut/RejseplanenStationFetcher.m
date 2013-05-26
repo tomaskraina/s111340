@@ -45,15 +45,17 @@ long const RejseplanenCoordinatesMultiplier = 1000000; // 1M
 - (void)findByName:(NSString *)searchName completed:(void (^)(NSArray *))block error:(void (^)(NSError *))errorBlock
 {
     NSURLRequest *request = [self urlRequestWithSearchName:searchName];
+    __weak RejseplanenStationFetcher *weakSelf = self;
     AFXMLRequestOperation *requestOperation = [AFXMLRequestOperation XMLParserRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
-        self.completionBlock = block;
-        self.errorBlock = errorBlock;
-        self.foundStations = nil;
-        self.search = searchName;
-        XMLParser.delegate = self;
+        // Need to store the blocks in properties to use them in XMLParser delegate methods
+        weakSelf.completionBlock = block;
+        weakSelf.errorBlock = errorBlock;
+        weakSelf.foundStations = nil;
+        weakSelf.search = searchName;
+        XMLParser.delegate = weakSelf;
         if (![XMLParser parse]) {
             NSLog(@"XML parser error: %@", [XMLParser parserError]);
-            self.errorBlock([XMLParser parserError]);
+            weakSelf.errorBlock([XMLParser parserError]);
         }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
         NSLog(@"AFXMLRequestOperation error: %@", error);
