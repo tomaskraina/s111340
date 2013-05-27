@@ -21,6 +21,9 @@
     // Allow handling network indicator by AFNetworking framework
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
+    // Load default defaults
+    [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Defaults" ofType:@"plist"]]];
+    
     // Override point for customization after application launch.
     return YES;
 }

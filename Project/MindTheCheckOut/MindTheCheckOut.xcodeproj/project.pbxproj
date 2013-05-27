@@ -18,6 +18,7 @@
 		9C2B820A174EC22D00E22C0F /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C2B8208174EC22D00E22C0F /* SettingsViewController.m */; };
 		9C2B820E174EC34D00E22C0F /* Constancts.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C2B820D174EC34D00E22C0F /* Constancts.m */; };
 		9C2B820F174EC34D00E22C0F /* Constancts.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C2B820D174EC34D00E22C0F /* Constancts.m */; };
+		9C7C74D21753B3D1000A0994 /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C7C74D11753B3D1000A0994 /* Defaults.plist */; };
 		9CA61F25173FFDD1006A9E99 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CA61F24173FFDD1006A9E99 /* libz.dylib */; };
 		9CB6F3291740266F00B7FF5F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CB6F3281740266F00B7FF5F /* SystemConfiguration.framework */; };
 		9CB6F32B1740267700B7FF5F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CB6F32A1740267700B7FF5F /* MobileCoreServices.framework */; };
@@ -74,6 +75,7 @@
 		9C2B8208174EC22D00E22C0F /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		9C2B820C174EC34D00E22C0F /* Constancts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constancts.h; sourceTree = "<group>"; };
 		9C2B820D174EC34D00E22C0F /* Constancts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constancts.m; sourceTree = "<group>"; };
+		9C7C74D11753B3D1000A0994 /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Defaults.plist; sourceTree = "<group>"; };
 		9C94E9C8148F494AA531FEE0 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		9CA61F24173FFDD1006A9E99 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		9CB6F3281740266F00B7FF5F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -226,6 +228,7 @@
 				9CC946BF1739798400454FF3 /* Default.png */,
 				9CC946C11739798400454FF3 /* Default@2x.png */,
 				9CC946C31739798400454FF3 /* Default-568h@2x.png */,
+				9C7C74D11753B3D1000A0994 /* Defaults.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -281,9 +284,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9CC946A91739798400454FF3 /* MindTheCheckOut */ = {
+		9CC946A91739798400454FF3 /* Mind the Check Out */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9CC946E51739798400454FF3 /* Build configuration list for PBXNativeTarget "MindTheCheckOut" */;
+			buildConfigurationList = 9CC946E51739798400454FF3 /* Build configuration list for PBXNativeTarget "Mind the Check Out" */;
 			buildPhases = (
 				248818846BF645A79F8CEC8C /* Check Pods Manifest.lock */,
 				9CC946A61739798400454FF3 /* Sources */,
@@ -295,7 +298,7 @@
 			);
 			dependencies = (
 			);
-			name = MindTheCheckOut;
+			name = "Mind the Check Out";
 			productName = MindTheCheckOut;
 			productReference = 9CC946AA1739798400454FF3 /* MindTheCheckOut.app */;
 			productType = "com.apple.product-type.application";
@@ -340,7 +343,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9CC946A91739798400454FF3 /* MindTheCheckOut */,
+				9CC946A91739798400454FF3 /* Mind the Check Out */,
 				9CC946D21739798400454FF3 /* MindTheCheckOutTests */,
 			);
 		};
@@ -358,6 +361,7 @@
 				9CC946C71739798400454FF3 /* MainStoryboard.storyboard in Resources */,
 				9CF2ADAB173D8EA800DFA5CE /* StationsViewController.strings in Resources */,
 				9CF2ADAE173D903E00DFA5CE /* ReminderViewController.strings in Resources */,
+				9C7C74D21753B3D1000A0994 /* Defaults.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,7 +459,7 @@
 /* Begin PBXTargetDependency section */
 		9CC946D91739798400454FF3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9CC946A91739798400454FF3 /* MindTheCheckOut */;
+			target = 9CC946A91739798400454FF3 /* Mind the Check Out */;
 			targetProxy = 9CC946D81739798400454FF3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -636,7 +640,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9CC946E51739798400454FF3 /* Build configuration list for PBXNativeTarget "MindTheCheckOut" */ = {
+		9CC946E51739798400454FF3 /* Build configuration list for PBXNativeTarget "Mind the Check Out" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9CC946E61739798400454FF3 /* Debug */,
