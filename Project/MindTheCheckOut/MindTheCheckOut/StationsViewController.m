@@ -81,7 +81,13 @@ typedef NS_ENUM(NSInteger, StationsViewControllerSections) {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return tableView != self.tableView ? 1 : StationsViewControllerNumberOfSection;
+    if (tableView == self.tableView) {
+        return [self.reminders count] ? StationsViewControllerNumberOfSection : 1;
+    }
+    else {
+        return 1;
+    }
+        
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -90,15 +96,11 @@ typedef NS_ENUM(NSInteger, StationsViewControllerSections) {
         return [self.foundStations count];
     }
     
-    switch (section) {
-        case StationsViewControllerSectionRecents:
-            return [self.recents count];
-        
-        case StationsViewControllerSectionReminders:
-            return [self.reminders count];
-            
-        default:
-            return 0;
+    if ([self.reminders count] && section == StationsViewControllerSectionReminders) {
+        return [self.reminders count];
+    }
+    else {
+        return [self.recents count];
     }
 }
 
@@ -113,13 +115,13 @@ typedef NS_ENUM(NSInteger, StationsViewControllerSections) {
         NSDictionary *object = self.foundStations[indexPath.row];
         cell.textLabel.text = object[kStationName];
     }
-    else if (indexPath.section == StationsViewControllerSectionRecents) {
-        NSDictionary *object = self.recents[indexPath.row];
-        cell.textLabel.text = object[kStationName];
-    }
-    else {
+    else if ([self.reminders count] && indexPath.section == StationsViewControllerSectionReminders) {
         Reminder *reminder = self.reminders[indexPath.row];
         cell.textLabel.text = [[[reminder.reminder.alarms lastObject] structuredLocation] title];
+    }
+    else {
+        NSDictionary *object = self.recents[indexPath.row];
+        cell.textLabel.text = object[kStationName];
     }
 
     return cell;
@@ -127,20 +129,14 @@ typedef NS_ENUM(NSInteger, StationsViewControllerSections) {
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (tableView == self.tableView) {
-        switch (section) {
-            case StationsViewControllerSectionRecents:
-                return NSLocalizedStringFromTable(@"Table - Recents section - Header", @"StationsViewController", @"");
-            
-            case StationsViewControllerSectionReminders:
-                return NSLocalizedStringFromTable(@"Table - Reminders section - Header", @"StationsViewController", @"");
-                
-            default:
-                return nil;
-        }
+    if (tableView != self.tableView) {
+        return nil;
+    }
+    else if ([self.reminders count] && section == StationsViewControllerSectionReminders) {
+        return NSLocalizedStringFromTable(@"Table - Reminders section - Header", @"StationsViewController", @"");
     }
     else {
-        return nil;
+        return NSLocalizedStringFromTable(@"Table - Recents section - Header", @"StationsViewController", @"");
     }
 }
 
@@ -205,14 +201,14 @@ typedef NS_ENUM(NSInteger, StationsViewControllerSections) {
             [[segue destinationViewController] setDetailItem:object];
             [[Recents defaultRecents] addObject:object];
         }
-        else if (indexPath.section == StationsViewControllerSectionRecents) {
+        else if ([self.reminders count] && indexPath.section == StationsViewControllerSectionReminders) {
+            Reminder *reminder = self.reminders[indexPath.row];
+            [[segue destinationViewController] setReminder:reminder];
+        }
+        else {
             NSDictionary *object = self.recents[indexPath.row];
             [[segue destinationViewController] setDetailItem:object];
             [[Recents defaultRecents] addObject:object];
-        }
-        else {
-            Reminder *reminder = self.reminders[indexPath.row];
-            [[segue destinationViewController] setReminder:reminder];
         }
     }
 }
