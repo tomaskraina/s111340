@@ -246,7 +246,7 @@ Feel free to close this app or just lock your screen.</string>
             </objects>
             <point key="canvasLocation" x="902" y="64"/>
         </scene>
-        <!--Settings View Controller-->
+        <!--Settings View Controller - Settings-->
         <scene sceneID="EmV-9y-xSR">
             <objects>
                 <tableViewController id="rk8-hE-N2o" customClass="SettingsViewController" sceneMemberID="viewController">
@@ -255,44 +255,11 @@ Feel free to close this app or just lock your screen.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection headerTitle="Default Values" id="fRM-wO-JQ6">
+                            <tableViewSection headerTitle="" id="fRM-wO-JQ6">
+                                <string key="footerTitle">Activation radius is a distance to a station where the reminder will be fired. The value will apply for this and all newly created reminders.</string>
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="57j-YC-qQZ">
-                                        <rect key="frame" x="0.0" y="46" width="320" height="45"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Radius" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OES-pk-JC6">
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
-                                                <stepper opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="6Iv-80-Ec6">
-                                                    <connections>
-                                                        <action selector="setActivationRadius:" destination="rk8-hE-N2o" eventType="valueChanged" id="B1a-oe-WlQ"/>
-                                                    </connections>
-                                                </stepper>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="150m" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gqg-uF-kKC">
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="OES-pk-JC6" firstAttribute="leading" secondItem="57j-YC-qQZ" secondAttribute="leading" constant="20" type="default" id="JIw-ZV-hkP"/>
-                                            <constraint firstItem="Gqg-uF-kKC" firstAttribute="baseline" secondItem="OES-pk-JC6" secondAttribute="baseline" type="default" id="dhW-Ce-rc6"/>
-                                            <constraint firstAttribute="trailing" secondItem="6Iv-80-Ec6" secondAttribute="trailing" constant="20" type="default" id="h08-Mz-VKE"/>
-                                            <constraint firstItem="6Iv-80-Ec6" firstAttribute="leading" secondItem="Gqg-uF-kKC" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="pk5-P6-Egy"/>
-                                            <constraint firstItem="OES-pk-JC6" firstAttribute="centerY" secondItem="57j-YC-qQZ" secondAttribute="centerY" type="default" id="pyM-OI-cJy"/>
-                                            <constraint firstItem="Gqg-uF-kKC" firstAttribute="centerY" secondItem="6Iv-80-Ec6" secondAttribute="centerY" type="default" id="rsy-YF-ZNE"/>
-                                        </constraints>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="EAm-II-T3R">
-                                        <rect key="frame" x="0.0" y="91" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="10" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
@@ -321,8 +288,42 @@ Feel free to close this app or just lock your screen.</string>
                                             <constraint firstItem="exv-8b-dUU" firstAttribute="leading" secondItem="EAm-II-T3R" secondAttribute="leading" constant="20" type="default" id="7i5-E4-YSc"/>
                                             <constraint firstItem="z0x-oj-182" firstAttribute="baseline" secondItem="exv-8b-dUU" secondAttribute="baseline" type="default" id="8mf-nD-ybB"/>
                                             <constraint firstItem="z0x-oj-182" firstAttribute="centerY" secondItem="45y-tB-RFl" secondAttribute="centerY" type="default" id="J56-M6-Io5"/>
+                                            <constraint firstItem="exv-8b-dUU" firstAttribute="centerY" secondItem="EAm-II-T3R" secondAttribute="centerY" type="default" id="Lih-OQ-FO1"/>
                                             <constraint firstAttribute="trailing" secondItem="45y-tB-RFl" secondAttribute="trailing" constant="20" type="default" id="Roc-gw-7U6"/>
-                                            <constraint firstItem="45y-tB-RFl" firstAttribute="top" secondItem="EAm-II-T3R" secondAttribute="top" constant="8" id="ZiP-Yq-svq"/>
+                                        </constraints>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="57j-YC-qQZ">
+                                        <rect key="frame" x="0.0" y="55" width="320" height="45"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Radius" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OES-pk-JC6">
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <stepper opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="6Iv-80-Ec6">
+                                                    <connections>
+                                                        <action selector="setActivationRadius:" destination="rk8-hE-N2o" eventType="valueChanged" id="B1a-oe-WlQ"/>
+                                                    </connections>
+                                                </stepper>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="150m" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gqg-uF-kKC">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="6Iv-80-Ec6" firstAttribute="top" secondItem="57j-YC-qQZ" secondAttribute="top" constant="8" id="HSD-n1-Xsq"/>
+                                            <constraint firstItem="OES-pk-JC6" firstAttribute="leading" secondItem="57j-YC-qQZ" secondAttribute="leading" constant="20" type="default" id="JIw-ZV-hkP"/>
+                                            <constraint firstItem="Gqg-uF-kKC" firstAttribute="baseline" secondItem="OES-pk-JC6" secondAttribute="baseline" type="default" id="dhW-Ce-rc6"/>
+                                            <constraint firstAttribute="trailing" secondItem="6Iv-80-Ec6" secondAttribute="trailing" constant="20" type="default" id="h08-Mz-VKE"/>
+                                            <constraint firstItem="6Iv-80-Ec6" firstAttribute="leading" secondItem="Gqg-uF-kKC" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="pk5-P6-Egy"/>
+                                            <constraint firstItem="Gqg-uF-kKC" firstAttribute="centerY" secondItem="6Iv-80-Ec6" secondAttribute="centerY" type="default" id="rsy-YF-ZNE"/>
                                         </constraints>
                                     </tableViewCell>
                                 </cells>
@@ -333,7 +334,7 @@ Feel free to close this app or just lock your screen.</string>
                             <outlet property="delegate" destination="rk8-hE-N2o" id="3sM-97-nEH"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="QXS-TT-N9G">
+                    <navigationItem key="navigationItem" title="Settings" id="QXS-TT-N9G">
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="n8z-9S-JCv">
                             <connections>
                                 <action selector="done:" destination="rk8-hE-N2o" id="nDg-Wc-16x"/>
@@ -401,6 +402,8 @@ Feel free to close this app or just lock your screen.</string>
         <class className="ReminderViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ReminderViewController.h"/>
             <relationships>
+                <relationship kind="action" name="cancelReminder:"/>
+                <relationship kind="action" name="toggleZoom:"/>
                 <relationship kind="outlet" name="cancelButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="mapButton" candidateClass="UIButton"/>
@@ -413,6 +416,9 @@ Feel free to close this app or just lock your screen.</string>
         <class className="SettingsViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
             <relationships>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="action" name="setActivationRadius:" candidateClass="UIStepper"/>
+                <relationship kind="action" name="setZoomRadius:" candidateClass="UIStepper"/>
                 <relationship kind="outlet" name="activationRadiusLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="activationRadiusStepper" candidateClass="UIStepper"/>
                 <relationship kind="outlet" name="zoomRadiusLabel" candidateClass="UILabel"/>
@@ -422,6 +428,7 @@ Feel free to close this app or just lock your screen.</string>
         <class className="StationsViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/StationsViewController.h"/>
             <relationships>
+                <relationship kind="action" name="eraseHistory:"/>
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
             </relationships>
         </class>
