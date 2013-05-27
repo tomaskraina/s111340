@@ -4,12 +4,12 @@ s111340
 Content
 -------
 
-- [DONE] Assignment #1
-- [DONE] Assignment #2
-- [DONE] Assignment #3
-- [DONE] Assignment #4
-- [DONE] Assignment #5
-- [DONE] Final Project
+- [DONE] [Assignment #1](#assignment-1)
+- [DONE] [Assignment #2](#assignment-2)
+- [DONE] [Assignment #3](#assignment-3)
+- [DONE] [Assignment #4](#assignment-4)
+- [DONE] [Assignment #5](#assignment-5)
+- [DONE] [Final Project](#final-project)
 
 
 Assignment #1
@@ -89,7 +89,11 @@ Assignment #5
 - All [DONE]
 
 ### Note
-Don't forget to set the FlickrAPIKey constant in FlickrAPIKey.h file to make the Assignment #4 and #5 working.
+Don't forget to set the `FlickrAPIKey` constant in `SPoT/FlickrFetcher/FlickrAPIKey.h` file to make the Assignment #4 and #5 working. To do that, you will need to get your own API key [here](http://www.flickr.com/services/api/misc.api_keys.html).
+
+```objective-c
+#define FlickrAPIKey @"<insert-your-flickr-api-key-here>"
+```
 
 Final Project
 -------------

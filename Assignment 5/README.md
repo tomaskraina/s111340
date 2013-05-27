@@ -8,7 +8,11 @@ Assignment #5
 - All [DONE]
 
 ### Note
-Don't forget to set the FlickrAPIKey constant in FlickrAPIKey.h file to make the Assignment #5 working.
+Don't forget to set the `FlickrAPIKey` constant in `SPoT/FlickrFetcher/FlickrAPIKey.h` file to make the Assignment #5 working. To do that, you will need to get your own API key [here](http://www.flickr.com/services/api/misc.api_keys.html).
+
+```objective-c
+#define FlickrAPIKey @"<insert-your-flickr-api-key-here>"
+```
 
 Contact
 -------
