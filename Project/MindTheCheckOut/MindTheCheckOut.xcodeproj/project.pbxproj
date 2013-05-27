@@ -22,6 +22,7 @@
 		9CB6F3291740266F00B7FF5F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CB6F3281740266F00B7FF5F /* SystemConfiguration.framework */; };
 		9CB6F32B1740267700B7FF5F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CB6F32A1740267700B7FF5F /* MobileCoreServices.framework */; };
 		9CB9BC221750F69F00084199 /* Reminder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CB9BC211750F69F00084199 /* Reminder.m */; };
+		9CB9BC251752DBE300084199 /* PinRadiusAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CB9BC241752DBE300084199 /* PinRadiusAnnotationView.m */; };
 		9CC946AE1739798400454FF3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC946AD1739798400454FF3 /* UIKit.framework */; };
 		9CC946B01739798400454FF3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC946AF1739798400454FF3 /* Foundation.framework */; };
 		9CC946B21739798400454FF3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC946B11739798400454FF3 /* CoreGraphics.framework */; };
@@ -79,6 +80,8 @@
 		9CB6F32A1740267700B7FF5F /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		9CB9BC201750F69F00084199 /* Reminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reminder.h; sourceTree = "<group>"; };
 		9CB9BC211750F69F00084199 /* Reminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reminder.m; sourceTree = "<group>"; };
+		9CB9BC231752DBE200084199 /* PinRadiusAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinRadiusAnnotationView.h; sourceTree = "<group>"; };
+		9CB9BC241752DBE300084199 /* PinRadiusAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinRadiusAnnotationView.m; sourceTree = "<group>"; };
 		9CC946AA1739798400454FF3 /* MindTheCheckOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MindTheCheckOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CC946AD1739798400454FF3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9CC946AF1739798400454FF3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -195,6 +198,8 @@
 				9CC946C91739798400454FF3 /* StationsViewController.m */,
 				9CC946CB1739798400454FF3 /* ReminderViewController.h */,
 				9CC946CC1739798400454FF3 /* ReminderViewController.m */,
+				9CB9BC231752DBE200084199 /* PinRadiusAnnotationView.h */,
+				9CB9BC241752DBE300084199 /* PinRadiusAnnotationView.m */,
 				9C2B8207174EC22C00E22C0F /* SettingsViewController.h */,
 				9C2B8208174EC22D00E22C0F /* SettingsViewController.m */,
 				9CC946B41739798400454FF3 /* Supporting Files */,
@@ -419,6 +424,7 @@
 				9C2B8209174EC22D00E22C0F /* SettingsViewController.m in Sources */,
 				9C2B820E174EC34D00E22C0F /* Constancts.m in Sources */,
 				9CB9BC221750F69F00084199 /* Reminder.m in Sources */,
+				9CB9BC251752DBE300084199 /* PinRadiusAnnotationView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

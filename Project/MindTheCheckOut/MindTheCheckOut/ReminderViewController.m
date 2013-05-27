@@ -13,6 +13,7 @@
 #import "NSDictionary+MKAnnotation.h"
 #import "Constancts.h"
 #import "Reminder.h"
+#import "PinRadiusAnnotationView.h"
 
 #define ORIGIN_LATITUDE 55.67609680
 #define ORIGIN_LONGITUDE 12.56833710
@@ -124,41 +125,14 @@
 {
     [super viewDidAppear:animated];
     
-    if ([self isMovingToParentViewController] || [self isBeingPresented]) {
-        
-        // Set up new reminder
-        if (!self.reminder) {
-            [self setUpReminder];
-        }
-        
-        [self.mapView setCenterCoordinate:[[self locationFromStation:self.detailItem] coordinate] animated:YES];
-        [self toggleZoom:self];
-        
-        [self.mapView removeAnnotations:self.mapView.annotations];
-        [self.mapView addAnnotation:self.detailItem];
-        
-        double delayInSeconds = .5;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [self.mapView selectAnnotation:self.detailItem animated:YES];
-        });
+    // Set up new reminder if not exists yet
+    if (!self.reminder) {
+        [self setUpReminder];
     }
-    else {
-        // TODO: recreate alarm if activation radius changed
-        self.zoomed = NO; // hack...
-        [self toggleZoom:self];
-    }
-}
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
+    // TODO: recreate alarm if activation radius changed
     
-//    if ([self isMovingFromParentViewController] || [self isBeingDismissed]) {
-//        [self.reminder cancel:NULL error:^(NSError *error) {
-//            NSLog(@"Can't cancel reminder: %@", error);
-//        }];
-//    }
+    [self zoomToSelectedStation];
 }
 
 - (void)didReceiveMemoryWarning
@@ -172,12 +146,9 @@
 {
     double zoomRadius = [[NSUserDefaults standardUserDefaults] doubleForKey:kZoomRadius];
     NSLog(@"Toggle zoom: %@", self.isZoomed ? @"out" : [NSString stringWithFormat:@"in %.0fm", zoomRadius]);
-    
-    [self.mapView setRegion:self.isZoomed ? [self defaultCoordinateRegion] : [self zoomedCoordinateRegion] animated:YES];
-    
-    self.zoomed = !self.isZoomed;
-}
 
+    self.isZoomed ? [self zoomOut] : [self zoomIn];
+}
 
 - (IBAction)cancelReminder:(id)sender
 {
@@ -189,33 +160,6 @@
 }
 
 #pragma mark - Reminder methods
-
-//- (void)_setUpReminder
-//{
-//    EKStructuredLocation *structuredLocation = [EKStructuredLocation locationWithTitle:self.detailItem[kStationName]];
-//    CLLocation *location = [self locationFromStation:self.detailItem];
-//    structuredLocation.geoLocation = location;
-//    structuredLocation.radius = [[NSUserDefaults standardUserDefaults] integerForKey:kActivationRadius]; // metres
-//    
-//    EKAlarm *alarm = [[EKAlarm alloc] init];
-//    alarm.proximity = EKAlarmProximityEnter;
-//    alarm.structuredLocation = structuredLocation;
-//    
-//    EKReminder *reminder = [EKReminder reminderWithEventStore:self.eventStore];
-//    reminder.calendar = [self.eventStore defaultCalendarForNewReminders];
-//    NSString *baseText = NSLocalizedStringFromTable(@"Reminder - Title", @"ReminderViewController", @"Must contain %@ for reminder's name");
-//    reminder.title = [NSString stringWithFormat:baseText, self.detailItem[kStationName]];
-//    [reminder addAlarm:alarm];
-//    
-//    NSError *error;
-//    if (![self.eventStore saveReminder:reminder commit:YES error:&error]) {
-//        NSLog(@"%@", error);
-//    }
-//    else {
-//        self.reminder = reminder;
-//        NSLog(@"Reminder has been set up: %@", reminder);
-//    }
-//}
 
 - (void)setUpReminder
 {
@@ -247,6 +191,35 @@
 
 #pragma mark - Convinience methods
 
+- (void)zoomIn
+{
+    [self.mapView setRegion:[self zoomedCoordinateRegion] animated:YES];
+    self.zoomed = YES;
+}
+
+- (void)zoomOut
+{
+    [self.mapView setRegion:[self defaultCoordinateRegion] animated:YES];
+    self.zoomed = NO;
+}
+
+- (void)zoomToSelectedStation
+{
+    CLLocationCoordinate2D coordinates = [[self locationFromStation:self.detailItem] coordinate];
+    
+    [self.mapView setCenterCoordinate:coordinates animated:YES];
+    [self zoomIn];
+    
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    [self.mapView addAnnotation:self.detailItem];
+    
+    double delayInSeconds = .5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self.mapView selectAnnotation:self.detailItem animated:YES];
+    });
+}
+
 - (MKCoordinateRegion)zoomedCoordinateRegion
 {
     double zoomRadius = [[NSUserDefaults standardUserDefaults] doubleForKey:kZoomRadius];
@@ -270,14 +243,40 @@
     if (annotation == mapView.userLocation) return nil;
     
     static NSString *AnnotationIdentifier = @"Pin";
-    MKPinAnnotationView *annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:AnnotationIdentifier];
+    PinRadiusAnnotationView *annotationView = (PinRadiusAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:AnnotationIdentifier];
     if (annotationView == nil) {
-        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationIdentifier];
+        annotationView = [[PinRadiusAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationIdentifier];
         annotationView.canShowCallout = YES;
         annotationView.animatesDrop = YES;
     }
     
+    // remove and add overlay in case the radius has changed
+    [self.mapView removeOverlay:annotationView.radiusOverlay];
+    id<MKOverlay> overlay = [self circleOverlayForAnnotation:annotation];
+    annotationView.radiusOverlay = overlay;
+    [self.mapView addOverlay:overlay];
+    
     return annotationView;
+}
+
+- (MKCircle *)circleOverlayForAnnotation:(id<MKAnnotation>)annotation
+{    
+    double radius = (double)[[NSUserDefaults standardUserDefaults] integerForKey:kActivationRadius];
+    MKCircle *circle = [MKCircle circleWithCenterCoordinate:annotation.coordinate radius:radius];
+    return circle;
+}
+
+- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay {
+	if([overlay isKindOfClass:[MKCircle class]]) {
+		// Create the view for the radius overlay.
+		MKCircleView *circleView = [[MKCircleView alloc] initWithOverlay:overlay];
+		circleView.strokeColor = [UIColor redColor];
+		circleView.fillColor = [[UIColor redColor] colorWithAlphaComponent:.4];
+		
+		return circleView;
+	}
+	
+	return nil;
 }
 
 @end

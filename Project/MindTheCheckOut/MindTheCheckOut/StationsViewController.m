@@ -20,8 +20,9 @@ typedef NS_ENUM(NSInteger, StationsViewControllerSections) {
 
 @interface StationsViewController () <UISearchBarDelegate, UISearchDisplayDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
-@property (strong, nonatomic) NSArray *stations;
+@property (strong, nonatomic) NSArray *recents;
 @property (strong, nonatomic) NSArray *reminders;
+@property (strong, nonatomic) NSArray *foundStations;
 @end
 
 @implementation StationsViewController
@@ -41,14 +42,16 @@ typedef NS_ENUM(NSInteger, StationsViewControllerSections) {
     
     self.searchBar.placeholder = NSLocalizedStringFromTable(@"SearchBar - Placeholder", @"StationsViewController", @"");
     
-    self.stations = [[Recents defaultRecents] allRecents];
+    self.recents = [[Recents defaultRecents] allRecents];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    [self reloadReminders];
+    if (!self.searchDisplayController.isActive) {
+        [self reloadReminders];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -69,7 +72,7 @@ typedef NS_ENUM(NSInteger, StationsViewControllerSections) {
 - (IBAction)eraseHistory:(id)sender
 {
     [[Recents defaultRecents] eraseRecents];
-    self.stations = nil;
+    self.recents = nil;
     [self.tableView reloadData];
 }
 
@@ -84,12 +87,12 @@ typedef NS_ENUM(NSInteger, StationsViewControllerSections) {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView != self.tableView) {
-        return [self.stations count];
+        return [self.foundStations count];
     }
     
     switch (section) {
         case StationsViewControllerSectionRecents:
-            return [self.stations count];
+            return [self.recents count];
         
         case StationsViewControllerSectionReminders:
             return [self.reminders count];
@@ -106,8 +109,12 @@ typedef NS_ENUM(NSInteger, StationsViewControllerSections) {
     // more info: http://stackoverflow.com/questions/8066668/ios-5-uisearchdisplaycontroller-crash
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:Identifier];
     
-    if (tableView != self.tableView || (tableView == self.tableView && indexPath.section == StationsViewControllerSectionRecents)) {
-        NSDictionary *object = self.stations[indexPath.row];
+    if (tableView != self.tableView) {
+        NSDictionary *object = self.foundStations[indexPath.row];
+        cell.textLabel.text = object[kStationName];
+    }
+    else if (indexPath.section == StationsViewControllerSectionRecents) {
+        NSDictionary *object = self.recents[indexPath.row];
         cell.textLabel.text = object[kStationName];
     }
     else {
@@ -163,7 +170,7 @@ typedef NS_ENUM(NSInteger, StationsViewControllerSections) {
     // TODO: activity indicator
     StationFetcher *fetcher = [RejseplanenStationFetcher defaultFetcher];
     [fetcher findByName:searchString completed:^(NSArray *stations) {
-        self.stations = stations;
+        self.foundStations = stations;
         
         // Refresh result's table view
         [controller.searchResultsTableView reloadData];
@@ -179,8 +186,10 @@ typedef NS_ENUM(NSInteger, StationsViewControllerSections) {
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView
 {
-    self.stations = [[Recents defaultRecents] allRecents];
+    self.recents = [[Recents defaultRecents] allRecents];
     [self.tableView reloadData];
+    
+    [self reloadReminders];
 }
 
 #pragma mark - UIStoryboarSegue
@@ -192,12 +201,12 @@ typedef NS_ENUM(NSInteger, StationsViewControllerSections) {
         if (indexPath == nil) {
             indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
             
-            NSDictionary *object = self.stations[indexPath.row];
+            NSDictionary *object = self.foundStations[indexPath.row];
             [[segue destinationViewController] setDetailItem:object];
             [[Recents defaultRecents] addObject:object];
         }
         else if (indexPath.section == StationsViewControllerSectionRecents) {
-            NSDictionary *object = self.stations[indexPath.row];
+            NSDictionary *object = self.recents[indexPath.row];
             [[segue destinationViewController] setDetailItem:object];
             [[Recents defaultRecents] addObject:object];
         }
