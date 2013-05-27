@@ -147,6 +147,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9CB9BC261752E59A00084199 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9CB9BC231752DBE200084199 /* PinRadiusAnnotationView.h */,
+				9CB9BC241752DBE300084199 /* PinRadiusAnnotationView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		9CC946A11739798400454FF3 = {
 			isa = PBXGroup;
 			children = (
@@ -189,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				9CF2AD96173D731400DFA5CE /* Model */,
+				9CB9BC261752E59A00084199 /* Views */,
 				9C2B820C174EC34D00E22C0F /* Constancts.h */,
 				9C2B820D174EC34D00E22C0F /* Constancts.m */,
 				9CC946BC1739798400454FF3 /* AppDelegate.h */,
@@ -198,8 +208,6 @@
 				9CC946C91739798400454FF3 /* StationsViewController.m */,
 				9CC946CB1739798400454FF3 /* ReminderViewController.h */,
 				9CC946CC1739798400454FF3 /* ReminderViewController.m */,
-				9CB9BC231752DBE200084199 /* PinRadiusAnnotationView.h */,
-				9CB9BC241752DBE300084199 /* PinRadiusAnnotationView.m */,
 				9C2B8207174EC22C00E22C0F /* SettingsViewController.h */,
 				9C2B8208174EC22D00E22C0F /* SettingsViewController.m */,
 				9CC946B41739798400454FF3 /* Supporting Files */,

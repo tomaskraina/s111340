@@ -163,7 +163,7 @@ NSString * const kReminders = @"Reminders";
         reminders = [NSMutableArray array];
     }
     
-    [reminders addObject:identifier];
+    [reminders insertObject:identifier atIndex:0];
     
     [storage setObject:reminders forKey:kReminders];
     [storage synchronize];

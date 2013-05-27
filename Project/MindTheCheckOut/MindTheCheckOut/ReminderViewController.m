@@ -130,7 +130,12 @@
         [self setUpReminder];
     }
 
-    // TODO: recreate alarm if activation radius changed
+    // Recreate alarm if activation radius changed
+    if ([[[self.reminder.reminder.alarms lastObject] structuredLocation] radius] != [[NSUserDefaults standardUserDefaults] integerForKey:kActivationRadius]) {
+        [self.reminder cancel:^{
+            [self setUpReminder];
+        } error:NULL];
+    }
     
     [self zoomToSelectedStation];
 }
