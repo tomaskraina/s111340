@@ -11,6 +11,14 @@
 
 extern NSString * const ReminderErrorDomain;
 
+typedef NS_ENUM(NSUInteger, ReminderErrorCode) {
+    ReminderErrorCodeAccessRestricted = 1,
+    ReminderErrorCodeAccessDenied,
+    ReminderErrorCodeSaveFailed,
+    ReminderErrorCodeRemoveFailed,
+    ReminderErrorCodeReasonUnknown
+};
+
 @interface Reminder : NSObject
 
 @property (strong, nonatomic, readonly) EKReminder *reminder;

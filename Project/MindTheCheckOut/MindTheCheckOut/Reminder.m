@@ -8,7 +8,7 @@
 
 #import "Reminder.h"
 
-NSString * const ReminderErrorDomain = @"Reminder";
+NSString * const ReminderErrorDomain = @"com.tomkraina.MindTheCheckout.Reminder";
 NSString * const kReminders = @"Reminders";
 
 @interface Reminder ()
@@ -90,8 +90,8 @@ NSString * const kReminders = @"Reminders";
             EKReminder *reminder = self.reminder;
             NSError *savingError;
             if (![self.eventStore saveReminder:reminder commit:YES error:&savingError]) {
-                NSLog(@"%@", savingError);
-                errorBlock(savingError);
+                NSLog(@"Save reminder failed: %@", savingError);
+                errorBlock([[self class] errorForCode:ReminderErrorCodeSaveFailed underlyingError:savingError]);
             }
             else {
                 NSLog(@"Reminder has been set up: %@", reminder);
@@ -111,8 +111,8 @@ NSString * const kReminders = @"Reminders";
         if (granted) {
             NSError *cancellingError;
             if (![self.eventStore removeReminder:self.reminder commit:YES error:&cancellingError]) {
-                NSLog(@"%@", cancellingError);
-                errorBlock(cancellingError);
+                NSLog(@"Remove reminder failed: %@", cancellingError);
+                errorBlock([[self class] errorForCode:ReminderErrorCodeRemoveFailed underlyingError:cancellingError]);
             }
             else {
                 NSLog(@"Reminder has been removed: %@", self.reminder);
@@ -200,13 +200,6 @@ NSString * const kReminders = @"Reminders";
     }
 }
 
-+ (NSError *)errorForAuthorizationStatus:(EKAuthorizationStatus)authorizationStatus
-{
-    NSError *error = [NSError errorWithDomain:ReminderErrorDomain code:authorizationStatus userInfo:nil];
-    // TODO: failure reason
-    return error;
-}
-
 + (void)requestAccess:(void (^)(BOOL granted, NSError *error))completitionBlock
 {
     [[[self class] eventStore] requestAccessToEntityType:EKEntityTypeReminder completion:^(BOOL granted, NSError *error) {
@@ -221,6 +214,58 @@ NSString * const kReminders = @"Reminders";
     alarm.proximity = proximity;
     
     return alarm;
+}
+
+#pragma mark - Error factory methods
+
++ (NSError *)errorForCode:(ReminderErrorCode)code underlyingError:(NSError *)underlyingError
+{
+    NSString *decription, *failureReason, *recoverySuggestion;
+    switch (code) {
+        case ReminderErrorCodeSaveFailed:
+            decription = NSLocalizedStringFromTable(@"Saving reminder failed", @"Reminder", nil);
+            recoverySuggestion = NSLocalizedStringFromTable(@"Try to adding the reminder again.", @"Reminder", nil);
+            break;
+        case ReminderErrorCodeRemoveFailed:
+            decription = NSLocalizedStringFromTable(@"Removing reminder failed", @"Reminder", nil);
+            recoverySuggestion = NSLocalizedStringFromTable(@"Try to canceling the reminder again.", @"Reminder", nil);
+            break;
+        case ReminderErrorCodeAccessRestricted:
+        case ReminderErrorCodeAccessDenied:
+            decription = NSLocalizedStringFromTable(@"Access to Reminders denied. This application is not allowed to access existing reminders or create any new ones.", @"Reminder", nil);
+            failureReason = NSLocalizedStringFromTable(@"The application can't use Reminders because the access has been denied.", @"Reminder", nil);
+            recoverySuggestion = NSLocalizedStringFromTable(@"Grand access to Reminders in Settings/Privacy/Remindes", @"Reminder", nil);
+            break;
+        default:
+            break;
+    }
+    
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+    if (decription) [userInfo setObject:decription forKey:NSLocalizedDescriptionKey];
+    if (failureReason) [userInfo setObject:failureReason forKey:NSLocalizedFailureReasonErrorKey];
+    if (recoverySuggestion) [userInfo setObject:recoverySuggestion forKey:NSLocalizedRecoverySuggestionErrorKey];
+    if (underlyingError) [userInfo setObject:underlyingError forKey:NSUnderlyingErrorKey];
+    
+    NSError *error = [NSError errorWithDomain:ReminderErrorDomain code:code userInfo:userInfo];
+    return error;
+}
+
++ (NSError *)errorForAuthorizationStatus:(EKAuthorizationStatus)authorizationStatus
+{
+    ReminderErrorCode code;
+    switch (authorizationStatus) {
+        case EKAuthorizationStatusDenied:
+            code = ReminderErrorCodeAccessDenied;
+            break;
+        case EKAuthorizationStatusRestricted:
+            code = ReminderErrorCodeAccessRestricted;
+            break;
+        default:
+            code = ReminderErrorCodeReasonUnknown;
+            break;
+    }
+    
+    return [[self class] errorForCode:code underlyingError:nil];
 }
 
 @end

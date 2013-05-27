@@ -17,8 +17,10 @@ extern NSString * const kStationID;
 extern NSString * const StationFetcherErrorDomain;
 
 typedef NS_ENUM(NSUInteger, StationFetcherErrorCode) {
-    StationFetcherErrorCodeOverLimit,
-    StationFetcherErrorCodeRequestDenied
+    StationFetcherErrorCodeOverLimit = 1,
+    StationFetcherErrorCodeRequestDenied,
+    StationFetcherErrorCodeInvalidResponse,
+    StationFetcherErrorCodeConnectionError
 };
 
 @interface StationFetcher : NSObject

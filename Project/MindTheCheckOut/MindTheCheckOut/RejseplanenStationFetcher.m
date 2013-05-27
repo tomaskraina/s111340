@@ -21,7 +21,7 @@ long const RejseplanenCoordinatesMultiplier = 1000000; // 1M
 @property (strong, nonatomic) NSString *search;
 @property (strong, nonatomic) NSMutableArray *foundStations;
 @property (strong, nonatomic) void (^completionBlock)(NSArray *);
-@property (strong, nonatomic) void (^errorBlock)(NSError *);
+//@property (strong, nonatomic) void (^errorBlock)(NSError *);
 @end
 
 @implementation RejseplanenStationFetcher
@@ -49,21 +49,49 @@ long const RejseplanenCoordinatesMultiplier = 1000000; // 1M
     AFXMLRequestOperation *requestOperation = [AFXMLRequestOperation XMLParserRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
         // Need to store the blocks in properties to use them in XMLParser delegate methods
         weakSelf.completionBlock = block;
-        weakSelf.errorBlock = errorBlock;
+//        weakSelf.errorBlock = errorBlock;
         weakSelf.foundStations = nil;
         weakSelf.search = searchName;
         XMLParser.delegate = weakSelf;
         if (![XMLParser parse]) {
             NSLog(@"XML parser error: %@", [XMLParser parserError]);
-            weakSelf.errorBlock([XMLParser parserError]);
+            errorBlock([[self class] errorForCode:StationFetcherErrorCodeInvalidResponse underlyingError:[XMLParser parserError]]);
         }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
         NSLog(@"AFXMLRequestOperation error: %@", error);
-        errorBlock(error);
+        errorBlock([[self class] errorForCode:StationFetcherErrorCodeConnectionError underlyingError:error]);
     }];
     
     [requestOperation start];
 }
+#pragma mark - Error factory method
+
++ (NSError *)errorForCode:(StationFetcherErrorCode)code underlyingError:(NSError *)underlyingError
+{
+    NSString *decription, *failureReason, *recoverySuggestion;
+    switch (code) {
+        case StationFetcherErrorCodeInvalidResponse:
+            decription = NSLocalizedStringFromTable(@"Invalid server response.", @"RejseplanenStationFetcher", nil);
+            recoverySuggestion = NSLocalizedStringFromTable(@"Try to search later again and make sure you're connected to the internet.", @"RejseplanenStationFetcher", nil);
+            break;
+        case StationFetcherErrorCodeConnectionError:
+            decription = NSLocalizedStringFromTable(@"Can't connect to the server", @"RejseplanenStationFetcher", nil);
+            recoverySuggestion = NSLocalizedStringFromTable(@"Pleas check your internet connection", @"Reminder", nil);
+            break;
+        default:
+            break;
+    }
+    
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+    if (decription) [userInfo setObject:decription forKey:NSLocalizedDescriptionKey];
+    if (failureReason) [userInfo setObject:failureReason forKey:NSLocalizedFailureReasonErrorKey];
+    if (recoverySuggestion) [userInfo setObject:recoverySuggestion forKey:NSLocalizedRecoverySuggestionErrorKey];
+    if (underlyingError) [userInfo setObject:underlyingError forKey:NSUnderlyingErrorKey];
+    
+    NSError *error = [NSError errorWithDomain:StationFetcherErrorDomain code:code userInfo:userInfo];
+    return error;
+}
+
 
 #pragma mark - NSXMLParserDelegate
 

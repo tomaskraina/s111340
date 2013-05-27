@@ -157,11 +157,13 @@
 
 - (IBAction)cancelReminder:(id)sender
 {
-    [self.reminder cancel:NULL error:^(NSError *error) {
-        NSLog(@"Can't cancel reminder: %@", error);
+    [self.reminder cancel:^(){
+        [self.navigationController popViewControllerAnimated:YES];
+    } error:^(NSError *error) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[error localizedDescription] message:[error localizedRecoverySuggestion] delegate:nil cancelButtonTitle:NSLocalizedStringFromTable(@"Alert - Cancel Button", @"ReminderViewController", nil) otherButtonTitles:nil];
+        alert.tag = error.code;
+        [alert show];
     }];
-    
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Reminder methods
@@ -181,7 +183,8 @@
         NSLog(@"Reminder saved!");
         self.reminder = reminder;
     } error:^(NSError *error) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Alert - Title - Saving Error", @"ReminderViewController", @"") message:[error localizedFailureReason] delegate:self cancelButtonTitle:NSLocalizedStringFromTable(@"Alert - Cancel Button", @"ReminderViewController", @"") otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[error localizedDescription] message:[error localizedRecoverySuggestion] delegate:self cancelButtonTitle:NSLocalizedStringFromTable(@"Alert - Cancel Button", @"ReminderViewController", @"") otherButtonTitles:nil];
+        alert.tag = error.code;
         [alert show];
     }];
 }
@@ -191,7 +194,16 @@
 // Can't save reminder alert view
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    switch (alertView.tag) {
+        case ReminderErrorCodeSaveFailed:
+        case ReminderErrorCodeAccessDenied:
+        case ReminderErrorCodeAccessRestricted:
+            [self.navigationController popViewControllerAnimated:YES];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark - Convinience methods

@@ -14,7 +14,7 @@ NSString * const kStationLongitude = @"longitude";
 NSString * const kStationTypes = @"types";
 NSString * const kStationID = @"id";
 
-NSString * const StationFetcherErrorDomain = @"StationFetcher";
+NSString * const StationFetcherErrorDomain = @"com.tomkraina.MindTheCheckout.StationFetcher";
 
 
 #define SEARCH_OPTIONS (NSDiacriticInsensitiveSearch | NSCaseInsensitiveSearch | NSAnchoredSearch)
