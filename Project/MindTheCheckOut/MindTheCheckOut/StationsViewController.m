@@ -158,7 +158,7 @@ typedef NS_ENUM(NSInteger, StationsViewControllerSections) {
         self.reminders = reminders;
         [self.tableView reloadData];
     } error:^(NSError *error) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Alert - Title - Can't load reminders", @"StationsViewController", @"") message:[error localizedFailureReason] delegate:self cancelButtonTitle:NSLocalizedStringFromTable(@"Alert - Cancel", @"StationsViewController", @"") otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Alert - Title - Can't load reminders", @"StationsViewController", @"") message:[error localizedFailureReason] delegate:self cancelButtonTitle:NSLocalizedStringFromTable(@"Alert - Cancel Button", @"StationsViewController", @"") otherButtonTitles:nil];
         [alert show];
     }];
 }
@@ -167,7 +167,6 @@ typedef NS_ENUM(NSInteger, StationsViewControllerSections) {
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
-    // TODO: activity indicator
     StationFetcher *fetcher = [RejseplanenStationFetcher defaultFetcher];
     [fetcher findByName:searchString completed:^(NSArray *stations) {
         self.foundStations = stations;
@@ -175,7 +174,6 @@ typedef NS_ENUM(NSInteger, StationsViewControllerSections) {
         // Refresh result's table view
         [controller.searchResultsTableView reloadData];
         
-        // TODO: insert data animated ?
     } error:^(NSError *error) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Alert - Title", @"StationsViewController", @"") message:[error localizedFailureReason] delegate:nil cancelButtonTitle:NSLocalizedStringFromTable(@"Alert - Cancel Button", @"StationsViewController", @"") otherButtonTitles:nil];
         [alert show];

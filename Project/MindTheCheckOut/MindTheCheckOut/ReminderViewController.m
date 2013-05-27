@@ -181,7 +181,7 @@
         NSLog(@"Reminder saved!");
         self.reminder = reminder;
     } error:^(NSError *error) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedFailureReason] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Alert - Title - Saving Error", @"ReminderViewController", @"") message:[error localizedFailureReason] delegate:self cancelButtonTitle:NSLocalizedStringFromTable(@"Alert - Cancel Button", @"ReminderViewController", @"") otherButtonTitles:nil];
         [alert show];
     }];
 }
