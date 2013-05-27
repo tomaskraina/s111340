@@ -131,7 +131,7 @@
     }
 
     // Recreate alarm if activation radius changed
-    if ([[[self.reminder.reminder.alarms lastObject] structuredLocation] radius] != [[NSUserDefaults standardUserDefaults] integerForKey:kActivationRadius]) {
+    if (![self isMovingToParentViewController] && [[[self.reminder.reminder.alarms lastObject] structuredLocation] radius] != [[NSUserDefaults standardUserDefaults] integerForKey:kActivationRadius]) {
         [self.reminder cancel:^{
             [self setUpReminder];
         } error:NULL];
@@ -278,7 +278,7 @@
 
 - (MKCircle *)circleOverlayForAnnotation:(id<MKAnnotation>)annotation
 {    
-    double radius = (double)[[NSUserDefaults standardUserDefaults] integerForKey:kActivationRadius];
+    double radius = self.reminder ? [[[self.reminder.reminder.alarms lastObject] structuredLocation] radius] : (double)[[NSUserDefaults standardUserDefaults] integerForKey:kActivationRadius];
     MKCircle *circle = [MKCircle circleWithCenterCoordinate:annotation.coordinate radius:radius];
     return circle;
 }
