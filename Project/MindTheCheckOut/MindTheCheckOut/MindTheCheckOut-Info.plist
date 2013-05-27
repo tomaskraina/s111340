@@ -22,6 +22,7 @@
 				<string>Icon-Small-iPad@2x.png</string>
 				<string>Icon-Small.png</string>
 				<string>Icon-Small@2x.png</string>
+				<string>iTunesArtwork</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<false/>
@@ -39,7 +40,7 @@
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>com.tomkraina.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>com.tomkraina.MindTheCheckOut</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleLocalizations</key>
@@ -47,7 +48,7 @@
 		<string>en</string>
 	</array>
 	<key>CFBundleName</key>
-	<string>${PRODUCT_NAME}</string>
+	<string>Mind the Check Out!</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -55,7 +56,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>2.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIMainStoryboardFile</key>
@@ -64,6 +65,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleBlackOpaque</string>
 	<key>UIStatusBarTintParameters</key>
 	<dict>
 		<key>UINavigationBar</key>

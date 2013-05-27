@@ -104,7 +104,7 @@
 		9CB9BC211750F69F00084199 /* Reminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reminder.m; sourceTree = "<group>"; };
 		9CB9BC231752DBE200084199 /* PinRadiusAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinRadiusAnnotationView.h; sourceTree = "<group>"; };
 		9CB9BC241752DBE300084199 /* PinRadiusAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinRadiusAnnotationView.m; sourceTree = "<group>"; };
-		9CC946AA1739798400454FF3 /* MindTheCheckOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MindTheCheckOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CC946AA1739798400454FF3 /* Mind the Check Out.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mind the Check Out.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CC946AD1739798400454FF3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9CC946AF1739798400454FF3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9CC946B11739798400454FF3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -209,7 +209,7 @@
 		9CC946AB1739798400454FF3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9CC946AA1739798400454FF3 /* MindTheCheckOut.app */,
+				9CC946AA1739798400454FF3 /* Mind the Check Out.app */,
 				9CC946D31739798400454FF3 /* MindTheCheckOutTests.octest */,
 			);
 			name = Products;
@@ -338,7 +338,7 @@
 			);
 			name = "Mind the Check Out";
 			productName = MindTheCheckOut;
-			productReference = 9CC946AA1739798400454FF3 /* MindTheCheckOut.app */;
+			productReference = 9CC946AA1739798400454FF3 /* Mind the Check Out.app */;
 			productType = "com.apple.product-type.application";
 		};
 		9CC946D21739798400454FF3 /* MindTheCheckOutTests */ = {
@@ -623,6 +623,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MindTheCheckOut/MindTheCheckOut-Prefix.pch";
 				INFOPLIST_FILE = "MindTheCheckOut/MindTheCheckOut-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -636,6 +637,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MindTheCheckOut/MindTheCheckOut-Prefix.pch";
 				INFOPLIST_FILE = "MindTheCheckOut/MindTheCheckOut-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
