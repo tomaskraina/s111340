@@ -115,8 +115,8 @@ NSString * const kReminders = @"Reminders";
                 errorBlock(cancellingError);
             }
             else {
-                // TODO: delete ID in persistent storage
                 NSLog(@"Reminder has been removed: %@", self.reminder);
+                [[self class] removeReminderIdentifier:self.reminder.calendarItemIdentifier];
                 if (completitionBlock) {
                     completitionBlock();
                 }
@@ -150,12 +150,7 @@ NSString * const kReminders = @"Reminders";
 
 #pragma mark - Private methods
 
-+ (NSArray *)allRemindersIdentifiers
-{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:kReminders];
-}
-
-+ (void)saveReminderIndentifier:(NSString *)identifier
++ (NSMutableArray *)allRemindersIdentifiers
 {
     NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
     NSMutableArray *reminders = [[storage objectForKey:kReminders] mutableCopy];
@@ -163,7 +158,27 @@ NSString * const kReminders = @"Reminders";
         reminders = [NSMutableArray array];
     }
     
+    return reminders;
+}
+
++ (void)saveReminderIndentifier:(NSString *)identifier
+{
+    NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *reminders = [[self class] allRemindersIdentifiers];
+    
+    [reminders removeObject:identifier];
     [reminders insertObject:identifier atIndex:0];
+    
+    [storage setObject:reminders forKey:kReminders];
+    [storage synchronize];
+}
+
++ (void)removeReminderIdentifier:(NSString *)identifier
+{
+    NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *reminders = [[self class] allRemindersIdentifiers];
+    
+    [reminders removeObject:identifier];
     
     [storage setObject:reminders forKey:kReminders];
     [storage synchronize];
