@@ -1,6 +1,17 @@
 s111340
 =======
 
+Content
+-------
+
+- [DONE] Assignment #1
+- [DONE] Assignment #2
+- [DONE] Assignment #3
+- [DONE] Assignment #4
+- [DONE] Assignment #5
+- [DONE] Final Project
+
+
 Assignment #1
 -------------
 
@@ -79,3 +90,12 @@ Assignment #5
 
 ### Note
 Don't forget to set the FlickrAPIKey constant in FlickrAPIKey.h file to make the Assignment #4 and #5 working.
+
+Final Project
+-------------
+
+(More info is comming...)
+
+Contact
+-------
+Tom Kraina, s111340@student.dtu.dk, me@tomkraina.com
