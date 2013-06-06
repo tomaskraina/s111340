@@ -98,7 +98,26 @@ Don't forget to set the `FlickrAPIKey` constant in `SPoT/FlickrFetcher/FlickrAPI
 Final Project
 -------------
 
-(More info is comming...)
+### Mind the Check Out
+
+#### About
+
+`Mind the Check Out` is a simple, location-aware iPhone application that reminds a user to check in and check out with his or her [rejsekort](http://www.rejsekort.dk) at selected train and metro stations and bus stops. To search for and select that particular location the application uses [Rejseplanen API](http://labs.rejseplanen.dk/labs/data__brug/rejseplanens_api/).
+
+![alt text](https://raw.github.com/kiniry-teaching/s111340/master/Project/Screenshot.png "Mind the Check Out screenshot")
+
+#### 3rd Party Libraries
+
+Mind the Check Out uses the following third party libraries:
+
+- AFNetworking - [github.com/AFNetworking/AFNetworking](https://github.com/AFNetworking/AFNetworking)
+- TestFlight SDK - [testflightapp.com/sdk/](https://testflightapp.com/sdk/)
+
+For dependency version requirements see [`Podfile`)(https://github.com/kiniry-teaching/s111340/blob/master/Project/MindTheCheckOut/Podfile) file in the project directory.
+
+This Xcode project uses [CocoaPods](https://github.com/CocoaPods/CocoaPods) to manage all the library dependencies. In order to building the project right after clonning this repo, it already includes all the mentioned libraries. Therefore, it's not required to install either CocoaPods on your computer nor install the project dependencies.
+
+However, update the dependencies to the latest version just run `pod update` in the project's directory. To do this just ensure you have CocoaPods installed.
 
 Contact
 -------
