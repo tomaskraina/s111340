@@ -106,6 +106,11 @@ Final Project
 
 ![alt text](https://raw.github.com/kiniry-teaching/s111340/master/Project/Screenshot.png "Mind the Check Out screenshot")
 
+#### Installation
+
+1. Open `MindTheCheckOut.xcworkspace` file in Xcode
+2. Build & Run
+
 #### Implementation
 
 This simple application consists of just three view controllers embedded in a `UINavigationViewController`. The first one, `StationsViewController`, shows a table view with active reminders and recently used locations. It also includes `UISearchDisplayViewController` to handle searching functionality. Second one, `ReminderViewController` shows info about selected location as well as sets up and cancels reminders. The last one, `SettingsViewController`, works as the name suggests to set default values for the application, e.g. radius for alarm activation and map view zoom level.
