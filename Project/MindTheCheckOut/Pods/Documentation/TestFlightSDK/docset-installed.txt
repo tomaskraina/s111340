@@ -1,4 +1,0 @@
-Documentation set was installed to Xcode!
-
-Path: /Users/tomkraina/Library/Developer/Shared/Documentation/DocSets/org.cocoapods.testflightsdk.TestFlightSDK-1.2.4.docset
-Time: 2013-05-12 21:33:05 +0000
